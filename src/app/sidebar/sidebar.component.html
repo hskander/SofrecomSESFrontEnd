@@ -7,241 +7,90 @@
           <li class="menu-title">
             <span>Main</span>
           </li>
-          <li
-            class="submenu"
-            [ngClass]="{ active: urlComplete.mainUrl === 'dashboard' }"
-          >
-            <a
-              href="javascript:"
-              [ngClass]="{ subdrop: urlComplete.mainUrl === 'dashboard' }"
+          <li [ngClass]="{ active: urlComplete.subUrl === 'admin'||
+          urlComplete.subUrl === 'admin' }">
+            <a routerLink="/layout/dashboard/admin"
+              ><i class="la la-dashboard"></i> <span>Dashbord</span></a
             >
-              <i class="la la-dashboard"></i>
-              <span>Dashboard</span>
-              <span class="menu-arrow"></span>
-            </a>
-            <ul
-              style="display: none"
-              [ngStyle]="{
-                display: urlComplete.mainUrl === 'dashboard' ? 'block' : 'none'
-              }"
-            >
-              <li routerLink="/layout/dashboard/admin">
-                <a
-                  [ngClass]="{ active: urlComplete.subUrl === 'admin' }"
-                  href="javascript:"
-                  >Admin Dashboard</a
-                >
-              </li>
-            </ul>
           </li>
-          
+
           <li class="menu-title">
             <span>Employees</span>
           </li>
-          <li
-            class="submenu"
-            [ngClass]="{
-              active:
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'employeepage') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'holidays') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'adminleaves') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'employeeleaves') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'leavesettings') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'attendanceadmin') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'attendanceemployee') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'departments') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'designation') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'timesheet') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'overtime') ||
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'employeelist') ||
-                urlComplete.mainUrl === 'scheduling' ||
-                urlComplete.mainUrl === 'shift'
-            }"
-          >
-            <a
-              href="javascript:"
-              [ngClass]="{
-                subdrop:
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'employeepage') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'holidays') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'adminleaves') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'employeeleaves') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'leavesettings') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'attendanceadmin') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'attendanceemployee') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'departments') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'designation') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'timesheet') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'overtime') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'employeelist') ||
-                  urlComplete.mainUrl === 'scheduling' ||
-                  urlComplete.mainUrl === 'shift'
-              }"
-              class="noti-dot"
-              ><i class="la la-user"></i> <span> Employees</span>
-              <span class="menu-arrow"></span
-            ></a>
-            <ul
-              style="display: none"
-              [ngStyle]="{
-                display:
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'employeepage') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'holidays') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'adminleaves') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'employeeleaves') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'leavesettings') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'attendanceadmin') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'attendanceemployee') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'departments') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'designation') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'timesheet') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'overtime') ||
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'employeelist') ||
-                  urlComplete.mainUrl === 'scheduling' ||
-                  urlComplete.mainUrl === 'shift'
-                    ? 'block'
-                    : 'none'
-              }"
+
+          <li [ngClass]="{ active: urlComplete.subUrl === 'employeepage'||
+          urlComplete.subUrl === 'employeelist'||
+          urlComplete.subUrl === 'employeeprofile'}">
+            <a routerLink="/layout/employees/employeepage"
+              ><i class="la la-user"></i> <span>All Employees</span></a
             >
-              <li routerLink="/layout/employees/employeepage">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active:
-                      urlComplete.subUrl === 'employeepage' ||
-                      urlComplete.subUrl === 'employeelist'
-                  }"
-                  >All Employees</a
-                >
-              </li>
-              <li routerLink="/layout/employees/holidays">
-                <a
-                  href="javascript:"
-                  [ngClass]="{ active: urlComplete.subUrl === 'holidays' }"
-                  >Holidays</a
-                >
-              </li>
-              <li routerLink="/layout/employees/adminleaves">
-                <a
-                  href="javascript:"
-                  [ngClass]="{ active: urlComplete.subUrl === 'adminleaves' }"
-                  >Leaves (Admin)
-                  <span class="badge rounded-pill bg-primary float-end"
-                    >1</span
-                  ></a
-                >
-              </li>
-            
-              <li routerLink="/layout/employees/leavesettings">
-                <a
-                  href="javascript:"
-                  [ngClass]="{ active: urlComplete.subUrl === 'leavesettings' }"
-                  >Leave Settings</a
-                >
-              </li>
-            
-              <li routerLink="/layout/employees/departments">
-                <a
-                  href="javascript:"
-                  [ngClass]="{ active: urlComplete.subUrl === 'departments' }"
-                  >Departments</a
-                >
-              </li>
-              <li routerLink="/layout/employees/designation">
-                <a
-                  href="javascript:"
-                  [ngClass]="{ active: urlComplete.subUrl === 'designation' }"
-                  >Designations</a
-                >
-              </li>
-            </ul>
           </li>
+
+
+
           <li
             class="submenu"
             [ngClass]="{
               active:
-                urlComplete.mainUrl === 'projects' ||
-                urlComplete.subUrl === 'projectlist' ||
-                urlComplete.subUrl === 'projectview'
+                urlComplete.mainUrl === 'leadscontent' ||
+                urlComplete.subUrl === 'leadscontent'
             }"
           >
             <a
               href="javascript:"
               [ngClass]="{
                 subdrop:
-                  urlComplete.mainUrl === 'projects' ||
-                  urlComplete.subUrl === 'projectlist' ||
-                  urlComplete.subUrl === 'projectview'
+                  urlComplete.mainUrl === 'leadscontent' ||
+                  urlComplete.subUrl === 'leadscontent' 
               }"
               href="javascript:"
-              ><i class="la la-rocket"></i> <span> Projects</span>
+              ><i class="la la-user-secret"></i> <span> Responsables</span>
               <span class="menu-arrow"></span
             ></a>
             <ul
               style="display: none"
               [ngStyle]="{
                 display:
-                  urlComplete.mainUrl === 'projects' ||
-                  urlComplete.subUrl === 'projectlist' ||
-                  urlComplete.subUrl === 'projectview'
+                  urlComplete.mainUrl === 'leadscontent' ||
+                  urlComplete.subUrl === 'leadscontent'
                     ? 'block'
                     : 'none'
               }"
             >
-              <li routerLink="/layout/projects/projectpage">
+              <li routerLink="/layout/leads/leadscontent">
                 <a
                   href="javascript:"
                   [ngClass]="{
                     active:
-                      urlComplete.subUrl === 'projectpage' ||
-                      urlComplete.subUrl === 'projectlist' ||
-                      urlComplete.subUrl === 'projectview'
+                      urlComplete.subUrl === 'leadscontent' ||
+                      urlComplete.subUrl === 'leadscontent'
                   }"
-                  >Projects</a
+                  >Responsable Poles</a
+                >
+              </li>
+              <li routerLink="/layout/leads/leadscontent">
+                <a
+                  href="javascript:"
+                  [ngClass]="{
+                    active:
+                      urlComplete.subUrl === 'leadscontent' ||
+                      urlComplete.subUrl === 'leadscontent'
+                  }"
+                  >Responsable Directions</a
                 >
               </li>
              
             </ul>
           </li>
-          <li [ngClass]="{ active: urlComplete.subUrl === 'leadscontent' }">
-            <a routerLink="/layout/leads/leadscontent"
-              ><i class="la la-user-secret"></i> <span>Leads</span></a
+
+
+
+
+          <li [ngClass]="{ active:  urlComplete.mainUrl === 'projects' ||
+          urlComplete.subUrl === 'projectlist' ||
+          urlComplete.subUrl === 'projectview' }">
+            <a routerLink="/layout/projects/projectpage"
+              ><i class="la la-rocket"></i> <span>Projects</span></a
             >
           </li>
           <li class="menu-title">
@@ -380,182 +229,27 @@
           <li class="menu-title">
             <span>Administration</span>
           </li>
-          <li [ngClass]="{ active: urlComplete.subUrl === 'assets-main' }">
-            <a routerLink="/layout/assets/assets-main"
-              ><i class="la la-object-ungroup"></i> <span>Assets</span></a
+          <li [ngClass]="{ active: urlComplete.subUrl === 'departments' }">
+            <a routerLink="/layout/employees/departments"
+              ><i class="la la-object-ungroup"></i> <span>Directions</span></a
             >
           </li>
-          <li
-            class="submenu"
-            [ngClass]="{
-              active:
-                urlComplete.mainUrl === 'jobs' ||
-                urlComplete.mainUrl === 'manageresume' ||
-                urlComplete.mainUrl === 'experience' ||
-                urlComplete.mainUrl === 'studentcandidate' ||
-                urlComplete.mainUrl === 'interview' ||
-                urlComplete.mainUrl === 'userdashboard' ||
-                urlComplete.mainUrl === 'visitedjobs' ||
-                urlComplete.mainUrl === 'offeredjobs' ||
-                urlComplete.mainUrl === 'useralljobs' ||
-                urlComplete.mainUrl === 'archivedjobs' ||
-                urlComplete.mainUrl === 'appliedjobs' ||
-                urlComplete.mainUrl === 'savedjobs' ||
-                urlComplete.mainUrl === 'jobsdashboard' ||
-                urlComplete.mainUrl === 'candidate' ||
-                urlComplete.mainUrl === 'offer' ||
-                urlComplete.mainUrl === 'scheduletiming' ||
-                urlComplete.mainUrl === 'aptitute' ||
-                urlComplete.mainUrl === 'interviewing'
-            }"
-          >
-            <a
-              href="javascript:"
-              [ngClass]="{
-                subdrop:
-                  urlComplete.mainUrl === 'jobs' ||
-                  urlComplete.mainUrl === 'manageresume' ||
-                  urlComplete.mainUrl === 'experience' ||
-                  urlComplete.mainUrl === 'studentcandidate' ||
-                  urlComplete.mainUrl === 'interview' ||
-                  urlComplete.mainUrl === 'userdashboard' ||
-                  urlComplete.mainUrl === 'visitedjobs' ||
-                  urlComplete.mainUrl === 'offeredjobs' ||
-                  urlComplete.mainUrl === 'useralljobs' ||
-                  urlComplete.mainUrl === 'archivedjobs' ||
-                  urlComplete.mainUrl === 'appliedjobs' ||
-                  urlComplete.mainUrl === 'savedjobs' ||
-                  urlComplete.mainUrl === 'jobsdashboard' ||
-                  urlComplete.mainUrl === 'candidate' ||
-                  urlComplete.mainUrl === 'offer' ||
-                  urlComplete.mainUrl === 'scheduletiming' ||
-                  urlComplete.mainUrl === 'aptitute' ||
-                  urlComplete.mainUrl === 'interviewing'
-              }"
-              ><i class="la la-briefcase"></i> <span> Jobs </span>
-              <span class="menu-arrow"></span
-            ></a>
-            <ul
-              style="display: none"
-              [ngStyle]="{
-                display:
-                  urlComplete.mainUrl === 'jobs' ||
-                  urlComplete.mainUrl === 'manageresume' ||
-                  urlComplete.mainUrl === 'experience' ||
-                  urlComplete.mainUrl === 'studentcandidate' ||
-                  urlComplete.mainUrl === 'interview' ||
-                  urlComplete.mainUrl === 'userdashboard' ||
-                  urlComplete.mainUrl === 'visitedjobs' ||
-                  urlComplete.mainUrl === 'offeredjobs' ||
-                  urlComplete.mainUrl === 'useralljobs' ||
-                  urlComplete.mainUrl === 'archivedjobs' ||
-                  urlComplete.mainUrl === 'appliedjobs' ||
-                  urlComplete.mainUrl === 'savedjobs' ||
-                  urlComplete.mainUrl === 'jobsdashboard' ||
-                  urlComplete.mainUrl === 'candidate' ||
-                  urlComplete.mainUrl === 'offer' ||
-                  urlComplete.mainUrl === 'scheduletiming' ||
-                  urlComplete.mainUrl === 'aptitute' ||
-                  urlComplete.mainUrl === 'interviewing'
-                    ? 'block'
-                    : 'none'
-              }"
+          <li [ngClass]="{ active: urlComplete.subUrl === 'designation' }">
+            <a routerLink="/layout/employees/designation"
+              ><i class="la la-object-ungroup"></i> <span>Poles</span></a
             >
-              <li routerLink="/layout/jobsdashboard/jobs-dashboard">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active: urlComplete.subUrl === 'jobs-dashboard'
-                  }"
-                >
-                  Jobs Dasboard
-                </a>
-              </li>
-
-              <li routerLink="/layout/jobs/manage-jobs">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active:
-                      urlComplete.subUrl === 'manage-jobs' ||
-                      urlComplete.subUrl === 'job-details'
-                  }"
-                >
-                  Manage Jobs
-                </a>
-              </li>
-              <li routerLink="/layout/jobs/job-applicants">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active: urlComplete.subUrl === 'job-applicants'
-                  }"
-                >
-                  Applied Candidates
-                </a>
-              </li>
-            </ul>
           </li>
-         
+          <li [ngClass]="{ active: urlComplete.subUrl === 'manage-jobs' ||
+                            urlComplete.subUrl === 'job-details' }">
+            <a routerLink="/layout/jobs/manage-jobs"
+              ><i class="la la-briefcase"></i> <span>Postes</span></a
+            >
+          </li>
+          
           <li class="menu-title">
             <span>Pages</span>
           </li>
-          <li
-            class="submenu"
-            [ngClass]="{
-              active:
-                (urlComplete.mainUrl === 'employees' &&
-                  urlComplete.subUrl === 'employeeprofile') ||
-                (urlComplete.mainUrl === 'clients' &&
-                  urlComplete.subUrl === 'clientsprofile')
-            }"
-          >
-            <a
-              href="javascript:"
-              [ngClass]="{
-                subdrop:
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'employeeprofile') ||
-                  (urlComplete.mainUrl === 'clients' &&
-                    urlComplete.subUrl === 'clientsprofile')
-              }"
-              ><i class="la la-user"></i> <span> Profile </span>
-              <span class="menu-arrow"></span
-            ></a>
-            <ul
-              style="display: none"
-              [ngStyle]="{
-                display:
-                  (urlComplete.mainUrl === 'employees' &&
-                    urlComplete.subUrl === 'employeeprofile') ||
-                  (urlComplete.mainUrl === 'clients' &&
-                    urlComplete.subUrl === 'clientsprofile')
-                    ? 'block'
-                    : 'none'
-              }"
-            >
-              <li routerLink="/layout/employees/employeeprofile">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active: urlComplete.subUrl === 'employeeprofile'
-                  }"
-                >
-                  Employee Profile
-                </a>
-              </li>
-              <li routerLink="/layout/clients/clientsprofile/1">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active: urlComplete.subUrl === 'clientsprofile'
-                  }"
-                >
-                  Client Profile
-                </a>
-              </li>
-            </ul>
-          </li>
+          
           <li
             class="submenu"
             [ngClass]="{ active: urlComplete.mainUrl === 'login' }"
