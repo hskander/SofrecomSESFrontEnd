@@ -18,7 +18,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 import { SharingModule } from 'src/app/sharing/sharing.module';
 import { PickListModule } from 'primeng/picklist';
 @NgModule({
-  declarations: [EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeaveSettingsComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent],
+  declarations: [EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeaveSettingsComponent, DepartmentsComponent, DesignationComponent],
   imports: [
     CommonModule,
     FormsModule,
