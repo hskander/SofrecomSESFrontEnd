@@ -167,15 +167,7 @@
                   ></a
                 >
               </li>
-              <li routerLink="/layout/employees/employeeleaves">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active: urlComplete.subUrl === 'employeeleaves'
-                  }"
-                  >Leaves (Employee)</a
-                >
-              </li>
+            
               <li routerLink="/layout/employees/leavesettings">
                 <a
                   href="javascript:"
@@ -183,24 +175,7 @@
                   >Leave Settings</a
                 >
               </li>
-              <li routerLink="/layout/employees/attendanceadmin">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active: urlComplete.subUrl === 'attendanceadmin'
-                  }"
-                  >Attendance (Admin)</a
-                >
-              </li>
-              <li routerLink="/layout/employees/attendanceemployee">
-                <a
-                  href="javascript:"
-                  [ngClass]="{
-                    active: urlComplete.subUrl === 'attendanceemployee'
-                  }"
-                  >Attendance (Employee)</a
-                >
-              </li>
+            
               <li routerLink="/layout/employees/departments">
                 <a
                   href="javascript:"
@@ -213,20 +188,6 @@
                   href="javascript:"
                   [ngClass]="{ active: urlComplete.subUrl === 'designation' }"
                   >Designations</a
-                >
-              </li>
-              <li routerLink="/layout/employees/timesheet">
-                <a
-                  href="javascript:"
-                  [ngClass]="{ active: urlComplete.subUrl === 'timesheet' }"
-                  >Timesheet</a
-                >
-              </li>
-              <li routerLink="/layout/employees/overtime">
-                <a
-                  href="javascript:"
-                  [ngClass]="{ active: urlComplete.subUrl === 'overtime' }"
-                  >Overtime</a
                 >
               </li>
             </ul>

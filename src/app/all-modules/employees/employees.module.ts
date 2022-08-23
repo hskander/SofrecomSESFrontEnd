@@ -9,21 +9,16 @@ import { EmployeeListComponent } from './all-employees/employee-list/employee-li
 import { EmployeeProfileComponent } from './all-employees/employee-profile/employee-profile.component';
 import { HolidaysComponent } from './holidays/holidays.component';
 import { LeavesAdminComponent } from './leaves-admin/leaves-admin.component';
-import { LeavesEmployeeComponent } from './leaves-employee/leaves-employee.component';
 import { LeaveSettingsComponent } from './leave-settings/leave-settings.component';
-import { AttendanceAdminComponent } from './attendance-admin/attendance-admin.component';
-import { AttendanceEmployeeComponent } from './attendance-employee/attendance-employee.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { DesignationComponent } from './designation/designation.component';
-import { TimesheetComponent } from './timesheet/timesheet.component';
-import { OvertimeComponent } from './overtime/overtime.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { SharingModule } from 'src/app/sharing/sharing.module';
 import { PickListModule } from 'primeng/picklist';
 @NgModule({
-  declarations: [EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeavesEmployeeComponent, LeaveSettingsComponent, AttendanceAdminComponent, AttendanceEmployeeComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent, OvertimeComponent],
+  declarations: [EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeaveSettingsComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent],
   imports: [
     CommonModule,
     FormsModule,
