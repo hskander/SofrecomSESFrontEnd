@@ -29,46 +29,11 @@
     <div class="row filter-row">
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
-                <input type="text" class="form-control floating" (input)="searchId($event.target.value)">
-                <label class=" focus-label">Employee Code</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus">
                 <input type="text" class="form-control floating" (input)="searchName($event.target.value)">
-                <label class="focus-label">Name, Surname, Email..</label>
+                <label class="focus-label">Code,Name, Surname, Email..</label>
             </div>
         </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus select-focus">
-                <select class="form-select form-control" (input)="searchByPole($event.target.value)">
-                    <option>Select Pole</option>
-                    <option>Pole1</option>
-                </select>
-                <label class="focus-label">Pole</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus select-focus">
-                <select class="form-select form-control" (input)="searchByDirection($event.target.value)">
-                    <option>Select Direction</option>
-                    <option>Direction1</option>
-                </select>
-                <label class="focus-label">Direction</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus select-focus">
-                <select class="form-select form-control" (input)="searchByPoste($event.target.value)">
-                    <option>Select Poste</option>
-                    <option>Web Developer</option>
-                </select>
-                <label class="focus-label">Poste</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <a  class="btn btn-success w-100"> Search </a>
-        </div>
+        
     </div>
     <!-- Search Filter -->
 
@@ -493,9 +458,9 @@
                         <div class="h3 card-title with-switch">
                             CNSS
                             <div class="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_annual"
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_cnss"
                                     checked>
-                                <label class="onoffswitch-label" for="switch_annual">
+                                <label class="onoffswitch-label" for="switch_cnss">
                                     <span class="onoffswitch-inner"></span>
                                     <span class="onoffswitch-switch"></span>
                                 </label>
@@ -567,9 +532,9 @@
                         <div class="h3 card-title with-switch">
                             En Congé
                             <div class="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_annual"
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_conge"
                                     checked>
-                                <label class="onoffswitch-label" for="switch_annual">
+                                <label class="onoffswitch-label" for="switch_conge">
                                     <span class="onoffswitch-inner"></span>
                                     <span class="onoffswitch-switch"></span>
                                 </label>
@@ -596,12 +561,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            
             <div class="modal-body">
                 <form (ngSubmit)="editEmployee()" [formGroup]="editEmployeeForm">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Nom <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('FirstName').invalid && editEmployeeForm.get('FirstName').touched"
                                     formControlName="FirstName">
@@ -615,7 +581,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Last Name</label>
+                                <label class="col-form-label">Prenom</label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('LastName').invalid && editEmployeeForm.get('LastName').touched"
                                     formControlName="LastName">
@@ -629,7 +595,39 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Username <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Age <span class="text-danger">*</span></label>
+                                <input class="form-control" type="number"
+                                    [class.invalid]="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched"
+                                    formControlName="UserName">
+                                <div
+                                    *ngIf="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched"
+                                        class="text-danger"> *Age is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Date de naissance <span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                        [class.invalid]="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched"
+                                        formControlName="JoinDate">
+                                    <div
+                                        *ngIf="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched">
+                                        <small
+                                            *ngIf="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched"
+                                            class="text-danger"> *JoinDate is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Lieu de naissance <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched"
                                     formControlName="UserName">
@@ -637,7 +635,67 @@
                                     *ngIf="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched">
                                     <small
                                         *ngIf="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched"
-                                        class="text-danger"> *Username is required</small>
+                                        class="text-danger"> *Lieu de naissance is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Genre</label>
+                                <select class="form-select form-control"
+                                    [class.invalid]="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched"
+                                    formControlName="CompanyName">
+                                    <option value="">MALE</option>
+                                    <option value="1">FEMALE</option>
+                                    <option value="2">OTHER</option>
+                                </select>
+                                <div
+                                    *ngIf="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched"
+                                        class="text-danger"> Genre required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Nationalité <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched"
+                                    formControlName="UserName">
+                                <div
+                                    *ngIf="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched"
+                                        class="text-danger"> *Nationalité is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Adresse </label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Adresse is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Numéro de Téléphone </label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Numéro de Téléphone is required</small>
                                 </div>
                             </div>
                         </div>
@@ -657,50 +715,23 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Password</label>
-                                <input class="form-control" type="password"
-                                    [class.invalid]="editEmployeeForm.get('Password').invalid && editEmployeeForm.get('Password').touched"
-                                    formControlName="Password">
+                                <label class="col-form-label">CIN</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
                                 <div
-                                    *ngIf="editEmployeeForm.get('Password').invalid && editEmployeeForm.get('Password').touched">
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
                                     <small
-                                        *ngIf="editEmployeeForm.get('Password').invalid && editEmployeeForm.get('Password').touched"
-                                        class="text-danger"> *Password is required</small>
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *CIN is required</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Confirm Password</label>
-                                <input class="form-control" type="password"
-                                    [class.invalid]="editEmployeeForm.get('ConfirmPassword').invalid && editEmployeeForm.get('ConfirmPassword').touched"
-                                    formControlName="ConfirmPassword">
-                                <div
-                                    *ngIf="editEmployeeForm.get('ConfirmPassword').invalid && editEmployeeForm.get('ConfirmPassword').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('ConfirmPassword').invalid && editEmployeeForm.get('ConfirmPassword').touched"
-                                        class="text-danger"> *ConfirmPassword is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control"
-                                    [class.invalid]="editEmployeeForm.get('EmployeeID').invalid && editEmployeeForm.get('EmployeeID').touched"
-                                    formControlName="EmployeeID">
-                                <div
-                                    *ngIf="editEmployeeForm.get('EmployeeID').invalid && editEmployeeForm.get('EmployeeID').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('EmployeeID').invalid && editEmployeeForm.get('EmployeeID').touched"
-                                        class="text-danger"> *Employee ID is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Date Deliv CIN <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
+
                                     <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
                                         [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
                                         [class.invalid]="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched"
@@ -709,14 +740,14 @@
                                         *ngIf="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched">
                                         <small
                                             *ngIf="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched"
-                                            class="text-danger"> *JoinDate is required</small>
+                                            class="text-danger"> *Date Deliv CIN is required</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Phone </label>
+                                <label class="col-form-label">Numero Passeport</label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
                                     formControlName="PhoneNumber">
@@ -724,256 +755,286 @@
                                     *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
                                     <small
                                         *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
-                                        class="text-danger"> *Phone is required</small>
+                                        class="text-danger"> *Numero Passeport is required</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Company</label>
+                                <label class="col-form-label">Date Expiration <span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                        [class.invalid]="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched"
+                                        formControlName="JoinDate">
+                                    <div
+                                        *ngIf="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched">
+                                        <small
+                                            *ngIf="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched"
+                                            class="text-danger"> *Date Expiration is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Civilité</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Civilité is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Date de Recrutement <span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                        [class.invalid]="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched"
+                                        formControlName="JoinDate">
+                                    <div
+                                        *ngIf="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched">
+                                        <small
+                                            *ngIf="editEmployeeForm.get('JoinDate').invalid && editEmployeeForm.get('JoinDate').touched"
+                                            class="text-danger"> *Date de Recrutement is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Date de Départ <span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                        formControlName="JoinDate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Poste</label>
                                 <select class="form-select form-control"
                                     [class.invalid]="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched"
                                     formControlName="CompanyName">
-                                    <option value="">Global Technologies</option>
-                                    <option value="1">Delta Infotech</option>
+                                    <option value="">PHP Developer</option>
+                                    <option value="1">Java Developer</option>
+                                    <option value="2">OTHER</option>
                                 </select>
                                 <div
                                     *ngIf="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched">
                                     <small
                                         *ngIf="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched"
-                                        class="text-danger"> Company Name required</small>
+                                        class="text-danger"> Poste required</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Department <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Pole</label>
                                 <select class="form-select form-control"
-                                    [class.invalid]="editEmployeeForm.get('DepartmentName').invalid && editEmployeeForm.get('DepartmentName').touched"
-                                    formControlName="DepartmentName">
-                                    <option>Select Department</option>
-                                    <option>Web Development</option>
-                                    <option>IT Management</option>
-                                    <option>Marketing</option>
+                                    [class.invalid]="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched"
+                                    formControlName="CompanyName">
+                                    <option value="">Pole1</option>
+                                    <option value="1">Pole2</option>
+                                    <option value="2">OTHER</option>
                                 </select>
                                 <div
-                                    *ngIf="editEmployeeForm.get('DepartmentName').invalid && editEmployeeForm.get('DepartmentName').touched">
+                                    *ngIf="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched">
                                     <small
-                                        *ngIf="editEmployeeForm.get('DepartmentName').invalid && editEmployeeForm.get('DepartmentName').touched"
-                                        class="text-danger"> *Department Name required</small>
+                                        *ngIf="editEmployeeForm.get('CompanyName').invalid && editEmployeeForm.get('CompanyName').touched"
+                                        class="text-danger"> Pole required</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Designation <span class="text-danger">*</span></label>
-                                <select class="form-select form-control"
-                                    [class.invalid]="editEmployeeForm.get('Designation').invalid && editEmployeeForm.get('Designation').touched"
-                                    formControlName="Designation">
-                                    <option>Select Designation</option>
-                                    <option>Web Designer</option>
-                                    <option>Web Developer</option>
-                                    <option>Android Developer</option>
-                                </select>
+                                <label class="col-form-label">Salaire Brute</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
                                 <div
-                                    *ngIf="editEmployeeForm.get('Designation').invalid && editEmployeeForm.get('Designation').touched">
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
                                     <small
-                                        *ngIf="editEmployeeForm.get('Designation').invalid && editEmployeeForm.get('Designation').touched"
-                                        class="text-danger"> *Designation Name required</small>
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Salaire Brute is required</small>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="table-responsive m-t-15">
-                        <table class="table table-striped custom-table">
-                            <thead>
-                                <tr>
-                                    <th>Module Permission</th>
-                                    <th class="text-center">Read</th>
-                                    <th class="text-center">Write</th>
-                                    <th class="text-center">Create</th>
-                                    <th class="text-center">Delete</th>
-                                    <th class="text-center">Import</th>
-                                    <th class="text-center">Export</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Holidays</td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leaves</td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Clients</td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Projects</td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tasks</td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Chats</td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Assets</td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Timing Sheets</td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input checked="" type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Numéro Tel urgence</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Numéro Tel urgence is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Prenom urgence</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Numéro Tel urgence is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label"> Relation urgence</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Relation is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Situation familiale</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Situation familiale is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Nombre des enfants <span class="text-danger">*</span></label>
+                                <input class="form-control" type="number"
+                                    [class.invalid]="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched"
+                                    formControlName="UserName">
+                                <div
+                                    *ngIf="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('UserName').invalid && editEmployeeForm.get('UserName').touched"
+                                        class="text-danger"> *Age is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="h3 card-title with-switch">
+                            CNSS
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_cnssE"
+                                    checked>
+                                <label class="onoffswitch-label" for="switch_cnssE">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-form-label">Matricule CNSS</label>
+                                <input class="form-control" type="text"
+                                    formControlName="PhoneNumber">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Banque</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *Banque is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">RIB</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *RIB is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">SWIFT</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *SWIFT is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">IBAN</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                    formControlName="PhoneNumber">
+                                <div
+                                    *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('PhoneNumber').invalid && editEmployeeForm.get('PhoneNumber').touched"
+                                        class="text-danger"> *IBAN is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="h3 card-title with-switch">
+                            En Congé
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_congeE"
+                                    checked>
+                                <label class="onoffswitch-label" for="switch_congeE">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
+
+
         </div>
     </div>
 </div>
