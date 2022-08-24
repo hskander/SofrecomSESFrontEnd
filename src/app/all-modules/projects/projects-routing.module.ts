@@ -4,8 +4,6 @@ import { ProjectsComponent } from './projects.component';
 import { ProjectContentComponent } from './project-content/project-content.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectViewComponent } from './project-view/project-view.component';
-import { TaskBoardComponent } from './task-board/task-board.component';
-import { TasksComponent } from './tasks/tasks.component';
 
 const routes: Routes = [
   {
@@ -23,15 +21,7 @@ const routes: Routes = [
       {
         path: "projectview/:id",
         component: ProjectViewComponent
-      },
-      {
-        path: "taskboard",
-        component: TaskBoardComponent
-      },
-      {
-        path: "tasks",
-        component: TasksComponent
-      },
+      }
 
 
 
