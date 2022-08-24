@@ -7,19 +7,30 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Jobs</h3>
+                <h3 class="page-title">Postes</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Jobs</li>
+                    <li class="breadcrumb-item active">Postes</li>
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
                 <a  class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_job"><i class="fa fa-plus"></i>
-                    Add Job</a>
+                    Add Poste</a>
             </div>
         </div>
     </div>
     <!-- /Page Header -->
+       <!-- Search Filter -->
+  <div class="row filter-row">
+        <div class="col-sm-5 ">
+            <div class="form-group form-focus">
+                <input type="text" class="form-control floating" (input)="searchId($event.target.value)" (focusout)="rerender()">
+                <label class="focus-label">Poste</label>
+            </div>
+        </div>
+           
+    </div>
+    <!-- /Search Filter -->
 
     <div class="row">
         <div class="col-md-12">
@@ -28,12 +39,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Job Title</th>
-                            <th>Department</th>
-                            <th>Start Date</th>
-                            <th>Expire Date</th>
-                            <th class="text-center">Job Type</th>
-                            <th class="text-center">Status</th>
+                            <th>Post Title</th>
+                            <th>Description</th>
+                            <th>Direction</th>
                             <th>Applicants</th>
                             <th class="text-end">Actions</th>
                         </tr>
@@ -42,46 +50,10 @@
                         <tr *ngFor="let manageJobs of allManageJobs;let i = index">
                             <td>{{ 1 + i }}</td>
                             <td><a routerLink="/layout/jobs/job-details">{{manageJobs.jobTitle}}</a></td>
+                            <td>description</td>
                             <td>{{manageJobs.department}}</td>
-                            <td>{{manageJobs.startDate | customDate}}</td>
-                            <td>{{manageJobs.expireDate | customDate}}</td>
-                            <td class="text-center">
-                                <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" 
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Full Time
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" ><i class="fa fa-dot-circle-o text-info"></i>
-                                            Full Time</a>
-                                        <a class="dropdown-item" ><i
-                                                class="fa fa-dot-circle-o text-success"></i> Part Time</a>
-                                        <a class="dropdown-item" ><i class="fa fa-dot-circle-o text-danger"></i>
-                                            Internship</a>
-                                        <a class="dropdown-item" ><i
-                                                class="fa fa-dot-circle-o text-warning"></i> Temporary</a>
-                                        <a class="dropdown-item" ><i
-                                                class="fa fa-dot-circle-o text-warning"></i> Other</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" 
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Open
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" ><i class="fa fa-dot-circle-o text-info"></i>
-                                            Open</a>
-                                        <a class="dropdown-item" ><i
-                                                class="fa fa-dot-circle-o text-success"></i> Closed</a>
-                                        <a class="dropdown-item" ><i class="fa fa-dot-circle-o text-danger"></i>
-                                            Cancelled</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><a routerLink="/layout/jobs/job-applicants" class="btn btn-sm btn-primary">3 Candidates</a></td>
+                         
+                            <td><a routerLink="/layout/jobs/job-applicants" class="btn btn-sm btn-primary">3 Employees</a></td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
@@ -99,7 +71,6 @@
                             <td colspan="10">
                                 <h5 style="text-align: center;">No data found</h5>
                             </td>
-                           
                         </tr>
                     </tbody>
                 </table>
@@ -132,123 +103,7 @@
                                 *ngIf="addManageJobs.get('addJobTitle').invalid && addManageJobs.get('addJobTitle').touched">
                                 <small
                                     *ngIf="addManageJobs.get('addJobTitle').invalid && addManageJobs.get('addJobTitle').touched"
-                                    class="text-danger"> *Job title is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Department</label>
-                                <select class="form-select form-control" [class.invalid]="addManageJobs.get('addDepartment').invalid && addManageJobs.get('addDepartment').touched"
-                                formControlName="addDepartment">
-                                    <option>-</option>
-                                    <option>Web Development</option>
-                                    <option>Application Development</option>
-                                    <option>IT Management</option>
-                                    <option>Accounts Management</option>
-                                    <option>Support Management</option>
-                                    <option>Marketing</option>
-                                </select>
-                                <div
-                                *ngIf="addManageJobs.get('addDepartment').invalid && addManageJobs.get('addDepartment').touched">
-                                <small
-                                    *ngIf="addManageJobs.get('addDepartment').invalid && addManageJobs.get('addDepartment').touched"
-                                    class="text-danger"> *Department is required</small>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Job Location</label>
-                                <input class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>No of Vacancies</label>
-                                <input class="form-control" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Experience</label>
-                                <input class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input class="form-control" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Salary From</label>
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Salary To</label>
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Job Type</label>
-                                <select class="form-select form-control">
-                                    <option>Full Time</option>
-                                    <option>Part Time</option>
-                                    <option>Internship</option>
-                                    <option>Temporary</option>
-                                    <option>Remote</option>
-                                    <option>Others</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select class="form-select form-control">
-                                    <option>Open</option>
-                                    <option>Closed</option>
-                                    <option>Cancelled</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Start Date</label>
-                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="addManageJobs.get('addStartDate').invalid && addManageJobs.get('addStartDate').touched"
-                                formControlName="addStartDate">
-                                <div
-                                *ngIf="addManageJobs.get('addStartDate').invalid && addManageJobs.get('addStartDate').touched">
-                                <small
-                                    *ngIf="addManageJobs.get('addStartDate').invalid && addManageJobs.get('addStartDate').touched"
-                                    class="text-danger"> *Start date is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Expired Date</label>
-                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="addManageJobs.get('addExpireDate').invalid && addManageJobs.get('addExpireDate').touched"
-                                formControlName="addExpireDate">
-                                <div
-                                *ngIf="addManageJobs.get('addExpireDate').invalid && addManageJobs.get('addExpireDate').touched">
-                                <small
-                                    *ngIf="addManageJobs.get('addExpireDate').invalid && addManageJobs.get('addExpireDate').touched"
-                                    class="text-danger"> *Expire date is required</small>
+                                    class="text-danger"> *Post title is required</small>
                             </div>
                             </div>
                         </div>
@@ -270,13 +125,12 @@
     </div>
 </div>
 <!-- /Add Job Modal -->
-
 <!-- Edit Job Modal -->
 <div id="edit_job" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Job</h5>
+                <h5 class="modal-title">Edit Post</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -286,130 +140,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Job Title</label>
+                                <label>Post Title</label>
                                 <input class="form-control" type="text"  [class.invalid]="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched"
                                 formControlName="editJobTitle">
                                 <div
                                 *ngIf="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched">
                                 <small
                                     *ngIf="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched"
-                                    class="text-danger"> *Job Title is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Department</label>
-                                <select class="form-select form-control" [class.invalid]="editManageJobs.get('editDepartment').invalid && editManageJobs.get('editDepartment').touched"
-                                formControlName="editDepartment">
-                                    <option>-</option>
-                                    <option selected>Web Development</option>
-                                    <option>Application Development</option>
-                                    <option>IT Management</option>
-                                    <option>Accounts Management</option>
-                                    <option>Support Management</option>
-                                    <option>Marketing</option>
-                                </select>
-                                <div
-                                *ngIf="editManageJobs.get('editDepartment').invalid && editManageJobs.get('editDepartment').touched">
-                                <small
-                                    *ngIf="editManageJobs.get('editDepartment').invalid && editManageJobs.get('editDepartment').touched"
-                                    class="text-danger"> *Department is required</small>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Job Location</label>
-                                <input class="form-control" type="text" value="California">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>No of Vacancies</label>
-                                <input class="form-control" type="text" value="5">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Experience</label>
-                                <input class="form-control" type="text" value="2 Years">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input class="form-control" type="text" value="-">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Salary From</label>
-                                <input type="text" class="form-control" value="32k">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Salary To</label>
-                                <input type="text" class="form-control" value="38k">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Job Type</label>
-                                <select class="form-select form-control">
-                                    <option selected>Full Time</option>
-                                    <option>Part Time</option>
-                                    <option>Internship</option>
-                                    <option>Temporary</option>
-                                    <option>Remote</option>
-                                    <option>Others</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select class="form-select form-control">
-                                    <option selected>Open</option>
-                                    <option>Closed</option>
-                                    <option>Cancelled</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Start Date</label>
-                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="editManageJobs.get('editStartDate').invalid && editManageJobs.get('editStartDate').touched"
-                                formControlName="editStartDate" (bsValueChange)="from($event)">
-                                <div
-                                *ngIf="editManageJobs.get('editStartDate').invalid && editManageJobs.get('editStartDate').touched">
-                                <small
-                                    *ngIf="editManageJobs.get('editStartDate').invalid && editManageJobs.get('editStartDate').touched"
-                                    class="text-danger"> *Start Date is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Expired Date</label>
-                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="editManageJobs.get('editExpireDate').invalid && editManageJobs.get('editExpireDate').touched"
-                                formControlName="editExpireDate" (bsValueChange)="to($event)">
-                                <div
-                                *ngIf="editManageJobs.get('editExpireDate').invalid && editManageJobs.get('editExpireDate').touched">
-                                <small
-                                    *ngIf="editManageJobs.get('editExpireDate').invalid && editManageJobs.get('editExpireDate').touched"
-                                    class="text-danger"> *Expired Date is required</small>
+                                    class="text-danger"> *Post Title is required</small>
                             </div>
                             </div>
                         </div>

@@ -5,15 +5,15 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Holidays 2019</h3>
+                <h3 class="page-title">Instituts</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Holidays</li>
+                    <li class="breadcrumb-item active">Instituts</li>
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
                 <a  class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_holiday"><i
-                        class="fa fa-plus"></i> Add Holiday</a>
+                        class="fa fa-plus"></i> Add institut</a>
             </div>
         </div>
     </div>
@@ -27,18 +27,22 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title </th>
-                            <th>Holiday Date</th>
-                            <th>Day</th>
+                            <th>Name </th>
+                            <th>Adress</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Description</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="holiday-completed" *ngFor="let row of lstHolidays">
                             <td>{{row.id}}</td>
+                            <td>Name Institut</td>
                             <td>{{row.title}}</td>
-                            <td>{{row.holidaydate | customDate}}</td>
-                            <td>{{row.day}}</td>
+                            <td>INST@gmail.com</td>
+                            <td>21345678</td>
+                            <td>Description</td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
@@ -67,7 +71,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Holiday</h5>
+                <h5 class="modal-title">Ajouter institut</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#add_holiday">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -75,7 +79,7 @@
             <div class="modal-body">
                 <form (ngSubmit)="addholidays()" [formGroup]="addHolidayForm">
                     <div class="form-group">
-                        <label>Holiday Name <span class="text-danger">*</span></label>
+                        <label>Nom de l'institut <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
                             [class.invalid]="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched"
                             formControlName="HolidayName">
@@ -83,37 +87,42 @@
                             *ngIf="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched">
                             <small
                                 *ngIf="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched"
-                                class="text-danger"> *Name is required</small>
+                                class="text-danger"> *nom d'institut is required</small>
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label>Holiday Date</label>
+                        <label>Adresee<span class="text-danger">*</span></label>
                         <div class="cal-icon">
-                            <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                            <input class="form-control datetimepicker" type="text" 
                                 [class.invalid]="addHolidayForm.get('Holidaydate').invalid && addHolidayForm.get('Holidaydate').touched"
                                 formControlName="Holidaydate">
                             <div
                                 *ngIf="addHolidayForm.get('Holidaydate').invalid && addHolidayForm.get('Holidaydate').touched">
                                 <small
                                     *ngIf="addHolidayForm.get('Holidaydate').invalid && addHolidayForm.get('Holidaydate').touched"
-                                    class="text-danger"> *Date is required</small>
+                                    class="text-danger"> *Adress is required</small>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Day <span class="text-danger">*</span></label>
+                        <label>Numéro de téléphone<span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
                             [class.invalid]="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched"
                             formControlName="DaysName">
                         <div *ngIf="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched">
                             <small
                                 *ngIf="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched"
-                                class="text-danger"> *Days is required</small>
+                                class="text-danger"> *Numéro de téléphone is required</small>
                         </div>
-
-                    </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" type="text"
+                            [class.invalid]="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched"
+                            formControlName="DaysName"></textarea>
+ 
+                     </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn" type="submit">Submit</button>
                     </div>
