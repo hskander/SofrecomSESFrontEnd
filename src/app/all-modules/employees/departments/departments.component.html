@@ -5,15 +5,15 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Department</h3>
+                <h3 class="page-title">Direction</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Department</li>
+                    <li class="breadcrumb-item active">Direction</li>
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
                 <a  class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_department"><i
-                        class="fa fa-plus"></i> Add Department</a>
+                        class="fa fa-plus"></i> Add Direction</a>
             </div>
         </div>
     </div>
@@ -29,7 +29,10 @@
                     <thead>
                         <tr>
                             <th style="width: 30px;">#</th>
-                            <th>Department Name</th>
+                            <th>Direction</th>
+                            <th>Responsable Direction</th>
+                            <th>Description</th>
+                            <th>Employees</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
@@ -37,6 +40,19 @@
                         <tr *ngFor="let item of lstDepartment">
                             <td>{{item.id}}</td>
                             <td>{{item.departmentName}}</td>
+                            <td>
+                                <h2 class="table-avatar">
+                                    <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                            src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
+                                    <a routerLink="/layout/employees/employeeprofile">{{leads.leadName}}</a>
+                                </h2>
+                            </td>
+                            <td>description</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" routerLink="/">
+                                    100
+                                </a>
+                            </td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
@@ -66,7 +82,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Department</h5>
+                <h5 class="modal-title">Add Direction</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -75,7 +91,7 @@
             <div class="modal-body">
                 <form (ngSubmit)="addDepartment()" [formGroup]="addDepartmentForm">
                     <div class="form-group">
-                        <label>Department Name <span class="text-danger">*</span></label>
+                        <label>Direction <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
                             [class.invalid]="addDepartmentForm.get('DepartmentName').invalid && addDepartmentForm.get('DepartmentName').touched"
                             formControlName="DepartmentName">
@@ -83,8 +99,19 @@
                             *ngIf="addDepartmentForm.get('DepartmentName').invalid && addDepartmentForm.get('DepartmentName').touched">
                             <small
                                 *ngIf="addDepartmentForm.get('DepartmentName').invalid && addDepartmentForm.get('DepartmentName').touched"
-                                class="text-danger"> *Department Name required</small>
+                                class="text-danger"> *Direction Name required</small>
                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Responsable Direction <span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                            formControlName="DepartmentName">
+                    </div>
+                    <div class="form-group">
+                        <label> Description <span class="text-danger">*</span></label>
+                            <textarea class=form-control formControlName="DepartmentName">
+                            </textarea>
                     </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn" type="submit">Submit</button>
@@ -101,7 +128,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Department</h5>
+                <h5 class="modal-title">Edit Direction</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -109,19 +136,30 @@
             <div class="modal-body">
                 <form (ngSubmit)="editDepartment()" [formGroup]="editDepartmentForm">
                     <div class="form-group">
-                        <label>Department Name <span class="text-danger">*</span></label>
-                        <input class="form-control" value="IT Management" type="text"
+                        <label>Direction <span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
                             [class.invalid]="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched"
                             formControlName="DepartmentName">
                         <div
                             *ngIf="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched">
                             <small
                                 *ngIf="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched"
-                                class="text-danger"> *Department Name required</small>
+                                class="text-danger"> *Direction Name required</small>
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label>Responsable Direction <span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                            formControlName="DepartmentName">
+                    </div>
+                    <div class="form-group">
+                        <label> Description <span class="text-danger">*</span></label>
+                            <textarea class=form-control formControlName="DepartmentName">
+                            </textarea>
+                    </div>
                     <div class="submit-section">
-                        <button class="btn btn-primary submit-btn">Save</button>
+                        <button class="btn btn-primary submit-btn" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
@@ -136,7 +174,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-header">
-                    <h3>Delete Department</h3>
+                    <h3>Delete Direction</h3>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

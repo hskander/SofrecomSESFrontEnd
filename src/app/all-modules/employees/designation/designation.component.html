@@ -5,15 +5,15 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Designations</h3>
+                <h3 class="page-title">Pole</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Designations</li>
+                    <li class="breadcrumb-item active">Pole</li>
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
                 <a  class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_designation"><i
-                        class="fa fa-plus"></i> Add Designation</a>
+                        class="fa fa-plus"></i> Add Pole</a>
             </div>
         </div>
     </div>
@@ -26,9 +26,12 @@
                     class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
-                            <th style="width: 30px;">#</th>
-                            <th>Designation </th>
-                            <th>Department </th>
+                            <th style="width: 30px;">ID</th>
+                            <th>Pole </th>
+                            <th>Responsable Pole </th>
+                            <th>Employees</th>
+                            <th>Direction</th>
+                            <th>Description</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
@@ -36,7 +39,14 @@
                         <tr *ngFor="let item of lstDesignation">
                             <td>{{item.id}}</td>
                             <td>{{item.designation}}</td>
+                            <td>Roua Bouhjar</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" routerLink="/">
+                                    100
+                                </a>
+                            </td>
                             <td>{{item.departmentName}}</td>
+                            <td>Description</td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
@@ -66,7 +76,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Designation</h5>
+                <h5 class="modal-title">Add Pole</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -116,7 +126,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Designation</h5>
+                <h5 class="modal-title">Edit Pole</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -168,7 +178,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-header">
-                    <h3>Delete Designation</h3>
+                    <h3>Delete Pole</h3>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">
