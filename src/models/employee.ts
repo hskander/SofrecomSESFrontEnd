@@ -1,0 +1,33 @@
+export interface Employee {
+    id: number;
+    employeeCode: string;
+    nom: string;
+    prenom: string;
+    genre: string;
+    adresse: string;
+    dateNaissance: string;
+    lieuNaissance: string;
+    nationalite : string;
+    email: string;
+    dateRecrut : string;
+    dateDepart : string;
+    numTel: string;
+    nomUrgence: string;
+    numUrgence: string;
+    relationUrgence : string;
+    numPasseport: string;
+    dateExpPasseport: string;
+    numCIN: string;
+    delivDate: string;
+    civilite: string;
+    situationFam :string;
+    nbEnfant: number;
+    salaireBrute: string;
+    cnss: boolean;
+    matriculeCnss: string;
+    bankName: string;
+    swift: string;
+    rib:string;
+    iBan: string;
+    enConge: boolean;
+  }
