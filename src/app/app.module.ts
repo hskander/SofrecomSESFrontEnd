@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 // Bootstrap DataTable
 import { DataTablesModule } from 'angular-datatables';
 import { ToastrModule } from 'ngx-toastr';
+
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent
@@ -17,6 +20,8 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     AppRoutingModule,
     DataTablesModule,
+    HttpClientModule,
+    FormsModule,
     ToastrModule.forRoot(
       {
         timeOut: 1500,

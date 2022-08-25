@@ -4,6 +4,9 @@ import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import { DirectionService } from 'src/services/direction.service';
+import { Direction } from 'src/models/direction';
+import { HttpErrorResponse } from '@angular/common/http';
 declare const $: any;
 @Component({
   selector: "app-departments",
@@ -23,10 +26,12 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public srch = [];
   public addDepartmentForm: FormGroup;
   public editDepartmentForm: FormGroup;
+  public directions: Direction[]=[];
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private directionService:DirectionService,
   ) {}
 
   ngOnInit() {
@@ -60,12 +65,20 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
   // Get department list  Api Call
   LoadDepartment() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    /*this.srvModuleService.get(this.url).subscribe((data) => {
       this.lstDepartment = data;
       this.dtTrigger.next();
       this.rows = this.lstDepartment;
       this.srch = [...this.rows];
-    });
+    });*/
+    this.directionService.getDirections().subscribe(
+      (response: Direction[]) =>{
+        this.directions=response;
+      },
+      (error: HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    );
   }
 
   // Add Department  Modal Api Call
