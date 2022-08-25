@@ -27,6 +27,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public addDepartmentForm: FormGroup;
   public editDepartmentForm: FormGroup;
   public directions: Direction[]=[];
+  public direction: Direction= new $;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -43,7 +44,9 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     this.LoadDepartment();
 
     this.addDepartmentForm = this.formBuilder.group({
-      DepartmentName: ["", [Validators.required]],
+      Direction: ["", [Validators.required]],
+      ResponsableDir: ["", [Validators.required]],
+      Description: ["", [Validators.required]],
     });
 
     this.editDepartmentForm = this.formBuilder.group({
@@ -83,25 +86,50 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
   // Add Department  Modal Api Call
   addDepartment() {
+    
     if(this.addDepartmentForm.invalid){
       this.markFormGroupTouched(this.addDepartmentForm)
       return
     }
     if (this.addDepartmentForm.valid) {
-      let obj = {
-        departmentName: this.addDepartmentForm.value.DepartmentName,
-        id: 0,
+      let obj:Direction = {
+        id:1000,
+        direction: this.addDepartmentForm.value.Direction,
+        description:this.addDepartmentForm.value.Description,
+        responsableDirection: this.addDepartmentForm.value.ResponsableDir,
+        manager: null,
+        poles:[]
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      console.log(this.direction);
+      this.srvModuleService.add(obj,'Direction/addDirection').subscribe((data) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        
       });
       this.LoadDepartment();
       $("#add_department").modal("hide");
       this.addDepartmentForm.reset();
-      this.toastr.success("Department added sucessfully...!", "Success");
+      this.toastr.success("Direction added sucessfully...!", "Success");
     }
+  }
+  addDirection(){
+    this.direction.direction=this.addDepartmentForm.value.Direction;
+      this.direction.description=this.addDepartmentForm.value.Description;
+      this.direction.responsableDirection=this.addDepartmentForm.value.ResponsableDir;
+    this.directionService.add(this.direction).subscribe(
+      (response: Direction) => {
+        console.log(response);
+        
+      },
+      (error: HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    );
+    this.LoadDepartment();
+        $("#add_department").modal("hide");
+      this.addDepartmentForm.reset();
+      this.toastr.success("Direction added sucessfully...!", "Success");
   }
 
   editDepartment() {

@@ -46,7 +46,7 @@ export class AllModulesService {
 
   // Get Method Api
   get(type): Observable<AllModulesData[]> {
-    this.apiurl = `api/${type}`;
+    this.apiurl = `http://localhost:8080/sofrecomSES/${type}`;
 
     return this.http
       .get<AllModulesData[]>(this.apiurl)
@@ -55,8 +55,8 @@ export class AllModulesService {
 
   // Post Method Api
   add(user: any, type): Observable<any> {
-    this.apiurl = `api/${type}`;
-    user.id = null;
+    this.apiurl = `http://localhost:8080/sofrecomSES/${type}`;
+    //user.id = null;
     return this.http
       .post<any>(this.apiurl, user, this.httpOptions)
       .pipe(tap(), catchError(this.handleError));
