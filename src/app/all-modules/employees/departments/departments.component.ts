@@ -68,20 +68,20 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
   // Get department list  Api Call
   LoadDepartment() {
-    /*this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstDepartment = data;
+    this.srvModuleService.get('Direction/all').subscribe((data) => {
+      this.directions = data;
       this.dtTrigger.next();
-      this.rows = this.lstDepartment;
+      this.rows = this.directions;
       this.srch = [...this.rows];
-    });*/
-    this.directionService.getDirections().subscribe(
+    });
+    /*this.directionService.getDirections().subscribe(
       (response: Direction[]) =>{
         this.directions=response;
       },
       (error: HttpErrorResponse) =>{
         alert(error.message);
       }
-    );
+    );*/
   }
 
   // Add Department  Modal Api Call
@@ -92,16 +92,11 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       return
     }
     if (this.addDepartmentForm.valid) {
-      let obj:Direction = {
-        id:null,
-        direction: this.addDepartmentForm.value.Direction,
-        description:this.addDepartmentForm.value.Description,
-        responsableDirection: this.addDepartmentForm.value.ResponsableDir,
-        manager: null,
-        poles:[]
-      };
-      console.log(obj);
-      this.srvModuleService.add(obj,'Direction/addDirection').subscribe((data) => {
+      this.direction.direction=this.addDepartmentForm.value.Direction;
+      this.direction.description=this.addDepartmentForm.value.Description;
+      this.direction.responsableDirection=this.addDepartmentForm.value.ResponsableDir;
+      console.log(this.direction);
+      this.srvModuleService.add(this.direction,'Direction/addDirection').subscribe((data) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });

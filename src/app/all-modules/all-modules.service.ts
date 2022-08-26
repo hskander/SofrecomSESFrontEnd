@@ -49,7 +49,7 @@ export class AllModulesService {
   }
 
   // Get Method Api
-  get(type): Observable<AllModulesData[]> {
+  get(type): Observable<any[]> {
     this.apiurl = `http://localhost:8080/sofrecomSES/${type}`;
 
     return this.http

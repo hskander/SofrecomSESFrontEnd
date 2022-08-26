@@ -39,7 +39,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
     CommonModule,
     FormsModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(AllModulesData),
+    //InMemoryWebApiModule.forRoot(AllModulesData),
     PerfectScrollbarModule,
     AllModulesRoutingModule,
 
