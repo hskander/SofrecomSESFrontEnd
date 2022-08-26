@@ -30,9 +30,13 @@ export class AllModulesService {
   public apiurl;
 
   // Headers Setup
-  headers = new HttpHeaders()
+ /* headers = new HttpHeaders()
     .set("Content-Type", "application/json")
-    .set("Accept", "application/json");
+    .set("Accept", "application/json");*/
+    headers= new HttpHeaders()
+  .set('content-type', 'application/json')
+  .set("Accept", "application/json")
+  .set('Access-Control-Allow-Origin', '*');
   httpOptions = {
     headers: this.headers,
   };
@@ -74,10 +78,8 @@ export class AllModulesService {
 
   // Delete Method Api
   delete(id: id, type): Observable<id> {
-    this.apiurl = `api/${type}`;
-    const url = `${this.apiurl}/${id}`;
-    return this.http
-      .delete<id>(url, this.httpOptions)
-      .pipe(catchError(this.handleError));
+    this.apiurl = `http://localhost:8080/sofrecomSES/${type}`;
+    const url = `${this.apiurl}?id=${id}`;
+    return this.http.delete<id>(url, this.httpOptions).pipe(catchError(this.handleError));
   }
 }

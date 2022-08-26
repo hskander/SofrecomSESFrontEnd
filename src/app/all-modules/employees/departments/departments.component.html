@@ -73,7 +73,7 @@
                                             data-bs-target="#edit_department" (click)="edit(item.id)"><i
                                                 class="fa fa-pencil m-r-5"></i> Edit</a>
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#delete_department" (click)="tempId = item.id"><i
+                                            data-bs-target="#delete_department" (click)="tempId = d.id"><i
                                                 class="fa fa-trash-o m-r-5"></i>
                                             Delete</a>
                                     </div>
@@ -100,7 +100,7 @@
             </div>
             
             <div class="modal-body">
-                <form (ngSubmit)="addDepartment()" [formGroup]="addDepartmentForm">
+                <form (ngSubmit)="addDirection()" [formGroup]="addDepartmentForm">
                     <div class="form-group">
                         <label>Direction <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"

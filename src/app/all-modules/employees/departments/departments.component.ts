@@ -93,14 +93,14 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     }
     if (this.addDepartmentForm.valid) {
       let obj:Direction = {
-        id:1000,
+        id:null,
         direction: this.addDepartmentForm.value.Direction,
         description:this.addDepartmentForm.value.Description,
         responsableDirection: this.addDepartmentForm.value.ResponsableDir,
         manager: null,
         poles:[]
       };
-      console.log(this.direction);
+      console.log(obj);
       this.srvModuleService.add(obj,'Direction/addDirection').subscribe((data) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -120,16 +120,16 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     this.directionService.add(this.direction).subscribe(
       (response: Direction) => {
         console.log(response);
-        
+        this.LoadDepartment();
+        $("#add_department").modal("hide");
+      this.addDepartmentForm.reset();
+      this.toastr.success("Direction added sucessfully...!", "Success");
       },
       (error: HttpErrorResponse) =>{
         alert(error.message);
       }
     );
-    this.LoadDepartment();
-        $("#add_department").modal("hide");
-      this.addDepartmentForm.reset();
-      this.toastr.success("Direction added sucessfully...!", "Success");
+    
   }
 
   editDepartment() {
@@ -163,7 +163,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
 
   deleteDepartment() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.srvModuleService.delete(this.tempId, 'Direction/deleteDirection').subscribe((data) => {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
