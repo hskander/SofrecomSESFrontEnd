@@ -136,7 +136,6 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     });
   }
 
-
   deleteDepartment() {
     this.srvModuleService.delete(this.tempId, 'Direction/deleteDirection').subscribe((data) => {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -147,35 +146,17 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.toastr.success("Department deleted sucessfully..!", "Success");
     });
   }
-  rerender(): void {
-    //$("#datatable").DataTable().clear();
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtTrigger.next();
+  
+  searchDirection(key) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      key = key.toLowerCase();
+      return d.direction.toLowerCase().indexOf(key) !== -1 
+      || d.description.toLowerCase().indexOf(key) !== -1
+      || d.responsableDirection.toLowerCase().indexOf(key) !== -1 
+      || !key;
     });
-    /*setTimeout(() => {
-      this.dtTrigger.next();
-    }, 1000);*/
-    //this.directions=[];
-    //this.LoadDepartment();
-  }
-   searchDirection(key: string): void {
-    console.log(key);
-    const results: Direction[] = [];
-    for (const direction of this.directions) {
-      if (direction.direction.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || direction.description.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || direction.responsableDirection.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
-        results.push(direction);
-      }
-      
-    }
-   
-    this.directions = results;
-    if (results.length === 0 || !key) {
-      this.rerender;
-      this.LoadDepartment();
-    }
+    this.rows.push(...temp);
   }
 
   ngOnDestroy(): void {
