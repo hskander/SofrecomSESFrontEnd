@@ -22,8 +22,8 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public url: any = "departments";
   public tempId: any;
   public editId: any;
-  public rows = [];
-  public srch = [];
+  public rows:any[] = [];
+  public srch:any[] = [];
   public addDepartmentForm: FormGroup;
   public editDepartmentForm: FormGroup;
   public directions: Direction[]=[];
@@ -63,9 +63,6 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
-
   // Get department list  Api Call
   LoadDepartment() {
     this.srvModuleService.get('Direction/all').subscribe((data) => {
@@ -74,14 +71,6 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.rows = this.directions;
       this.srch = [...this.rows];
     });
-    /*this.directionService.getDirections().subscribe(
-      (response: Direction[]) =>{
-        this.directions=response;
-      },
-      (error: HttpErrorResponse) =>{
-        alert(error.message);
-      }
-    );*/
   }
 
   // Add Department  Modal Api Call
@@ -100,12 +89,11 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
-        
-      });
-      this.LoadDepartment();
+        this.LoadDepartment();
       $("#add_department").modal("hide");
       this.addDepartmentForm.reset();
       this.toastr.success("Direction added sucessfully...!", "Success");
+      });
     }
   }
   addDirection(){
