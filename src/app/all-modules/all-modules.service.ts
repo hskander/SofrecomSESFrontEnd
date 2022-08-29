@@ -68,9 +68,9 @@ export class AllModulesService {
 
   // Update Method Api
   update(user: any, type): Observable<any> {
-    this.apiurl = `api/${type}`;
-    const url = `${this.apiurl}/${user.id}`;
-    return this.http.put<any>(url, user, this.httpOptions).pipe(
+    this.apiurl = `http://localhost:8080/sofrecomSES/${type}`;
+    //const url = `${this.apiurl}/${user.id}`;
+    return this.http.put<any>(this.apiurl, user, this.httpOptions).pipe(
       map(() => user),
       catchError(this.handleError)
     );

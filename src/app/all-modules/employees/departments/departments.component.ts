@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
@@ -33,6 +33,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private directionService:DirectionService,
+    private chRef : ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -41,6 +42,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       pageLength: 10,
       dom: "lrtip",
     };
+    
     this.LoadDepartment();
 
     this.addDepartmentForm = this.formBuilder.group({
@@ -50,7 +52,9 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     });
 
     this.editDepartmentForm = this.formBuilder.group({
-      DepartmentName: ["", [Validators.required]],
+      Direction: ["", [Validators.required]],
+      ResponsableDir: ["", [Validators.required]],
+      Description: ["", [Validators.required]],
     });
   }
 
@@ -67,6 +71,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   LoadDepartment() {
     this.srvModuleService.get('Direction/all').subscribe((data) => {
       this.directions = data;
+      this.chRef.detectChanges();
       this.dtTrigger.next();
       this.rows = this.directions;
       this.srch = [...this.rows];
@@ -96,51 +101,38 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       });
     }
   }
-  addDirection(){
-    this.direction.direction=this.addDepartmentForm.value.Direction;
-      this.direction.description=this.addDepartmentForm.value.Description;
-      this.direction.responsableDirection=this.addDepartmentForm.value.ResponsableDir;
-    this.directionService.add(this.direction).subscribe(
-      (response: Direction) => {
-        console.log(response);
-        this.LoadDepartment();
-        $("#add_department").modal("hide");
-      this.addDepartmentForm.reset();
-      this.toastr.success("Direction added sucessfully...!", "Success");
-      },
-      (error: HttpErrorResponse) =>{
-        alert(error.message);
-      }
-    );
-    
-  }
 
   editDepartment() {
     if (this.editDepartmentForm.valid) {
-      let obj = {
-        departmentName: this.editDepartmentForm.value.DepartmentName,
-        id: this.editId,
-      };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+        this.direction.id= this.editId;
+        this.direction.direction=this.editDepartmentForm.value.Direction;
+        this.direction.description=this.editDepartmentForm.value.Description;
+        this.direction.responsableDirection=this.editDepartmentForm.value.ResponsableDir;
+     
+      this.srvModuleService.update(this.direction, 'Direction/editDirection').subscribe((data1) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        this.LoadDepartment();
+        $("#edit_department").modal("hide");
+        this.toastr.success("Department Updated sucessfully...!", "Success");
       });
-      this.LoadDepartment();
-      $("#edit_department").modal("hide");
-      this.toastr.success("Department Updated sucessfully...!", "Success");
+     
     }
+
   }
 
   // To Get The department Edit Id And Set Values To Edit Modal Form
   edit(value) {
     this.editId = value;
-    const index = this.lstDepartment.findIndex((item) => {
+    const index = this.directions.findIndex((item) => {
       return item.id === value;
     });
-    let toSetValues = this.lstDepartment[index];
+    let toSetValues = this.directions[index];
     this.editDepartmentForm.setValue({
-      DepartmentName: toSetValues.departmentName,
+      Direction: toSetValues.direction,
+      ResponsableDir: toSetValues.responsableDirection,
+      Description: toSetValues.description
     });
   }
 
@@ -155,6 +147,37 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.toastr.success("Department deleted sucessfully..!", "Success");
     });
   }
+  rerender(): void {
+    //$("#datatable").DataTable().clear();
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+    });
+    /*setTimeout(() => {
+      this.dtTrigger.next();
+    }, 1000);*/
+    //this.directions=[];
+    //this.LoadDepartment();
+  }
+   searchDirection(key: string): void {
+    console.log(key);
+    const results: Direction[] = [];
+    for (const direction of this.directions) {
+      if (direction.direction.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || direction.description.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || direction.responsableDirection.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+        results.push(direction);
+      }
+      
+    }
+   
+    this.directions = results;
+    if (results.length === 0 || !key) {
+      this.rerender;
+      this.LoadDepartment();
+    }
+  }
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();

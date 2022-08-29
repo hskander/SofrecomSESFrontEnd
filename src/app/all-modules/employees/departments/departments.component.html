@@ -23,7 +23,8 @@
     <div class="row filter-row">
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
-                <input type="text" class="form-control floating" (input)="searchName($event.target.value)">
+                <input type="text" class="form-control floating" (ngModelChange)="searchDirection(key.value)" #key="ngModel" ngModel
+                name="key" id="searchDirection">
                 <label class="focus-label">search by Direction</label>
             </div>
         </div>
@@ -70,7 +71,7 @@
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#edit_department" (click)="edit(item.id)"><i
+                                            data-bs-target="#edit_department" (click)="edit(d.id)"><i
                                                 class="fa fa-pencil m-r-5"></i> Edit</a>
                                         <a class="dropdown-item"  data-bs-toggle="modal"
                                             data-bs-target="#delete_department" (click)="tempId = d.id"><i
@@ -149,12 +150,12 @@
                     <div class="form-group">
                         <label>Direction <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            [class.invalid]="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched"
-                            formControlName="DepartmentName">
+                            [class.invalid]="editDepartmentForm.get('Direction').invalid && editDepartmentForm.get('Direction').touched"
+                            formControlName="Direction">
                         <div
-                            *ngIf="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched">
+                            *ngIf="editDepartmentForm.get('Direction').invalid && editDepartmentForm.get('Direction').touched">
                             <small
-                                *ngIf="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched"
+                                *ngIf="editDepartmentForm.get('Direction').invalid && editDepartmentForm.get('Direction').touched"
                                 class="text-danger"> *Direction Name required</small>
                         </div>
                     </div>
@@ -162,11 +163,11 @@
                     <div class="form-group">
                         <label>Responsable Direction <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            formControlName="DepartmentName">
+                            formControlName="ResponsableDir">
                     </div>
                     <div class="form-group">
                         <label> Description <span class="text-danger">*</span></label>
-                            <textarea class=form-control formControlName="DepartmentName">
+                            <textarea class=form-control formControlName="Description">
                             </textarea>
                     </div>
                     <div class="submit-section">
