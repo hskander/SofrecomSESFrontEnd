@@ -33,7 +33,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private directionService:DirectionService,
-    private chRef : ChangeDetectorRef,
+    //private chRef : ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -71,7 +71,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   LoadDepartment() {
     this.srvModuleService.get('Direction/all').subscribe((data) => {
       this.directions = data;
-      this.chRef.detectChanges();
+      //this.chRef.detectChanges();
       this.dtTrigger.next();
       this.rows = this.directions;
       this.srch = [...this.rows];
@@ -94,6 +94,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.LoadDepartment();
       $("#add_department").modal("hide");
       this.addDepartmentForm.reset();
@@ -113,6 +114,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.LoadDepartment();
         $("#edit_department").modal("hide");
         this.toastr.success("Department Updated sucessfully...!", "Success");
@@ -141,6 +143,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
+      $("#datatable").DataTable().clear();
       this.LoadDepartment();
       $("#delete_department").modal("hide");
       this.toastr.success("Department deleted sucessfully..!", "Success");

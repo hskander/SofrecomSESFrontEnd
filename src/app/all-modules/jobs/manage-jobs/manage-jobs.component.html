@@ -22,9 +22,10 @@
     <!-- /Page Header -->
        <!-- Search Filter -->
   <div class="row filter-row">
-        <div class="col-sm-5 ">
+        <div class="col-sm-3 ">
             <div class="form-group form-focus">
-                <input type="text" class="form-control floating" (input)="searchId($event.target.value)" (focusout)="rerender()">
+                <input type="text" class="form-control floating" (ngModelChange)="searchPoste(key.value)" #key="ngModel" ngModel
+                name="key" id="searchPoste">
                 <label class="focus-label">Poste</label>
             </div>
         </div>
@@ -38,36 +39,33 @@
                 <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Post Title</th>
+                            <th>ID</th>
+                            <th>Poste</th>
                             <th>Description</th>
-                            <th>Direction</th>
-                            <th>Applicants</th>
+                            <th>Employees</th>
                             <th class="text-end">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let manageJobs of allManageJobs;let i = index">
-                            <td>{{ 1 + i }}</td>
-                            <td><a routerLink="/layout/jobs/job-details">{{manageJobs.jobTitle}}</a></td>
-                            <td>description</td>
-                            <td>{{manageJobs.department}}</td>
-                         
-                            <td><a routerLink="/layout/jobs/job-applicants" class="btn btn-sm btn-primary">3 Employees</a></td>
+                        <tr *ngFor="let poste of postes">
+                            <td>{{poste.id}}</td>
+                            <td>{{poste.poste}}</td>
+                            <td>{{poste.description}}</td>
+                            <td><a routerLink="/layout/employees/allEmployees" class="btn btn-sm btn-primary">36</a></td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a  class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_job" (click)="edit(manageJobs.id)"><i
+                                        <a  class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_job" (click)="edit(poste.id)"><i
                                                 class="fa fa-pencil m-r-5"></i> Edit</a>
                                         <a  class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#delete_job" (click)="tempId = manageJobs.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            data-bs-target="#delete_job" (click)="tempId = poste.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                        <tr *ngIf="allManageJobs.length === 0">
+                        <tr *ngIf="postes?.length === 0">
                             <td colspan="10">
                                 <h5 style="text-align: center;">No data found</h5>
                             </td>
@@ -83,10 +81,10 @@
 
 <!-- Add Job Modal -->
 <div id="add_job" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Job</h5>
+                <h5 class="modal-title">Add Poste</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -94,15 +92,15 @@
             <div class="modal-body">
                 <form (ngSubmit)="addJobs()" [formGroup]="addManageJobs">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Job Title</label>
-                                <input class="form-control" type="text"  [class.invalid]="addManageJobs.get('addJobTitle').invalid && addManageJobs.get('addJobTitle').touched"
-                                formControlName="addJobTitle">
+                                <input class="form-control" type="text"  [class.invalid]="addManageJobs.get('Poste').invalid && addManageJobs.get('Poste').touched"
+                                formControlName="Poste">
                                 <div
-                                *ngIf="addManageJobs.get('addJobTitle').invalid && addManageJobs.get('addJobTitle').touched">
+                                *ngIf="addManageJobs.get('Poste').invalid && addManageJobs.get('Poste').touched">
                                 <small
-                                    *ngIf="addManageJobs.get('addJobTitle').invalid && addManageJobs.get('addJobTitle').touched"
+                                    *ngIf="addManageJobs.get('Poste').invalid && addManageJobs.get('Poste').touched"
                                     class="text-danger"> *Post title is required</small>
                             </div>
                             </div>
@@ -112,7 +110,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="form-control"></textarea>
+                                <textarea class="form-control" formControlName="Description"></textarea>
                             </div>
                         </div>
                     </div>
@@ -140,13 +138,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Post Title</label>
-                                <input class="form-control" type="text"  [class.invalid]="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched"
-                                formControlName="editJobTitle">
+                                <label>Poste</label>
+                                <input class="form-control" type="text"  [class.invalid]="editManageJobs.get('editPoste').invalid && editManageJobs.get('editPoste').touched"
+                                formControlName="editPoste">
                                 <div
-                                *ngIf="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched">
+                                *ngIf="editManageJobs.get('editPoste').invalid && editManageJobs.get('editPoste').touched">
                                 <small
-                                    *ngIf="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched"
+                                    *ngIf="editManageJobs.get('editPoste').invalid && editManageJobs.get('editPoste').touched"
                                     class="text-danger"> *Post Title is required</small>
                             </div>
                             </div>
@@ -156,7 +154,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="form-control"></textarea>
+                                <textarea class="form-control" formControlName="editDescription"></textarea>
                             </div>
                         </div>
                     </div>

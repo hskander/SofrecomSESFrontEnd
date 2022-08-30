@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
+import { Poste } from 'src/models/Poste';
 
 declare const $: any;
 @Component({
@@ -24,6 +25,10 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject();
   public url: any = "manageJobs";
   public allManageJobs: any = [];
+  public postes: Poste[];
+  public poste:Poste=new $;
+  public srch:any[] = [];
+  public rows:any[] = [];
   public addManageJobs: FormGroup;
   public editManageJobs: FormGroup;
   public editId: any;
@@ -43,19 +48,16 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
     // Add Provident Form Validation And Getting Values
 
     this.addManageJobs = this.formBuilder.group({
-      addJobTitle: ["", [Validators.required]],
-      addDepartment: ["", [Validators.required]],
-      addStartDate: ["", [Validators.required]],
-      addExpireDate: ["", [Validators.required]],
+      Poste: ["", [Validators.required]],
+      Description: ["", [Validators.required]],
+      
     });
 
     // Edit Provident Form Validation And Getting Values
 
     this.editManageJobs = this.formBuilder.group({
-      editJobTitle: ["", [Validators.required]],
-      editDepartment: ["", [Validators.required]],
-      editStartDate: ["", [Validators.required]],
-      editExpireDate: ["", [Validators.required]],
+      editPoste: ["", [Validators.required]],
+      editDescription: ["", [Validators.required]],
     });
 
     // for data table configuration
@@ -67,17 +69,21 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   }
 
   getManageJobs() {
-    this.allModuleService.get(this.url).subscribe((data) => {
-      this.allManageJobs = data;
+    console.log(this.srch);
+    this.allModuleService.get('Poste/all').subscribe((data) => {
+      this.postes = data;
       this.dtTrigger.next();
+      this.rows = this.postes;
+      this.srch = [...this.rows];
     });
+    console.log(this.srch);
   }
 
   // Add Provident Modal Api Call
 
   addJobs() {
     if (this.addManageJobs.valid) {
-      let purchaseDateFormat = this.pipe.transform(
+      /*let purchaseDateFormat = this.pipe.transform(
         this.addManageJobs.value.addStartDate,
         "dd-MM-yyyy"
       );
@@ -90,13 +96,16 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
         department: this.addManageJobs.value.addDepartment,
         startDate: purchaseDateFormat,
         expireDate: purchaseToDateFormat,
-      };
-      this.allModuleService.add(obj, this.url).subscribe((data) => {
+      };*/
+      this.poste.poste= this.addManageJobs.value.Poste;
+      this.poste.description=this.addManageJobs.value.Description;
+      this.allModuleService.add(this.poste, 'Poste/add').subscribe((data) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        this.getManageJobs();
       });
-      this.getManageJobs();
+     
       $("#add_job").modal("hide");
       this.addManageJobs.reset();
       this.toastr.success("Job is added", "Success");
@@ -104,51 +113,48 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   }
   // to know the date picker changes
 
-  from(data) {
+ /* from(data) {
     this.purchaseDateFormat = this.pipe.transform(data, "dd-MM-yyyy");
   }
   to(data) {
     this.purchaseToDateFormat = this.pipe.transform(data, "dd-MM-yyyy");
-  }
+  }*/
 
   // Edit Provident Modal Api Call
 
   editJobs() {
-    let obj = {
-      jobTitle: this.editManageJobs.value.editJobTitle,
-      department: this.editManageJobs.value.editDepartment,
-      startDate: this.purchaseDateFormat,
-      expireDate: this.purchaseToDateFormat,
-      id: this.editId,
-    };
-    this.allModuleService.update(obj, this.url).subscribe((data1) => {
+    this.poste.id=this.editId;
+      this.poste.poste= this.editManageJobs.value.editPoste;
+      this.poste.description=this.editManageJobs.value.editDescription;
+      console.log(this.poste);
+    this.allModuleService.update(this.poste, 'Poste/update').subscribe((data1) => {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
+      
+      this.getManageJobs();
     });
-    this.getManageJobs();
+    
     $("#edit_job").modal("hide");
     this.toastr.success("Job is edited", "Success");
   }
 
   edit(value) {
     this.editId = value;
-    const index = this.allManageJobs.findIndex((item) => {
+    const index = this.postes.findIndex((item) => {
       return item.id === value;
     });
-    let toSetValues = this.allManageJobs[index];
+    let toSetValues = this.postes[index];
     this.editManageJobs.setValue({
-      editJobTitle: toSetValues.jobTitle,
-      editDepartment: toSetValues.department,
-      editStartDate: toSetValues.startDate,
-      editExpireDate: toSetValues.expireDate,
+      editPoste: toSetValues.poste,
+      editDescription: toSetValues.description,
     });
   }
 
   // Delete Provident Modal Api Call
 
   deleteJobs() {
-    this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.allModuleService.delete(this.tempId, 'Poste/delete').subscribe((data) => {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
@@ -156,6 +162,16 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       $("#delete_job").modal("hide");
       this.toastr.success("Job is deleted", "Success");
     });
+  }
+  searchPoste(key) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      key = key.toLowerCase();
+      return d.poste.toLowerCase().indexOf(key) !== -1 
+      || d.description.toLowerCase().indexOf(key) !== -1
+      || !key;
+    });
+    this.rows.push(...temp);
   }
 
   ngOnDestroy(): void {
