@@ -4,12 +4,17 @@ import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import {Pole} from "src/models/Pole";
+import { Direction } from 'src/models/direction';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Employee } from 'src/models/employee';
 declare const $: any;
 @Component({
   selector: "app-designation",
   templateUrl: "./designation.component.html",
   styleUrls: ["./designation.component.css"],
 })
+
 export class DesignationComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -24,6 +29,11 @@ export class DesignationComponent implements OnInit, OnDestroy {
   public srch = [];
   public addDesignationForm: FormGroup;
   public editDesignationForm: FormGroup;
+  public affectManagerForm: FormGroup;
+  public poles: Pole[]=[];
+  public pole: Pole= new $;
+  public directions: Direction[]=[];
+  public employees: Employee[]=[];
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -37,25 +47,26 @@ export class DesignationComponent implements OnInit, OnDestroy {
       dom: "lrtip",
     };
     this.LoadDesignation();
+    this.getDirections();
 
+     
+      //console.log(this.directions)
     this.addDesignationForm = this.formBuilder.group({
-      Designation: ["", [Validators.required]],
-      DepartmentName: ["", [Validators.required]],
+      Pole: ["", [Validators.required]],
+      Direction: ["", [Validators.required]],
+      ResponsablePole: ["", [Validators.required]],
+      Description : ["", [Validators.required]]
     });
 
     this.editDesignationForm = this.formBuilder.group({
-      Designation: ["", [Validators.required]],
-      DepartmentName: ["", [Validators.required]],
+      editPole: ["", [Validators.required]],
+      editDirection: ["", [Validators.required]],
+      editDescription: ["", [Validators.required]],
+      editResponsablePole: ["", [Validators.required]]
     });
-  }
+    this.affectManagerForm=this.formBuilder.group({
+      Manager: ["", [Validators.required]]
 
-  // Get designation list  Api Call
-  LoadDesignation() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstDesignation = data;
-      this.dtTrigger.next();
-      this.rows = this.lstDesignation;
-      this.srch = [...this.rows];
     });
   }
 
@@ -68,65 +79,130 @@ export class DesignationComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Get designation list  Api Call
+  LoadDesignation() {
+    this.srvModuleService.get('Pole/all').subscribe((data) => {
+      console.log(data);
+      this.poles = data;
+      this.dtTrigger.next();
+      this.rows = this.poles;
+      this.srch = [...this.rows];
+    });
+  }
+
+  getDirections(): void {
+    this.srvModuleService.get('Direction/all').subscribe(
+      (response: Direction[]) => {
+        this.directions= response;
+        console.log(this.directions);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
   // Add Designation  Modal Api Call
   addDesignation() {
     if(this.addDesignationForm.invalid){
       this.markFormGroupTouched(this.addDesignationForm)
       return
     }
+    
     if (this.addDesignationForm.valid) {
-      let obj = {
-        designation: this.addDesignationForm.value.Designation,
-        departmentName: this.addDesignationForm.value.DepartmentName,
-        id: 1,
-      };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+        this.pole.id = null; 
+        this.pole.pole =  this.addDesignationForm.value.Pole;
+        this.pole.description =  this.addDesignationForm.value.Description;
+        this.pole.responsablePole =  this.addDesignationForm.value.ResponsablePole;
+        this.pole.direction= this.addDesignationForm.value.Direction ;
+
+        console.log(this.pole);
+      this.srvModuleService.add(this.pole,`Pole/addPole?directionId=${this.pole.direction.id}`).subscribe((data) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        this.LoadDesignation();
+        $("#add_designation").modal("hide");
+        this.addDesignationForm.reset();
+        this.toastr.success("Desigantion added sucessfully...!", "Success");
       });
-      this.LoadDesignation();
-      $("#add_designation").modal("hide");
-      this.addDesignationForm.reset();
-      this.toastr.success("Desigantion added sucessfully...!", "Success");
     }
   }
 
-  editDesignation() {
-    if (this.editDesignationForm.valid) {
-      let obj = {
-        designation: this.editDesignationForm.value.Designation,
-        departmentName: this.editDesignationForm.value.DepartmentName,
-        id: this.editId,
-      };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+  onAffectManagerButton(value){
+    this.srvModuleService.get('Employee/allEmployees').subscribe(
+      (response: Employee[]) =>{
+        this.employees=response;
+      },
+      (error: HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    );
+    this.editId = value;
+    const index = this.poles.findIndex((item) => {
+      return item.id === this.editId;
+    });
+    let toSetValues = this.poles[index];
+    this.pole.id=this.editId;
+    this.pole.direction=toSetValues.direction;
+    this.pole.description=toSetValues.description;
+    this.pole.responsablePole=toSetValues.responsablePole;
+    this.pole.employees=toSetValues.employees;
+
+  }
+  affectManager(){
+
+    if (this.affectManagerForm.valid){
+      this.srvModuleService.update(this.pole,`Pole/affecterManagerPole?poleId=${this.pole.id}&employeId=${this.affectManagerForm.value.Manager.id}`).subscribe((data) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        this.LoadDesignation();
       });
-      this.LoadDesignation();
-      $("#edit_designation").modal("hide");
-      this.toastr.success("Department Updated sucessfully...!", "Success");
+
+      $("#affect_manager").modal("hide");
+        this.toastr.success("Department Updated sucessfully...!", "Success");
+    }
+  }
+  editDesignation() {
+    if (this.editDesignationForm.valid) {
+        this.pole.id = this.editId;
+        this.pole.pole = this.editDesignationForm.value.editPole,
+        this.pole.description = this.editDesignationForm.value.editDescription;
+        this.pole.direction = this.editDesignationForm.value.editDirection;
+        this.pole.responsablePole = this.editDesignationForm.value.editResponsablePole;
+      
+        this.srvModuleService.update(this.pole, 'Pole/editPole').subscribe((data1) => {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.LoadDesignation();
+        $("#edit_designation").modal("hide");
+        this.toastr.success("Department Updated sucessfully...!", "Success");
+      });
     }
   }
 
   // To Get The timesheet Edit Id And Set Values To Edit Modal Form
   edit(value) {
     this.editId = value;
-    const index = this.lstDesignation.findIndex((item) => {
+    const index = this.poles.findIndex((item) => {
       return item.id === value;
     });
-    let toSetValues = this.lstDesignation[index];
+    let toSetValues = this.poles[index];
     this.editDesignationForm.setValue({
-      Designation: toSetValues.designation,
-      DepartmentName: toSetValues.departmentName,
+      editPole: toSetValues.pole,
+      editDescription: toSetValues.description,
+      editDirection: toSetValues.direction,
+      editResponsablePole: toSetValues.responsablePole
+
     });
   }
 
   // Delete timedsheet Modal Api Call
 
   deleteDesignation() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.srvModuleService.delete(this.tempId,'Pole/delete').subscribe((data) => {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
         this.LoadDesignation();
@@ -138,5 +214,19 @@ export class DesignationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+ 
+searchPole(key) {
+  this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      key = key.toLowerCase();
+      return d.pole.toLowerCase().indexOf(key) !== -1
+      || !key;
+      
+    });
+    
+    this.rows.push(...temp);
+
   }
 }

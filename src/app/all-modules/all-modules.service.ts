@@ -4,6 +4,7 @@ import { throwError, Observable } from "rxjs";
 import { tap, catchError, map } from "rxjs/operators";
 import { AllModulesData } from "src/assets/all-modules-data/all-modules-data";
 import { id } from "src/assets/all-modules-data/id";
+import { Employee } from 'src/models/employee';
 
 @Injectable({
   providedIn: "root",
@@ -65,7 +66,7 @@ export class AllModulesService {
       .post<any>(this.apiurl, user, this.httpOptions)
       .pipe(tap(), catchError(this.handleError));
   }
-
+  
   // Update Method Api
   update(user: any, type): Observable<any> {
     this.apiurl = `http://localhost:8080/sofrecomSES/${type}`;
@@ -75,7 +76,7 @@ export class AllModulesService {
       catchError(this.handleError)
     );
   }
-
+  
   // Delete Method Api
   delete(id: id, type): Observable<id> {
     this.apiurl = `http://localhost:8080/sofrecomSES/${type}`;

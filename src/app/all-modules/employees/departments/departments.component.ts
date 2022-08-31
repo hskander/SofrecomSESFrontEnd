@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 import { DirectionService } from 'src/services/direction.service';
 import { Direction } from 'src/models/direction';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Employee } from 'src/models/employee';
 declare const $: any;
 @Component({
   selector: "app-departments",
@@ -26,7 +27,10 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public srch:any[] = [];
   public addDepartmentForm: FormGroup;
   public editDepartmentForm: FormGroup;
+  public affectManagerForm: FormGroup;
   public directions: Direction[]=[];
+  public manager:Employee= new $;
+  public employees:Employee[]=[];
   public direction: Direction= new $;
   constructor(
     private formBuilder: FormBuilder,
@@ -55,6 +59,9 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       Direction: ["", [Validators.required]],
       ResponsableDir: ["", [Validators.required]],
       Description: ["", [Validators.required]],
+    });
+    this.affectManagerForm=this.formBuilder.group({
+      Manager: ["", [Validators.required]]
     });
   }
 
@@ -86,6 +93,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       return
     }
     if (this.addDepartmentForm.valid) {
+      this.direction.id=null;
       this.direction.direction=this.addDepartmentForm.value.Direction;
       this.direction.description=this.addDepartmentForm.value.Description;
       this.direction.responsableDirection=this.addDepartmentForm.value.ResponsableDir;
@@ -101,6 +109,41 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.toastr.success("Direction added sucessfully...!", "Success");
       });
     }
+  }
+  onAffectManagerButton(value){
+    this.srvModuleService.get('Employee/allEmployees').subscribe(
+      (response: Employee[]) =>{
+        this.employees=response;
+      },
+      (error: HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    );
+    this.editId = value;
+    const index = this.directions.findIndex((item) => {
+      return item.id === this.editId;
+    });
+    let toSetValues = this.directions[index];
+    this.direction.id=this.editId;
+    this.direction.direction=toSetValues.direction;
+    this.direction.description=toSetValues.description;
+    this.direction.responsableDirection=toSetValues.responsableDirection;
+    this.direction.poles=toSetValues.poles;
+
+  }
+  affectManager(){
+    if (this.affectManagerForm.valid){
+      this.srvModuleService.update(this.direction,`Direction/affecterManagerDirection?directionId=${this.direction.id}&employeId=${this.affectManagerForm.value.Manager.id}`).subscribe((data) => {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.LoadDepartment();
+        
+      });
+      $("#affect_manager").modal("hide");
+        this.toastr.success("Department Updated sucessfully...!", "Success");
+    }
+   
   }
 
   editDepartment() {

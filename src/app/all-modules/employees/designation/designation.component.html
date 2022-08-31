@@ -23,7 +23,8 @@
     <div class="row filter-row">
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
-                <input type="text" class="form-control floating" (input)="searchName($event.target.value)">
+                <input type="text" class="form-control floating" (ngModelChange)="searchPole(key.value)" #key="ngModel" ngModel
+                name="key" id="searchPole">
                 <label class="focus-label">search by Pole</label>
             </div>
         </div>
@@ -49,27 +50,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of lstDesignation">
-                            <td>{{item.id}}</td>
-                            <td>{{item.designation}}</td>
-                            <td>Roua Bouhjar</td>
+                        <tr *ngFor="let p of poles">
+                            <td>{{p.id}}</td>
+                            <td>{{p.pole}}</td>
+                            <td>{{p.responsablePole}}</td>
                             <td>
                                 <a class="btn btn-sm btn-primary" routerLink="/">
-                                    60
+                                    {{p.employees?.length}}
                                 </a>
                             </td>
-                            <td>{{item.departmentName}}</td>
-                            <td>Description</td>
+                           <ng-container *ngIf="p.direction">
+                                    <td >{{p.direction.direction}}</td>
+                            </ng-container> 
+                            <td>{{p.description}}</td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#edit_designation" (click)="edit(item.id)"><i
+                                            data-bs-target="#edit_designation" (click)="edit(p.id)"><i
                                                 class="fa fa-pencil m-r-5"></i> Edit</a>
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#delete_designation" (click)="tempId = item.id"><i
+                                            data-bs-target="#affect_manager" (click)="onAffectManagerButton(p.id)"><i
+                                                class="fa fa-pencil m-r-5"></i> Affect Manager</a>  
+                                        <a class="dropdown-item"  data-bs-toggle="modal"
+                                            data-bs-target="#delete_designation" (click)="tempId = p.id"><i
                                                 class="fa fa-trash-o m-r-5"></i>
                                             Delete</a>
                                     </div>
@@ -99,39 +105,36 @@
                     <div class="form-group">
                         <label>Pole<span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            [class.invalid]="addDesignationForm.get('Designation').invalid && addDesignationForm.get('Designation').touched"
-                            formControlName="Designation">
+                            [class.invalid]="addDesignationForm.get('Pole').invalid && addDesignationForm.get('Pole').touched"
+                            formControlName="Pole">
                         <div
-                            *ngIf="addDesignationForm.get('Designation').invalid && addDesignationForm.get('Designation').touched">
+                            *ngIf="addDesignationForm.get('Pole').invalid && addDesignationForm.get('Pole').touched">
                             <small
-                                *ngIf="addDesignationForm.get('Designation').invalid && addDesignationForm.get('Designation').touched"
+                                *ngIf="addDesignationForm.get('Pole').invalid && addDesignationForm.get('Pole').touched"
                                 class="text-danger"> Pole is required</small>
                         </div>
                     </div>
-                    <div class="form-group">
+                     <div class="form-group">
                         <label>Direction <span class="text-danger">*</span></label>
-                        <select class="form-select form-control" [class.invalid]="addDesignationForm.get('DepartmentName').invalid &&
-                            addDesignationForm.get('DepartmentName').touched" formControlName="DepartmentName">
-                            <option>Select Department</option>
-                            <option>Web Development</option>
-                            <option>IT Management</option>
-                            <option> Marketing</option>
-                        </select>
-                        <div
-                            *ngIf="addDesignationForm.get('DepartmentName').invalid && addDesignationForm.get('DepartmentName').touched">
-                            <small
-                                *ngIf="addDesignationForm.get('DepartmentName').invalid && addDesignationForm.get('DepartmentName').touched"
-                                class="text-danger"> Direction is required</small>
-                        </div>
+                        <select class="form-select form-control" *ngIf="directions"  [class.invalid]="addDesignationForm.get('Direction').invalid &&
+                        addDesignationForm.get('Direction').touched" formControlName="Direction">
+                        <option *ngFor="let direction of directions"  [ngValue]="direction">{{direction.direction}}</option>
+                    </select>
+                    <div
+                        *ngIf="addDesignationForm.get('Direction').invalid && addDesignationForm.get('Direction').touched">
+                        <small
+                            *ngIf="addDesignationForm.get('Direction').invalid && addDesignationForm.get('Direction').touched"
+                            class="text-danger"> Direction is required</small>
                     </div>
+                    </div> 
                     <div class="form-group">
                         <label>Responsable Pole <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            formControlName="ResponsableDir">
+                            formControlName="ResponsablePole">
                     </div>
                     <div class="form-group">
                         <label> Description <span class="text-danger">*</span></label>
-                            <textarea class=form-control formControlName="PoleDescription">
+                            <textarea class=form-control formControlName="Description">
                             </textarea>
                     </div>
                     <div class="submit-section">
@@ -159,39 +162,36 @@
                     <div class="form-group">
                         <label>Pole<span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            [class.invalid]="editDesignationForm.get('Designation').invalid && editDesignationForm.get('Designation').touched"
-                            formControlName="Designation">
+                            [class.invalid]="editDesignationForm.get('editPole').invalid && editDesignationForm.get('editPole').touched"
+                            formControlName="editPole">
                         <div
-                            *ngIf="editDesignationForm.get('Designation').invalid && editDesignationForm.get('Designation').touched">
+                            *ngIf="editDesignationForm.get('editPole').invalid && editDesignationForm.get('editPole').touched">
                             <small
-                                *ngIf="editDesignationForm.get('Designation').invalid && editDesignationForm.get('Designation').touched"
+                                *ngIf="editDesignationForm.get('editPole').invalid && editDesignationForm.get('editPole').touched"
                                 class="text-danger"> Pole is required</small>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Direction <span class="text-danger">*</span></label>
-                        <select class="form-select form-control" [class.invalid]="editDesignationForm.get('DepartmentName').invalid &&
-                        editDesignationForm.get('DepartmentName').touched" formControlName="DepartmentName">
-                            <option>Select Department</option>
-                            <option>Web Development</option>
-                            <option>IT Management</option>
-                            <option> Marketing</option>
+                            <label>Direction <span class="text-danger">*</span></label>
+                            <select class="form-select form-control" *ngIf="directions"  [class.invalid]="editDesignationForm.get('editDirection').invalid &&
+                            editDesignationForm.get('editDirection').touched" formControlName="editDirection">
+                            <option *ngFor="let direction of directions"  [ngValue]="direction">{{direction.direction}}</option>
                         </select>
                         <div
-                            *ngIf="editDesignationForm.get('DepartmentName').invalid && editDesignationForm.get('DepartmentName').touched">
+                            *ngIf="editDesignationForm.get('editDirection').invalid && editDesignationForm.get('editDirection').touched">
                             <small
-                                *ngIf="editDesignationForm.get('DepartmentName').invalid && editDesignationForm.get('DepartmentName').touched"
+                                *ngIf="editDesignationForm.get('editDirection').invalid && editDesignationForm.get('editDirection').touched"
                                 class="text-danger"> Direction is required</small>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Responsable Pole <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            formControlName="ResponsableDir">
+                            formControlName="editResponsablePole">
                     </div>
                     <div class="form-group">
                         <label> Description <span class="text-danger">*</span></label>
-                            <textarea class=form-control formControlName="PoleDescription">
+                            <textarea class=form-control formControlName="editDescription">
                             </textarea>
                     </div>
                     <div class="submit-section">
@@ -203,6 +203,47 @@
     </div>
 </div>
 <!-- /Edit Designation Modal -->
+
+<!-- /Affect Manager Modal -->
+<div id="affect_manager" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Affect Direction Manager</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form (ngSubmit)="affectManager()" [formGroup]="affectManagerForm">
+                    <div class="form-group">
+                        <label class="col-form-label">Direction Manager</label>
+                        <select class="form-select form-control"
+                            [class.invalid]="affectManagerForm.get('Manager').invalid && affectManagerForm.get('Manager').touched"
+                            formControlName="Manager" *ngIf="employees">
+
+                            <option *ngFor="let e of employees" [ngValue]="e" >{{e.nom}} {{e.prenom}}</option>
+                                                   </select>
+                        <div
+                            *ngIf="affectManagerForm.get('Manager').invalid && affectManagerForm.get('Manager').touched">
+                            <small
+                                *ngIf="affectManagerForm.get('Manager').invalid && affectManagerForm.get('Manager').touched"
+                                class="text-danger"> please choose a manager before you submit</small>
+                        </div>
+                    </div>
+                    
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Affect Manager Modal -->
+
+
 
 <!-- Delete Designation Modal -->
 <div class="modal custom-modal fade" id="delete_designation" role="dialog">
