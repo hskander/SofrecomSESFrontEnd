@@ -8,6 +8,9 @@ import { AllModulesComponent } from './all-modules.component';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 // Api Interaction 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api'
 
@@ -42,6 +45,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
     //InMemoryWebApiModule.forRoot(AllModulesData),
     PerfectScrollbarModule,
     AllModulesRoutingModule,
+    
 
   ],
   providers: [
