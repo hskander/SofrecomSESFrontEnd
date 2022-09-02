@@ -4,7 +4,6 @@ import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
-import { DirectionService } from 'src/services/direction.service';
 import { Direction } from 'src/models/direction';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Employee } from 'src/models/employee';
@@ -36,7 +35,6 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private directionService:DirectionService,
     //private chRef : ChangeDetectorRef,
   ) {}
 

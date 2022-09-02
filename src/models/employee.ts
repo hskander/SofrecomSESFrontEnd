@@ -1,7 +1,9 @@
 import { Pole } from 'src/models/pole';
 import { Poste } from 'src/models/Poste';
-import { Projet } from 'src/models/projet';
-
+import { Projet } from 'src/models/Projet';
+import { Experience } from 'src/models/Experience';
+import { DiplomeDetails } from 'src/models/diplomeDetails';
+import { CertificatDetails } from 'src/models/CertificatDetails';
 export interface Employee {
     id: number;
     employeeCode: string;
