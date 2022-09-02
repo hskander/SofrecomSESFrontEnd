@@ -1,3 +1,7 @@
+import { Pole } from 'src/models/pole';
+import { Poste } from 'src/models/Poste';
+import { Projet } from 'src/models/projet';
+
 export interface Employee {
     id: number;
     employeeCode: string;
@@ -8,7 +12,7 @@ export interface Employee {
     dateNaissance: string;
     lieuNaissance: string;
     nationalite : string;
-    email: string;
+    mail: string;
     dateRecrut : string;
     dateDepart : string;
     numTel: string;
@@ -17,7 +21,7 @@ export interface Employee {
     relationUrgence : string;
     numPasseport: string;
     dateExpPasseport: string;
-    numCIN: string;
+    numCin: string;
     delivDate: string;
     civilite: string;
     situationFam :string;
@@ -28,6 +32,9 @@ export interface Employee {
     bankName: string;
     swift: string;
     rib:string;
-    iBan: string;
+    iban: string;
     enConge: boolean;
+    pole: Pole;
+    poste: Poste;
+    projets : Projet[],
   }

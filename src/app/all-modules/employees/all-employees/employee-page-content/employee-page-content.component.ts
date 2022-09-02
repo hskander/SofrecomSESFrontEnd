@@ -6,6 +6,10 @@ import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { id } from "src/assets/all-modules-data/id";
+import { Employee } from 'src/models/employee';
+import { Pole } from 'src/models/pole';
+import { Poste } from 'src/models/Poste';
+import { HttpErrorResponse } from '@angular/common/http';
 
 declare const $: any;
 @Component({
@@ -20,7 +24,10 @@ export class EmployeePageContentComponent implements OnInit {
   public editId: any;
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
-
+  public employee:Employee= new $;
+  public employees:Employee[]=[];
+  public poles:Pole[];
+  public postes: Poste[];
   public pipe = new DatePipe("en-US");
   public rows = [];
   public srch = [];
@@ -36,43 +43,101 @@ export class EmployeePageContentComponent implements OnInit {
     this.addEmployeeForm = this.formBuilder.group({
       FirstName: ["", [Validators.required]],
       LastName: ["", [Validators.required]],
-      UserName: ["", [Validators.required]],
-      Password: ["", [Validators.required]],
-      ConfirmPassword: ["", [Validators.required]],
-      DepartmentName: ["", [Validators.required]],
-      Designation: ["", [Validators.required]],
+      Adresse: ["", [Validators.required]],
+      Nationalite: ["", [Validators.required]],
+      NumPasseport: ["", [Validators.required]],
+      dateExpPasseport: ["", [Validators.required]],
+      CIN: ["", [Validators.required]],
+      dateDelivCIN: ["", [Validators.required]],
+      Civilite: ["", [Validators.required]],
+      SituationFam: ["", [Validators.required]],
+      NbEnfant: ["", [Validators.required]],
+      MatriculeCNSS: ["", [Validators.required]],
+      CNSS: ["", [Validators.required]],
+      BankName: ["", [Validators.required]],
+      SWIFT: ["", [Validators.required]],
+      RIB: ["", [Validators.required]],
+      IBAN: ["", [Validators.required]],
+      EnConge: ["", [Validators.required]],
+      Pole: ["", [Validators.required]],
+      Poste: ["", [Validators.required]],
       Email: ["", [Validators.required]],
-      PhoneNumber: ["", [Validators.required]],
-      JoinDate: ["", [Validators.required]],
-      CompanyName: ["", [Validators.required]],
-      EmployeeID: ["", [Validators.required]],
+      NumTel: ["", [Validators.required]],
+      dateNaissance: ["", [Validators.required]],
+      Salaire: ["", [Validators.required]],
+      lieuNaissance: ["", [Validators.required]],
+      dateRecrut: ["", [Validators.required]],
+      dateDepart: ["", [Validators.required]],
+      Genre: ["", [Validators.required]],
+      NomURG: ["", [Validators.required]],
+      TelURG: ["", [Validators.required]],
+      RelationURG: ["", [Validators.required]],
+      
     });
 
     this.editEmployeeForm = this.formBuilder.group({
       FirstName: ["", [Validators.required]],
       LastName: ["", [Validators.required]],
-      UserName: ["", [Validators.required]],
-      Password: ["", [Validators.required]],
-      ConfirmPassword: ["", [Validators.required]],
-      DepartmentName: ["", [Validators.required]],
-      Designation: ["", [Validators.required]],
+      Adresse: ["", [Validators.required]],
+      Nationalite: ["", [Validators.required]],
+      NumPasseport: ["", [Validators.required]],
+      dateExpPasseport: ["", [Validators.required]],
+      CIN: ["", [Validators.required]],
+      dateDelivCIN: ["", [Validators.required]],
+      Civilite: ["", [Validators.required]],
+      SituationFam: ["", [Validators.required]],
+      NbEnfant: ["", [Validators.required]],
+      MatriculeCNSS: ["", [Validators.required]],
+      CNSS: ["", [Validators.required]],
+      BankName: ["", [Validators.required]],
+      SWIFT: ["", [Validators.required]],
+      RIB: ["", [Validators.required]],
+      IBAN: ["", [Validators.required]],
+      EnConge: ["", [Validators.required]],
+      Pole: ["", [Validators.required]],
+      Poste: ["", [Validators.required]],
       Email: ["", [Validators.required]],
-      PhoneNumber: ["", [Validators.required]],
-      JoinDate: ["", [Validators.required]],
-      CompanyName: ["", [Validators.required]],
-      EmployeeID: ["", [Validators.required]],
+      NumTel: ["", [Validators.required]],
+      dateNaissance: ["", [Validators.required]],
+      Salaire: ["", [Validators.required]],
+      lieuNaissance: ["", [Validators.required]],
+      dateRecrut: ["", [Validators.required]],
+      dateDepart: ["", [Validators.required]],
+      Genre: ["", [Validators.required]],
+      NomURG: ["", [Validators.required]],
+      TelURG: ["", [Validators.required]],
+      RelationURG: ["", [Validators.required]],
     });
   }
 
   // Get Employee  Api Call
   loadEmployee() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstEmployee = data;
-      this.rows = this.lstEmployee;
+    this.srvModuleService.get('Employee/allEmployees').subscribe((data) => {
+      this.employees = data;
+      this.rows = this.employees;
       this.srch = [...this.rows];
     });
   }
-
+  loadPoles(){
+    this.srvModuleService.get('Pole/all').subscribe(
+      (response: Pole[]) =>{
+        this.poles=response;
+      },
+      (error: HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    );
+  }
+  loadPostes(){
+    this.srvModuleService.get('Poste/all').subscribe(
+      (response: Poste[]) =>{
+        this.postes=response;
+      },
+      (error: HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    );
+  }
 
   private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control) => {
@@ -85,61 +150,134 @@ export class EmployeePageContentComponent implements OnInit {
 
   // Add employee  Modal Api Call
   addEmployee() {
-    if(this.addEmployeeForm.invalid){
+    /*if(this.addEmployeeForm.invalid){
       this.markFormGroupTouched(this.addEmployeeForm)
       return
-    }
-    let DateJoin = this.pipe.transform(
-      this.addEmployeeForm.value.JoinDate,
-      "dd-MM-yyyy"
+    }*/
+    let dateExpPasseport = this.pipe.transform(
+      this.addEmployeeForm.value.dateExpPasseport,
+      "yyyy-MM-dd"
     );
-    let obj = {
-      firstname: this.addEmployeeForm.value.FirstName,
-      lastname: this.addEmployeeForm.value.LastName,
-      username: this.addEmployeeForm.value.UserName,
-      email: this.addEmployeeForm.value.Email,
-      password: this.addEmployeeForm.value.Password,
-      confirmpassword: this.addEmployeeForm.value.ConfirmPassword,
-      employeeId: this.addEmployeeForm.value.EmployeeID,
-      joindate: DateJoin,
-      phone: this.addEmployeeForm.value.PhoneNumber,
-      company: this.addEmployeeForm.value.CompanyName,
-      department: this.addEmployeeForm.value.DepartmentName,
-      designation: this.addEmployeeForm.value.Designation,
-      mobile: "9944996335",
-      role: "Web developer",
-    };
-    this.srvModuleService.add(obj, this.url).subscribe((data) => {});
-    this.loadEmployee();
+    let dateDelivCIN = this.pipe.transform(
+      this.addEmployeeForm.value.dateDelivCIN,
+      "yyyy-MM-dd"
+    );
+    let dateNaissance = this.pipe.transform(
+      this.addEmployeeForm.value.dateNaissance,
+      "yyyy-MM-dd"
+    );
+    let dateRecrut = this.pipe.transform(
+      this.addEmployeeForm.value.dateRecrut,
+      "yyyy-MM-dd"
+    );
+    let dateDepart = this.pipe.transform(
+      this.addEmployeeForm.value.dateDepart,
+      "yyyy-MM-dd"
+    );
+    this.employee.id=null;
+    this.employee.nom=this.addEmployeeForm.value.FirstName;
+    this.employee.prenom=this.addEmployeeForm.value.LastName;
+    this.employee.genre=this.addEmployeeForm.value.Genre;
+    this.employee.adresse=this.addEmployeeForm.value.Adresse;
+    this.employee.dateNaissance=dateNaissance;
+    this.employee.lieuNaissance=this.addEmployeeForm.value.lieuNaissance;
+    this.employee.nationalite=this.addEmployeeForm.value.Nationalite;
+    this.employee.mail=this.addEmployeeForm.value.Email;
+    this.employee.dateRecrut=dateRecrut;
+    this.employee.dateDepart=dateDepart;
+    this.employee.numTel=this.addEmployeeForm.value.NumTel;
+    this.employee.nomUrgence=this.addEmployeeForm.value.NomURG;
+    this.employee.numUrgence=this.addEmployeeForm.value.TelURG;
+    this.employee.relationUrgence=this.addEmployeeForm.value.RelationURG;
+    this.employee.numPasseport=this.addEmployeeForm.value.NumPasseport;
+    this.employee.dateExpPasseport=dateExpPasseport;
+    this.employee.numCin=this.addEmployeeForm.value.CIN;
+    this.employee.delivDate=dateDelivCIN;
+    this.employee.civilite=this.addEmployeeForm.value.Civilite;
+    this.employee.situationFam=this.addEmployeeForm.value.SituationFam;
+    this.employee.nbEnfant=this.addEmployeeForm.value.NbEnfant;
+    this.employee.salaireBrute=this.addEmployeeForm.value.Salaire;
+    if(this.addEmployeeForm.value.CNSS==="2"){
+      this.employee.cnss=false;
+    }else{this.employee.cnss=true;}
+    this.employee.matriculeCnss=this.addEmployeeForm.value.MatriculeCNSS;
+    this.employee.bankName=this.addEmployeeForm.value.BankName;
+    this.employee.swift=this.addEmployeeForm.value.SWIFT;
+    this.employee.rib=this.addEmployeeForm.value.RIB;
+    this.employee.iban=this.addEmployeeForm.value.IBAN;
+    if(this.addEmployeeForm.value.EnConge==="2"){
+      this.employee.enConge=false;
+    }else{this.employee.enConge=true;}
+    this.srvModuleService.add(this.employee,`Employee/addEmployee?posteId=${this.addEmployeeForm.value.Poste.id}&poleId=${this.addEmployeeForm.value.Pole.id}`).
+    subscribe((data) => 
+    {this.loadEmployee();}
+  );
+    
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
     this.toastr.success("Employeee added sucessfully...!", "Success");
   }
-
+ 
   editEmployee() {
-    let DateJoin = this.pipe.transform(
-      this.editEmployeeForm.value.JoinDate,
-      "dd-MM-yyyy"
+    let dateExpPasseport = this.pipe.transform(
+      this.editEmployeeForm.value.dateExpPasseport,
+      "yyyy-MM-dd"
     );
-    let obj = {
-      firstname: this.editEmployeeForm.value.FirstName,
-      lastname: this.editEmployeeForm.value.LastName,
-      username: this.editEmployeeForm.value.UserName,
-      email: this.editEmployeeForm.value.Email,
-      password: this.editEmployeeForm.value.Password,
-      confirmpassword: this.editEmployeeForm.value.ConfirmPassword,
-      employeeId: this.editEmployeeForm.value.EmployeeID,
-      joindate: DateJoin,
-      phone: this.editEmployeeForm.value.PhoneNumber,
-      company: this.editEmployeeForm.value.CompanyName,
-      department: this.editEmployeeForm.value.DepartmentName,
-      designation: this.editEmployeeForm.value.Designation,
-      mobile: "9944996335",
-      role: "Web developer",
-      id: this.editId,
-    };
-    this.srvModuleService.update(obj, this.url).subscribe((data1) => {});
-    this.loadEmployee();
+    let dateDelivCIN = this.pipe.transform(
+      this.editEmployeeForm.value.dateDelivCIN,
+      "yyyy-MM-dd"
+    );
+    let dateNaissance = this.pipe.transform(
+      this.editEmployeeForm.value.dateNaissance,
+      "yyyy-MM-dd"
+    );
+    let dateRecrut = this.pipe.transform(
+      this.editEmployeeForm.value.dateRecrut,
+      "yyyy-MM-dd"
+    );
+    let dateDepart = this.pipe.transform(
+      this.editEmployeeForm.value.dateDepart,
+      "yyyy-MM-dd"
+    );
+    this.employee.id=this.editId;
+    this.employee.nom=this.editEmployeeForm.value.FirstName;
+    this.employee.prenom=this.editEmployeeForm.value.LastName;
+    this.employee.genre=this.editEmployeeForm.value.Genre;
+    this.employee.adresse=this.editEmployeeForm.value.Adresse;
+    this.employee.dateNaissance=dateNaissance;
+    this.employee.lieuNaissance=this.editEmployeeForm.value.lieuNaissance;
+    this.employee.nationalite=this.editEmployeeForm.value.Nationalite;
+    this.employee.mail=this.editEmployeeForm.value.Email;
+    this.employee.dateRecrut=dateRecrut;
+    this.employee.dateDepart=dateDepart;
+    this.employee.numTel=this.editEmployeeForm.value.NumTel;
+    this.employee.nomUrgence=this.editEmployeeForm.value.NomURG;
+    this.employee.numUrgence=this.editEmployeeForm.value.TelURG;
+    this.employee.relationUrgence=this.editEmployeeForm.value.RelationURG;
+    this.employee.numPasseport=this.editEmployeeForm.value.NumPasseport;
+    this.employee.dateExpPasseport=dateExpPasseport;
+    this.employee.numCin=this.editEmployeeForm.value.CIN;
+    this.employee.delivDate=dateDelivCIN;
+    this.employee.civilite=this.editEmployeeForm.value.Civilite;
+    this.employee.situationFam=this.editEmployeeForm.value.SituationFam;
+    this.employee.nbEnfant=this.editEmployeeForm.value.NbEnfant;
+    this.employee.salaireBrute=this.editEmployeeForm.value.Salaire;
+    if(this.editEmployeeForm.value.CNSS==="2"){
+      this.employee.cnss=false;
+    }else{this.employee.cnss=true;}
+    this.employee.matriculeCnss=this.editEmployeeForm.value.MatriculeCNSS;
+    this.employee.bankName=this.editEmployeeForm.value.BankName;
+    this.employee.swift=this.editEmployeeForm.value.SWIFT;
+    this.employee.rib=this.editEmployeeForm.value.RIB;
+    this.employee.iban=this.editEmployeeForm.value.IBAN;
+    if(this.editEmployeeForm.value.EnConge==="2"){
+      this.employee.enConge=false;
+    }else{this.employee.enConge=true;}
+    this.employee.pole=this.editEmployeeForm.value.Pole;
+    this.employee.poste=this.editEmployeeForm.value.Poste;
+    this.srvModuleService.update(this.employee,'Employee/editEmployee').subscribe((data1) => {
+      this.loadEmployee();
+    });
     $("#edit_employee").modal("hide");
     this.toastr.success("Employeee Updated sucessfully...!", "Success");
   }
@@ -147,23 +285,44 @@ export class EmployeePageContentComponent implements OnInit {
   // To Get The employee Edit Id And Set Values To Edit Modal Form
   editEmp(value) {
     this.editId = value;
-    const index = this.lstEmployee.findIndex((item) => {
+    const index = this.employees.findIndex((item) => {
       return item.id === value;
     });
-    let toSetValues = this.lstEmployee[index];
+    
+    let toSetValues:Employee = this.employees[index];
     this.editEmployeeForm.setValue({
-      FirstName: toSetValues.firstname,
-      LastName: toSetValues.lastname,
-      UserName: toSetValues.username,
-      Email: toSetValues.email,
-      Password: toSetValues.password,
-      ConfirmPassword: toSetValues.confirmpassword,
-      EmployeeID: toSetValues.employeeId,
-      JoinDate: toSetValues.joindate,
-      PhoneNumber: toSetValues.phone,
-      CompanyName: toSetValues.company,
-      DepartmentName: toSetValues.department,
-      Designation: toSetValues.designation,
+      FirstName: toSetValues.nom,
+      LastName: toSetValues.prenom,
+      Adresse: toSetValues.adresse,
+      Nationalite: toSetValues.nationalite,
+      NumPasseport: toSetValues.numPasseport,
+      dateExpPasseport: toSetValues.dateExpPasseport,
+      CIN: toSetValues.numCin,
+      dateDelivCIN: toSetValues.delivDate,
+      Civilite:toSetValues.civilite,
+      SituationFam: toSetValues.situationFam,
+      NbEnfant: toSetValues.nbEnfant,
+      MatriculeCNSS: toSetValues.matriculeCnss,
+      CNSS: toSetValues.cnss,
+      BankName: toSetValues.bankName,
+      SWIFT: toSetValues.swift,
+      RIB: toSetValues.rib,
+      IBAN: toSetValues.iban,
+      EnConge: toSetValues.enConge,
+      Pole: toSetValues.pole,
+      Poste: toSetValues.poste,
+      Email: toSetValues.mail,
+      NumTel: toSetValues.numTel,
+      dateNaissance: toSetValues.dateNaissance,
+      Salaire:toSetValues.salaireBrute,
+      lieuNaissance: toSetValues.lieuNaissance,
+      dateRecrut: toSetValues.dateRecrut,
+      dateDepart: toSetValues.dateDepart,
+      Genre: toSetValues.genre,
+      NomURG: toSetValues.nomUrgence,
+      TelURG: toSetValues.numUrgence,
+      RelationURG: toSetValues.relationUrgence,
+
     });
   }
 
@@ -189,7 +348,7 @@ export class EmployeePageContentComponent implements OnInit {
 
   // delete api call
   deleteEmployee() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.srvModuleService.delete(this.tempId,'Employee/deleteEmployee').subscribe((data) => {
       this.loadEmployee();
       $("#delete_employee").modal("hide");
       this.toastr.success("Employee deleted sucessfully..!", "Success");
@@ -197,31 +356,13 @@ export class EmployeePageContentComponent implements OnInit {
   }
 
   //search by name
-  searchId(val) {
+  searchEmployee(val) {
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (d) {
       val = val.toLowerCase();
-      return d.employeeId.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
-  }
-
-  //search by name
-  searchName(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.firstname.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
-  }
-
-  //search by designation
-  searchByDesignation(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.nom.toLowerCase().indexOf(val) !== -1 
+      || d.prenom.toLowerCase().indexOf(val) !== -1 
+      || !val;
     });
     this.rows.push(...temp);
   }

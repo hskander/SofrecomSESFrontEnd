@@ -77,6 +77,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   // Get department list  Api Call
   LoadDepartment() {
     this.srvModuleService.get('Direction/all').subscribe((data) => {
+      $("#datatable").DataTable().clear();
       this.directions = data;
       //this.chRef.detectChanges();
       this.dtTrigger.next();
@@ -99,10 +100,10 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.direction.responsableDirection=this.addDepartmentForm.value.ResponsableDir;
       console.log(this.direction);
       this.srvModuleService.add(this.direction,'Direction/addDirection').subscribe((data) => {
+        $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
-        $("#datatable").DataTable().clear();
         this.LoadDepartment();
       $("#add_department").modal("hide");
       this.addDepartmentForm.reset();

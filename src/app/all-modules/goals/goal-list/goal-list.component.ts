@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
-import { DatePipe } from "@angular/common";
-import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
-
+import { Subject } from "rxjs";
+import { Certificat } from 'src/models/certificat';
+import { HttpErrorResponse } from '@angular/common/http';
 declare const $: any;
 @Component({
   selector: "app-goal-list",
@@ -13,64 +13,44 @@ declare const $: any;
   styleUrls: ["./goal-list.component.css"],
 })
 export class GoalListComponent implements OnInit, OnDestroy {
-  lstGoal: any;
-
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
-  url: any = "goallist";
-
-  public rows = [];
-  public srch = [];
-  public statusValue;
   public dtTrigger: Subject<any> = new Subject();
-  public pipe = new DatePipe("en-US");
+  public lstGoal: any[];
+  public url: any = "goals";
   public tempId: any;
   public editId: any;
+  public rows:any[] = [];
+  public srch:any[] = [];
   public addGoalForm: FormGroup;
   public editGoalForm: FormGroup;
+  public certificats: Certificat[]=[];
+  public certificat: Certificat= new $;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit() {
-    this.LoadGoal();
-
-    this.addGoalForm = this.formBuilder.group({
-      GoalType: ["", [Validators.required]],
-      Subject: ["", [Validators.required]],
-      TargetAchivement: ["", [Validators.required]],
-      StartDate: ["", [Validators.required]],
-      EndDate: ["", [Validators.required]],
-      Description: ["", [Validators.required]],
-      Status: ["", [Validators.required]],
-    });
-
-    this.editGoalForm = this.formBuilder.group({
-      GoalType: ["", [Validators.required]],
-      Subject: ["", [Validators.required]],
-      TargetAchivement: ["", [Validators.required]],
-      StartDate: ["", [Validators.required]],
-      EndDate: ["", [Validators.required]],
-      Description: ["", [Validators.required]],
-      Status: ["", [Validators.required]],
-    });
     this.dtOptions = {
       // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
-  }
+    this.LoadGoal();
 
-  // Get goallist  Api Call
-  LoadGoal() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstGoal = data;
-      this.dtTrigger.next();
-      this.rows = this.lstGoal;
-      this.srch = [...this.rows];
+    this.addGoalForm = this.formBuilder.group({
+      Certificat: ["", [Validators.required]],
+      Description: ["", [Validators.required]],
+      Online: ["", [Validators.required]],
+    });
+
+    this.editGoalForm = this.formBuilder.group({
+      Certificat: ["", [Validators.required]],
+      Description: ["", [Validators.required]],
+      Online: ["", [Validators.required]],
     });
   }
 
@@ -82,109 +62,101 @@ export class GoalListComponent implements OnInit, OnDestroy {
       }
     });
   }
-  // Add Department  Modal Api Call
+
+  // Get goal list  Api Call
+  LoadGoal() {
+    this.srvModuleService.get('Certificat/all').subscribe((data) => {
+      this.certificats = data;
+      this.dtTrigger.next();
+      this.rows = this.certificats;
+      this.srch = [...this.rows];
+    });
+  }
+
+  // Add Goal  Modal Api Call
   addGoal() {
+    
     if(this.addGoalForm.invalid){
       this.markFormGroupTouched(this.addGoalForm)
       return
     }
     if (this.addGoalForm.valid) {
-      let StartDatetime = this.pipe.transform(
-        this.addGoalForm.value.StartDate,
-        "dd-MM-yyyy"
-      );
-      let EndDatetime = this.pipe.transform(
-        this.addGoalForm.value.EndDate,
-        "dd-MM-yyyy"
-      );
-      let obj = {
-        goalType: this.addGoalForm.value.GoalType,
-        subject: this.addGoalForm.value.Subject,
-        targetAchivement: this.addGoalForm.value.TargetAchivement,
-        startDate: StartDatetime,
-        endDate: EndDatetime,
-        description: this.addGoalForm.value.Description,
-        status: this.addGoalForm.value.Status,
-        progress: "Completed 73%",
-      };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      this.certificat.certificat=this.addGoalForm.value.Certificat;
+      this.certificat.descriptionCertificat=this.addGoalForm.value.Description;
+      this.certificat.enLigne=this.addGoalForm.value.Online;
+      console.log(this.certificat);
+      this.srvModuleService.add(this.certificat,'Certificat/addCertificat').subscribe((data) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
-      });
-      this.LoadGoal();
+        $("#datatable").DataTable().clear();
+        this.LoadGoal();
       $("#add_goal").modal("hide");
       this.addGoalForm.reset();
-      this.toastr.success("Goal added sucessfully...!", "Success");
+      this.toastr.success("Certificat added sucessfully...!", "Success");
+      });
     }
   }
+
 
   editGoal() {
     if (this.editGoalForm.valid) {
-      let StartDatetime = this.pipe.transform(
-        this.editGoalForm.value.StartDate,
-        "dd-MM-yyyy"
-      );
-      let EndDatetime = this.pipe.transform(
-        this.editGoalForm.value.EndDate,
-        "dd-MM-yyyy"
-      );
-      let obj = {
-        goalType: this.editGoalForm.value.GoalType,
-        subject: this.editGoalForm.value.Subject,
-        targetAchivement: this.editGoalForm.value.TargetAchivement,
-        startDate: StartDatetime,
-        endDate: EndDatetime,
-        description: this.editGoalForm.value.Description,
-        status: this.editGoalForm.value.Status,
-        progress: "Completed 73%",
-        id: this.editId,
+        this.certificat.id= this.editId
+        this.certificat.certificat=this.editGoalForm.value.Certificat,
+        this.certificat.descriptionCertificat=this.editGoalForm.value.Description,
+        this.certificat.enLigne=this.editGoalForm.value.Online  
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      this.srvModuleService.update(this.certificat,'Certificat/update').subscribe((data1) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        this.LoadGoal();
       });
-      this.LoadGoal();
+      
       $("#edit_goal").modal("hide");
-      this.toastr.success("Goal Updated sucessfully...!", "Success");
+      this.toastr.success("Certificat Updated sucessfully...!", "Success");
     }
-  }
+  
 
-  // To Get The department Edit Id And Set Values To Edit Modal Form
+  // To Get The Goal Edit Id And Set Values To Edit Modal Form
   edit(value) {
     this.editId = value;
-    const index = this.lstGoal.findIndex((item) => {
+    const index = this.certificats.findIndex((item) => {
       return item.id === value;
     });
-    let toSetValues = this.lstGoal[index];
+    let toSetValues = this.certificats[index];
     this.editGoalForm.setValue({
-      GoalType: toSetValues.goalType,
-      Subject: toSetValues.subject,
-      TargetAchivement: toSetValues.targetAchivement,
-      StartDate: toSetValues.startDate,
-      EndDate: toSetValues.endDate,
-      Description: toSetValues.description,
-      Status: toSetValues.status,
+      Certificat: toSetValues.certificat,
+      Description:toSetValues.descriptionCertificat,
+      Online:toSetValues.enLigne
     });
   }
 
-  deleteGoal() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+
+  deleteCertificat() {
+    this.srvModuleService.delete(this.tempId, 'Certificat/delete').subscribe((data) => {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.LoadGoal();
-      $("#delete_goal").modal("hide");
-      this.toastr.success("Goal deleted sucessfully..!", "Success");
+      $("#delete_certificat").modal("hide");
+      this.toastr.success("Certificat deleted sucessfully..!", "Success");
     });
   }
-  //getting the status value
-  getStatus(data) {
-    this.statusValue = data;
+
+  searchCertificat(key) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (certif) {
+      key = key.toLowerCase();
+      return certif.certificat.toLowerCase().indexOf(key) !== -1 
+      || certif.descriptionCertificat.toLowerCase().indexOf(key) !== -1 
+      || !key;
+    });
+    this.rows.push(...temp);
   }
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
+    this.dtTrigger.unsubscribe()
   }
 }
