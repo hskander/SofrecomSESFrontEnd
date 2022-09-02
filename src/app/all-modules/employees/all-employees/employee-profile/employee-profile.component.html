@@ -7,7 +7,9 @@
             <div class="col-sm-12">
                 <h3 class="page-title">Profile</h3>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                    <li class="breadcrumb-item">
+                        <a routerLink="/layout/dashboard/admin">Dashboard</a>
+                    </li>
                     <li class="breadcrumb-item active">Profile</li>
                 </ul>
             </div>
@@ -19,51 +21,61 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="profile-view">
+                    <div class="profile-view" *ngIf='employee'>
                         <div class="profile-img-wrap">
                             <div class="profile-img">
-                                <a><img alt="" src="assets/img/profiles/avatar-2.jpg"></a>
+                                <a>
+                                    <img alt="" src="assets/img/profiles/avatar-2.jpg">
+                                </a>
                             </div>
                         </div>
                         <div class="profile-basic">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="profile-info-left">
-                                        <h3 class="user-name m-t-0 mb-0">John Doe</h3>
-                                        <h6 class="text-muted">UI/UX Design Team</h6>
-                                        <small class="text-muted">Web Designer</small>
-                                        <div class="staff-id">Employee ID : FT-0001</div>
-                                        <div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+                                        <h3 class="user-name m-t-0 mb-0">{{employee.nom}}</h3>
+                                        <h6 class="text-muted">{{employee.prenom}}</h6>
+                                        <small class="text-muted" *ngIf="employee.pole">{{employee.pole.pole}}</small>
+                                        <div class="staff-id">{{employee.employeCode}}</div>
+                                       
                                     </div>
                                 </div>
-                                <div class="col-md-7">
+                                <div class="col-md-8">
                                     <ul class="personal-info">
                                         <li>
-                                            <div class="title">Phone:</div>
-                                            <div class="text"><a href="">9876543210</a></div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Email:</div>
-                                            <div class="text"><a href="">johndoe@example.com</a></div>
-                                        </li>
-                                        <li>
-                                                <div class="title">Date de récrutement:</div>
-                                                <div class="text"><a href="">12/02/2020</a></div>
-                                            </li>
-                                            <li>
-                                                    <div class="title">Date de depart:</div>
-                                                    <div class="text"><a href="">...</a></div>
-                                                </li>
-                                        <li>
-                                            <div class="title">Reports to:</div>
+                                            <div class="title">Numéro Tel</div>
                                             <div class="text">
+                                                <a href="">{{employee.numTel}}</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Email</div>
+                                            <div class="text">
+                                                <a href="">{{employee.mail}}</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Date de récrutement</div>
+                                            <div class="text">
+                                                <a href="">{{employee.dateRecrut}}</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Date de depart</div>
+                                            <div class="text">
+                                                <a href="">{{employee.dateDepart}}</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Manager pole</div>
+                                            <div class="text"  *ngIf="employee.pole">
                                                 <div class="avatar-box">
                                                     <div class="avatar avatar-xs">
                                                         <img src="assets/img/profiles/avatar-16.jpg" alt="">
                                                     </div>
                                                 </div>
                                                 <a routerLink="/layout/employees/employeeprofile">
-                                                    Ammar
+                                                  {{employee.pole.manager}}
                                                 </a>
                                             </div>
                                         </li>
@@ -71,115 +83,118 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                <div class="col-md-6">
-                                        <h3 class="card-title">Personal Informations</h3>
-                                    <ul class="personal-info">
+                                    <div class="col-md-7" *ngIf='employee'>
+                                        <h3 class="card-title">Les informations personnelles</h3>
+                                        <ul class="personal-info">
                                             <li>
-                                                    <div class="title">Address:</div>
-                                                    <div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
-                                                </li>
-                                                <li>
-                                                        <div class="title">Birth:</div>
-                                                        <div class="text">24th July</div>
-                                                    </li>
-                                                    <li>
-                                                            <div class="title">Lieu naissance:</div>
-                                                            <div class="text">Tunis</div>
-                                                        </li>
-                                                    <li>
-                                                        <div class="title">Gender:</div>
-                                                        <div class="text">Male</div>
-                                                    </li>
-                                            <li>
-                                                    <div class="title">CIN No.</div>
-                                                    <div class="text">9876543210</div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">CIN Deliv Date.</div>
-                                                    <div class="text">9876543210</div>
-                                                </li>
-                                        <li>
-                                            <div class="title">Passport No.</div>
-                                            <div class="text">9876543210</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Passport Exp</div>
-                                            <div class="text">22/08/2024</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Nationalité</div>
-                                            <div class="text">Indian</div>
-                                        </li>
-                                        
-                                    </ul>
-                                   
-                                </div>
-                               
-                            <div class="col-md-6">
-                            <h3 class="card-title">Emergency Contact</h3>
-                        <ul class="personal-info">
-                            
-                            <li>
-                                <div class="title">Name</div>
-                                <div class="text">John Doe</div>
-                            </li>
-                            <li>
-                                <div class="title">Relationship</div>
-                                <div class="text">Father</div>
-                            </li>
-                            <li>
-                                <div class="title">Phone</div>
-                                <div class="text">9876543210, 9876543210</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-6">
-                            <h3 class="card-title">Bank information</h3>
-                            <ul class="personal-info">
-                                <li>
-                                    <div class="title">Salaire Brute</div>
-                                    <div class="text">TC000Y56</div>
-                                </li>
-                                <li>
-                                    <div class="title">Bank name</div>
-                                    <div class="text">BH Bank</div>
-                                </li>
-                                <li>
-                                    <div class="title">N°account (RIB)</div>
-                                    <div class="text">159843014641</div>
-                                </li>
-                                <li>
-                                    <div class="title">IBN Code</div>
-                                    <div class="text">ICI24504</div>
-                                </li>
-                                <li>
-                                    <div class="title">SWIFT No</div>
-                                    <div class="text">TC000Y56</div>
-                                </li>
-                            </ul>
-                    </div>
-                    <div class="col-md-6">
-                            <h3 class="card-title">Family Informations </h3>
-
-                                <ul class="personal-info">
-                                        <li>
-                                                <div class="title">Civilité</div>
-                                                <div class="text">Célibataire</div>
+                                                <div class="title">Adresse</div>
+                                                <div class="text">{{employee.adresse}}</div>
                                             </li>
-                                        <li>
-                                            <div class="title">Nombre des enfants</div>
-                                            <div class="text">2</div>
-                                        </li>
-                                    </ul>
-                    </div>
-                </div>
+                                            <li>
+                                                <div class="title">Date naissance</div>
+                                                <div class="text">{{employee.dateNaissance}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Lieu naissance</div>
+                                                <div class="text">{{employee.lieuNaissance}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Genre</div>
+                                                <div class="text">{{employee.genre}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">CIN</div>
+                                                <div class="text">{{employee.numCin}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Date delivrance</div>
+                                                <div class="text">{{employee.delivDate}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Passport</div>
+                                                <div class="text">{{employee.numPasseport}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Passport Exp</div>
+                                                <div class="text">{{employee.dateExpPasseport}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Nationalité</div>
+                                                <div class="text">{{employee.nationalite}}</div>
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <div class="col-md-5" *ngIf='employee'>
+                                        <h3 class="card-title">Contact d'urgence</h3>
+                                        <ul class="personal-info">
+
+                                            <li>
+                                                <div class="title">Nom d'urgence</div>
+                                                <div class="text">{{employee.nomUrgence}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Relation</div>
+                                                <div class="text">{{employee.relationUrgence}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Numero de téléphone</div>
+                                                <div class="text">{{employee.numUrgence}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6" *ngIf='employee'>
+                                        <h3 class="card-title">Les informations bancaires</h3>
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Salaire Brute</div>
+                                                <div class="text">{{employee.salaireBrute}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">La banque</div>
+                                                <div class="text">{{employee.bankName}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">RIB</div>
+                                                <div class="text">{{employee.rib}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Code IBN</div>
+                                                <div class="text">{{employee.iban}}</div>
+                                            </li>
+                                            <li>
+                                        <div class="title">Code SWIFT</div>
+                                                <div class="text">{{employee.swift}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6" *ngIf='employee'>
+                                        <h3 class="card-title">Informations familiale </h3>
+
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Civilité</div>
+                                                <div class="text">{{employee.civilite}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Nombre des enfants</div>
+                                                <div class="text">{{employee.nbEnfant}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="pro-edit"><a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon"><i
-                                    class="fa fa-pencil"></i></a></div>
+                        <div class="pro-edit">
+                            <a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -190,40 +205,95 @@
     <div class="tab-content">
 
         <!-- Profile Info Tab -->
-        <div id="emp_profile" class="pro-overview tab-pane fade show active">
-          
+        <div id="emp_profile" class="pro-overview tab-pane fade show active ">
+
+                <div class="row justify-content-md-center">
+                        <div class="col-md-12 d-flex">
+                            <div class="card profile-box flex-fill">
+                                <div class="card-body">
+                                    <h3 class="card-title">Les Experiences
+                                        <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </h3>
+                                    <div class="experience-box ">
+                                        <ul class="experience-list " *ngIf='employee'>
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content"  *ngFor='let exp of employee.experiences'>
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name">{{exp.entreprise.entreprise}}</a>
+                                                        <div class="row">
+                                                            <div class="col col-6">
+                                                                <span class="time">{{exp.poste}}</span>
+                                                                <span>{{exp.salaireBrute}} DT</span>
+                                                            </div>
+                                                            <div class="col col-6">
+                                                                <span class="time">{{exp.dateDebut}} - {{exp.dateFin}}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span>{{exp.raisonDepart}}</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             <div class="row">
                 <div class="col-md-6 d-flex">
                     <div class="card profile-box flex-fill">
-                        <div class="card-body">
-                            <h3 class="card-title">Diplome Informations <a class="edit-icon" data-bs-toggle="modal"
-                                    data-bs-target="#education_info"><i class="fa fa-pencil"></i></a>
+                        <div class="card-body" *ngIf='employee'>
+                            <h3 class="card-title">Les diplomes
+                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#education_info">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
                             </h3>
-                            <div class="experience-box">
-                                <ul class="experience-list">
+                            <div class="experience-box" >
+                                <ul class="experience-list" *ngFor='let dip of employee.listDiplomeDetails'  >
                                     <li>
                                         <div class="experience-user">
                                             <div class="before-circle"></div>
                                         </div>
-                                        <div class="experience-content">
+                                        <div class="experience-content" >
                                             <div class="timeline-content">
-                                                <a href="#/" class="name">International College of Arts and Science
-                                                    (UG)</a>
-                                                <div>Licence en Info Appliqué</div>
-                                                <span class="time">2000 - 2003</span>
+                                                <a href="#/" class="name">{{dip.institut.institut}}
+                                                </a>
+                                                <div>{{dip.diplome.diplome}}</div>
+                                                <span class="time">{{dip.dateDebutFomation }} à {{ dip.dateObtention}}</span>
                                             </div>
                                         </div>
                                     </li>
+                                  
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill" *ngIf='employee'>
+                        <div class="card-body">
+                            <h3 class="card-title">Les certificats
+                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#certificat_info">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </h3>
+                            <div class="experience-box">
+                                <ul class="experience-list" *ngFor='let certif of employee.listCertificatDetails'>
                                     <li>
                                         <div class="experience-user">
                                             <div class="before-circle"></div>
                                         </div>
                                         <div class="experience-content">
                                             <div class="timeline-content">
-                                                <a href="#/" class="name">International College of Arts and Science
-                                                    (PG)</a>
-                                                <div>Ingénieurie en Info App</div>
-                                                <span class="time">2003-2006</span>
+                                                <a href="#/" class="name">{{certif.certificat.certificat}}</a>
+                                                <div>{{certif.centreFormation.centreFormationName}}</div>
+                                                <span class="time">{{certif.dateDebutFormation}} - {{certif.dateObtention}}</span>
                                             </div>
                                         </div>
                                     </li>
@@ -232,98 +302,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 d-flex">
-                        <div class="card profile-box flex-fill">
-                            <div class="card-body">
-                                <h3 class="card-title">Certificat Informations <a class="edit-icon" data-bs-toggle="modal"
-                                        data-bs-target="#certificat_info"><i class="fa fa-pencil"></i></a>
-                                </h3>
-                                <div class="experience-box" >
-                                        <ul class="experience-list">
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">SCUM master</a>
-                                                        <div>GO MYCODE</div>
-                                                        <span class="time">Jan 2013 - Present (5 years 2 months)</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">React JS</a>
-                                                        <div>En Ligne UDEMY</div>
-                                                        <span class="time">Jan 2013 - Present (5 years 2 months)</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-                                </div>
             </div>
-            <div class="row justify-content-md-center">
-                    <div class="col-md-9 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Experience <a class="edit-icon" data-bs-toggle="modal"
-                                            data-bs-target="#experience_info"><i class="fa fa-pencil"></i></a></h3>
-                                    <div class="experience-box ">
-                                        <ul class="experience-list ">
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">Vermeg</a>
-                                                       <div class="row"> 
-                                                           <div class="col col-6">
-                                                        <span class="time">Developpeur PHP</span>  
-                                                    </div>
-                                                    <div class="col col-6">
-                                                        <span class="time">Jan 2013 - Present (5 years 2 months)
-                                                         </span>
-                                                         </div>
-                                                        </div>
-                                                        <span>Description...</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">Sofrecom</a>
-                                                        <div class="row"> 
-                                                                <div class="col col-6">
-                                                             <span class="time">Developpeur JAVA</span>  
-                                                         </div>
-                                                         <div class="col col-6">
-                                                             <span class="time">Jan 2013 - Present (5 years 2 months)
-                                                              </span>
-                                                              </div>
-                                                             </div>
-                                                        <span>Description...</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                                </div>
+            
         </div>
         <!-- /Profile Info Tab -->
 
@@ -336,42 +316,40 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Profile Information</h5>
+                <h5 class="modal-title">Le Profile </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form >
                     <div class="row">
                         <div class="col-md-12">
                             <div class="profile-img-wrap edit-img">
                                 <img class="inline-block" src="assets/img/profiles/avatar-2.jpg" alt="user">
                                 <div class="fileupload btn">
-                                    <span class="btn-text">edit</span>
+                                    <span class="btn-text">Mise à jour</span>
                                     <input class="upload" type="file">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>First Name</label>
-                                        <input type="text" class="form-control" value="John">
+                                        <label>Prenon</label>
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Last Name</label>
-                                        <input type="text" class="form-control" value="Doe">
+                                        <label>Nom</label>
+                                        <input type="text" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Birth Date</label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text" bsDatepicker
-                                                type="text"
-                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                            <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
                                                 value="05/06/1985">
                                         </div>
                                     </div>
@@ -402,26 +380,28 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control" value="631-889-3206">
-                                </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" value="631-889-3206">
                             </div>
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Date de recrutement</label>
-                                        <input type="text" class="form-control" value="631-889-3206">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Date de depart</label>
-                                            <input type="text" class="form-control" value="631-889-3206">
-                                        </div>
-                                    </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Department <span class="text-danger">*</span></label>
+                                <label>Date de recrutement</label>
+                                <input type="text" class="form-control" value="631-889-3206">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date de depart</label>
+                                <input type="text" class="form-control" value="631-889-3206">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Department
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <select class="form-select form-control">
                                     <option>Select Department</option>
                                     <option>Web Development</option>
@@ -432,7 +412,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Designation <span class="text-danger">*</span></label>
+                                <label>Designation
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <select class="form-select form-control">
                                     <option>Select Designation</option>
                                     <option>Web Designer</option>
@@ -443,7 +425,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Reports To <span class="text-danger">*</span></label>
+                                <label>Reports To
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <select class="form-select form-control">
                                     <option>-</option>
                                     <option>Wilmer Deluna</option>
@@ -455,80 +439,86 @@
                     </div>
                     <h3 class="card-title">Personal Informations</h3>
                     <div class="row">
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>CIN N°<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>CIN Deliv Date<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Passport N°</label>
-                                    <input type="text" class="form-control">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>CIN N°
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>CIN Deliv Date
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Passport N°</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Passport Exp Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Passport Exp Date</label>
-                                    <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
-                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nationalité
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input class="form-control" type="text">
                             </div>
+                        </div>
+
+                    </div>
+                    <h3 class="card-title">Family Informations</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>N°.des enfants</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span class="text-danger">*</span>Civilité</label>
+                                <select class="form-select form-control">
+                                    <option>Celibataire</option>
+                                    <option>Marrié</option>
+                                </select>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Emergency Informations</h3>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nationalité <span class="text-danger">*</span></label>
+                                    <label>Nom Urgent</label>
                                     <input class="form-control" type="text">
                                 </div>
                             </div>
-                          
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Numero Urgent</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Relation Urgent</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
                         </div>
-                        <h3 class="card-title">Family Informations</h3>
-                        <div class="row">
-                                <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>N°.des enfants</label>
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <div class="form-group">
-                                                    <label><span class="text-danger">*</span>Civilité</label>
-                                                    <select class="form-select form-control">
-                                                        <option>Celibataire</option>
-                                                        <option>Marrié</option>
-                                                    </select>
-                                            </div>
-                                        </div>
-                                        <h3 class="card-title">Emergency Informations</h3>
-                                        <div class="row">
-                                                <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Nom Urgent</label>
-                                                            <input class="form-control" type="text">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Numero Urgent</label>
-                                                                <input class="form-control" type="text">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label>Relation Urgent</label>
-                                                                    <input class="form-control" type="text">
-                                                                </div>
-                                                            </div>
-                            </div>
-                            </div>
+                    </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn">Submit</button>
                     </div>
@@ -544,7 +534,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"> Education Informations</h5>
+                <h5 class="modal-title"> Parcours académique</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -554,8 +544,11 @@
                     <div class="form-scroll">
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="card-title">Education Informations <a 
-                                        class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <h3 class="card-title">parcours académique
+                                    <a class="delete-icon">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </h3>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-focus focused">
@@ -572,9 +565,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group form-focus focused">
                                             <div class="cal-icon">
-                                                <input class="form-control datetimepicker" type="text" bsDatepicker
-                                                    type="text"
-                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
                                                     value="01/05/2006">
                                             </div>
                                             <label class="focus-label">Date de début</label>
@@ -583,9 +574,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group form-focus focused">
                                             <div class="cal-icon">
-                                                <input class="form-control datetimepicker" type="text" bsDatepicker
-                                                    type="text"
-                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
                                                     value="31/05/2006">
                                             </div>
                                             <label class="focus-label"> Date de fin</label>
@@ -593,8 +582,9 @@
                                     </div>
                                 </div>
                                 <div class="add-more">
-                                        <a ><i class="fa fa-plus-circle"></i> Add More</a>
-                                    </div>
+                                    <a>
+                                        <i class="fa fa-plus-circle"></i> Add More</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -610,72 +600,72 @@
 
 <!-- Certificat Modal -->
 <div id="certificat_info" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"> Certificats Informations</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-scroll">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="card-title">Certificats Informations <a 
-                                            class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group form-focus focused">
-                                                <input type="text" value="GO MYCODE" class="form-control floating">
-                                                <label class="focus-label">Centre de formation</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group form-focus focused">
-                                                <input type="text" value="SCRUM" class="form-control floating">
-                                                <label class="focus-label">Certificat</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group form-focus focused">
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text" bsDatepicker
-                                                        type="text"
-                                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                        value="01/05/2006">
-                                                </div>
-                                                <label class="focus-label">Starting Date</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group form-focus focused">
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text" bsDatepicker
-                                                        type="text"
-                                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                        value="31/05/2006">
-                                                </div>
-                                                <label class="focus-label">Complete Date</label>
-                                            </div>
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Certificats Informations</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-scroll">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Certificats Informations
+                                    <a class="delete-icon">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" value="GO MYCODE" class="form-control floating">
+                                            <label class="focus-label">Centre de formation</label>
                                         </div>
                                     </div>
-                                    <div class="add-more">
-                                            <a ><i class="fa fa-plus-circle"></i> Add More</a>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" value="SCRUM" class="form-control floating">
+                                            <label class="focus-label">Certificat</label>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <div class="cal-icon">
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    value="01/05/2006">
+                                            </div>
+                                            <label class="focus-label">Starting Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <div class="cal-icon">
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    value="31/05/2006">
+                                            </div>
+                                            <label class="focus-label">Complete Date</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-more">
+                                    <a>
+                                        <i class="fa fa-plus-circle"></i> Add More</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- /Certificat Modal -->
+</div>
+<!-- /Certificat Modal -->
 
 <!-- Experience Modal -->
 <div id="experience_info" class="modal custom-modal fade" role="dialog">
@@ -692,13 +682,15 @@
                     <div class="form-scroll">
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="card-title">Experience Informations <a
-                                        class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <h3 class="card-title">Experience Informations
+                                    <a class="delete-icon">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </h3>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-focus">
-                                            <input type="text" class="form-control floating"
-                                            >
+                                            <input type="text" class="form-control floating">
                                             <label class="focus-label">Entreprise</label>
                                         </div>
                                     </div>
@@ -715,17 +707,15 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                            <div class="form-group form-focus">
-                                                <input type="text" class="form-control floating">
-                                                <label class="focus-label">Poste</label>
-                                            </div>
+                                        <div class="form-group form-focus">
+                                            <input type="text" class="form-control floating">
+                                            <label class="focus-label">Poste</label>
                                         </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-focus">
                                             <div class="cal-icon">
-                                                <input type="text" bsDatepicker type="text"
-                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    class="form-control floating datetimepicker">
+                                                <input type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control floating datetimepicker">
                                             </div>
                                             <label class="focus-label">Periode De</label>
                                         </div>
@@ -733,21 +723,20 @@
                                     <div class="col-md-6">
                                         <div class="form-group form-focus">
                                             <div class="cal-icon">
-                                                <input type="text" bsDatepicker type="text"
-                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    class="form-control floating datetimepicker">
+                                                <input type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control floating datetimepicker">
                                             </div>
                                             <label class="focus-label">Période à</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="add-more">
-                                        <a ><i class="fa fa-plus-circle"></i> Add More</a>
-                                    </div>
+                                    <a>
+                                        <i class="fa fa-plus-circle"></i> Add More</a>
+                                </div>
                             </div>
                         </div>
 
-                    
+
                     </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn">Submit</button>
