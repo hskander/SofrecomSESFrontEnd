@@ -31,6 +31,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public manager:Employee= new $;
   public employees:Employee[]=[];
   public direction: Direction= new $;
+  public directionManager:Employee=new $;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -52,6 +53,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       ResponsableDir: ["", [Validators.required]],
       Description: ["", [Validators.required]],
     });
+
 
     this.editDepartmentForm = this.formBuilder.group({
       Direction: ["", [Validators.required]],
@@ -82,6 +84,17 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.rows = this.directions;
       this.srch = [...this.rows];
     });
+  }
+   //Get Direction Manager
+   getDirectionManager(id){
+     this.srvModuleService.getOne(`Direction/findDirectionManager?id=${id}`).subscribe(
+      (response: Employee) => {
+        this.directionManager= response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   // Add Department  Modal Api Call

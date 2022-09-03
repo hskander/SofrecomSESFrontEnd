@@ -14,6 +14,7 @@ export interface Employee {
     dateNaissance: string;
     lieuNaissance: string;
     nationalite : string;
+    image : string;
     mail: string;
     dateRecrut : string;
     dateDepart : string;
@@ -38,5 +39,8 @@ export interface Employee {
     enConge: boolean;
     pole: Pole;
     poste: Poste;
-    projets : Projet[],
+    projets : Projet[];
+    experiences: Experience[];
+    listDiplomeDetails: DiplomeDetails[];
+    listCertificatDetails: CertificatDetails[];
   }

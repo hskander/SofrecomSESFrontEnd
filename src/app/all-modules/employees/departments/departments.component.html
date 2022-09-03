@@ -56,7 +56,7 @@
                                 <h2 class="table-avatar">
                                     <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
                                             src="assets/img/user.jpg"></a>
-                                    <a routerLink="/layout/employees/employeeprofile">{{d.responsableDirection}}</a>
+                                    <a (click)="getDirectionManager(d.id)" routerLink="/layout/employees/employeeprofile">{{d.responsableDirection}}</a>
                                 </h2>
                             </td>
                             <td>{{d.description}}</td>

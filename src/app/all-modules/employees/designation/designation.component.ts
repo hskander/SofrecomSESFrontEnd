@@ -94,7 +94,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
     this.srvModuleService.get('Direction/all').subscribe(
       (response: Direction[]) => {
         this.directions= response;
-        console.log(this.directions);
+        //console.log(this.directions);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

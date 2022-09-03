@@ -57,6 +57,13 @@ export class AllModulesService {
       .get<AllModulesData[]>(this.apiurl)
       .pipe(tap(), catchError(this.handleError));
   }
+  getOne(type): Observable<any> {
+    this.apiurl = `http://localhost:8080/sofrecomSES/${type}`;
+
+    return this.http
+      .get<AllModulesData[]>(this.apiurl)
+      .pipe(tap(), catchError(this.handleError));
+  }
 
   // Post Method Api
   add(user: any, type): Observable<any> {

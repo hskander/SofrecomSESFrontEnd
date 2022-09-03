@@ -42,8 +42,8 @@
         <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3" *ngFor="let emp of employees;">
             <div class="profile-widget">
                 <div class="profile-img">
-                    <a routerLink="/layout/employees/employeeprofile" class="avatar"><img
-                            src="" alt=""></a>
+                    <a routerLink="/layout/employees/employeeprofile/{{emp.id}}" class="avatar"><img
+                            src="assets/img/{{emp.image}}.jpeg" alt=""></a>
                 </div>
                 <div class="dropdown profile-action">
                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a
-                        routerLink="/layout/employees/employeeprofile">{{emp.nom}} {{emp.prenom}}</a>
+                        routerLink="/layout/employees/employeeprofile/{{emp.id}}">{{emp.nom}} {{emp.prenom}}</a>
                 </h4>
                 <div class="small text-muted">{{emp.poste.poste}}</div>
             </div>
