@@ -59,7 +59,7 @@ export class EmployeePageContentComponent implements OnInit {
       RIB: ["", [Validators.required]],
       IBAN: ["", [Validators.required]],
       EnConge: ["", [Validators.required]],
-      Pole: ["", [Validators.required]],
+      Pole: [null, [Validators.required]],
       Poste: ["", [Validators.required]],
       Email: ["", [Validators.required]],
       NumTel: ["", [Validators.required]],
@@ -197,21 +197,25 @@ export class EmployeePageContentComponent implements OnInit {
     this.employee.situationFam=this.addEmployeeForm.value.SituationFam;
     this.employee.nbEnfant=this.addEmployeeForm.value.NbEnfant;
     this.employee.salaireBrute=this.addEmployeeForm.value.Salaire;
-    if(this.addEmployeeForm.value.CNSS==="2"){
-      this.employee.cnss=false;
-    }else{this.employee.cnss=true;}
+    this.employee.cnss=this.addEmployeeForm.value.CNSS;
     this.employee.matriculeCnss=this.addEmployeeForm.value.MatriculeCNSS;
     this.employee.bankName=this.addEmployeeForm.value.BankName;
     this.employee.swift=this.addEmployeeForm.value.SWIFT;
     this.employee.rib=this.addEmployeeForm.value.RIB;
     this.employee.iban=this.addEmployeeForm.value.IBAN;
-    if(this.addEmployeeForm.value.EnConge==="2"){
-      this.employee.enConge=false;
-    }else{this.employee.enConge=true;}
-    this.srvModuleService.add(this.employee,`Employee/addEmployee?posteId=${this.addEmployeeForm.value.Poste.id}&poleId=${this.addEmployeeForm.value.Pole.id}`).
-    subscribe((data) => 
-    {this.loadEmployee();}
-  );
+    this.employee.enConge=this.addEmployeeForm.value.EnConge;
+    if(this.addEmployeeForm.value.Pole){
+      this.srvModuleService.add(this.employee,`Employee/addEmployee?posteId=${this.addEmployeeForm.value.Poste.id}&poleId=${this.addEmployeeForm.value.Pole.id}`).
+      subscribe((data) => 
+      {this.loadEmployee();}
+    );
+    }else{
+      this.srvModuleService.add(this.employee,`Employee/addEmployee?posteId=${this.addEmployeeForm.value.Poste.id}&poleId=${0}`).
+      subscribe((data) => 
+      {this.loadEmployee();}
+    );
+    }
+    
     
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
@@ -263,17 +267,13 @@ export class EmployeePageContentComponent implements OnInit {
     this.employee.situationFam=this.editEmployeeForm.value.SituationFam;
     this.employee.nbEnfant=this.editEmployeeForm.value.NbEnfant;
     this.employee.salaireBrute=this.editEmployeeForm.value.Salaire;
-    if(this.editEmployeeForm.value.CNSS==="2"){
-      this.employee.cnss=false;
-    }else{this.employee.cnss=true;}
+    this.employee.cnss=this.editEmployeeForm.value.CNSS;
     this.employee.matriculeCnss=this.editEmployeeForm.value.MatriculeCNSS;
     this.employee.bankName=this.editEmployeeForm.value.BankName;
     this.employee.swift=this.editEmployeeForm.value.SWIFT;
     this.employee.rib=this.editEmployeeForm.value.RIB;
     this.employee.iban=this.editEmployeeForm.value.IBAN;
-    if(this.editEmployeeForm.value.EnConge==="2"){
-      this.employee.enConge=false;
-    }else{this.employee.enConge=true;}
+    this.employee.enConge=this.editEmployeeForm.value.EnConge;
     this.employee.poste=this.editEmployeeForm.value.Poste;
     this.srvModuleService.update(this.employee,'Employee/editEmployee').subscribe((data1) => {
       this.loadEmployee();

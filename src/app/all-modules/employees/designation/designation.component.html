@@ -53,7 +53,7 @@
                         <tr *ngFor="let p of poles">
                             <td>{{p.id}}</td>
                             <td>{{p.pole}}</td>
-                            <td>{{p.manager.prenom}} {{p.manager.nom}}</td>
+                            <td>{{p?.manager?.prenom}} {{p?.manager?.nom}}</td>
                             <td>
                                 <a class="btn btn-sm btn-primary" routerLink="/">
                                     {{p.employes?.length}}

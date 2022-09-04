@@ -313,17 +313,16 @@
                             <div class="form-group">
                                 <label class="col-form-label">Pole</label>
                                 <select class="form-select form-control"
-                                    [class.invalid]="addEmployeeForm.get('Pole').invalid && addEmployeeForm.get('Pole').touched"
                                     formControlName="Pole">
                                     <option value="">Choisir Pole</option>
                                     <option *ngFor="let p of poles" [ngValue]="p" >{{p.pole}}</option>
                                 </select>
-                                <div
+                               <!-- <div
                                     *ngIf="addEmployeeForm.get('Pole').invalid && addEmployeeForm.get('Pole').touched">
                                     <small
                                         *ngIf="addEmployeeForm.get('Pole').invalid && addEmployeeForm.get('Pole').touched"
                                         class="text-danger"> Pole required</small>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -423,8 +422,8 @@
                                     [class.invalid]="addEmployeeForm.get('CNSS').invalid && addEmployeeForm.get('CNSS').touched"
                                     formControlName="CNSS">
                                     <option value="">Avec CNSS ?</option>
-                                    <option value="1">OUI</option>
-                                    <option value="2">NON</option>
+                                    <option value="true">OUI</option>
+                                    <option value="false">NON</option>
                                 </select>
                                 <div
                                     *ngIf="addEmployeeForm.get('CNSS').invalid && addEmployeeForm.get('CNSS').touched">
@@ -473,8 +472,8 @@
                                     [class.invalid]="addEmployeeForm.get('EnConge').invalid && addEmployeeForm.get('EnConge').touched"
                                     formControlName="EnConge">
                                     <option value="">Le salarié est-il en congé ?</option>
-                                    <option value="1">OUI</option>
-                                    <option value="2">NON</option>
+                                    <option value="true">OUI</option>
+                                    <option value="false">NON</option>
                                 </select>
                                 <div
                                     *ngIf="addEmployeeForm.get('EnConge').invalid && addEmployeeForm.get('EnConge').touched">
@@ -509,6 +508,7 @@
             <div class="modal-body">
                 <form (ngSubmit)="editEmployee()" [formGroup]="editEmployeeForm">
                     <div class="row">
+                            <h3 class="card-title">Informations Personnelles</h3>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Nom <span class="text-danger">*</span></label>
@@ -723,6 +723,168 @@
                                 </div>
                             </div>
                         </div>
+                       
+                        <h3 class="card-title">Informations d'urgence</h3>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Numéro Tel urgence</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('TelURG').invalid && editEmployeeForm.get('TelURG').touched"
+                                    formControlName="TelURG">
+                                <div
+                                    *ngIf="editEmployeeForm.get('TelURG').invalid && editEmployeeForm.get('TelURG').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('TelURG').invalid && editEmployeeForm.get('TelURG').touched"
+                                        class="text-danger"> *Numéro Tel urgence is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Prenom urgence</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched"
+                                    formControlName="NomURG">
+                                <div
+                                    *ngIf="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched"
+                                        class="text-danger"> *Numéro Tel urgence is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label"> Relation urgence</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched"
+                                    formControlName="RelationURG">
+                                <div
+                                    *ngIf="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched"
+                                        class="text-danger"> *Relation is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Informations Famille</h3>
+                        <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label">Situation familiale</label>
+                            <select class="form-select form-control"
+                                [class.invalid]="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
+                                formControlName="SituationFam">
+                                <option value="">Choisir Situation Familiale</option>
+                                <option value="MARIE">Marie(é)</option>
+                                <option value="CELIBATAIRE">Célibataire</option>
+                               
+                            </select>
+                            <div
+                                *ngIf="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched">
+                                <small
+                                    *ngIf="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
+                                    class="text-danger"> *Situation familiale required</small>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Nombre des enfants <span class="text-danger">*</span></label>
+                                <input class="form-control" type="number"
+                                    [class.invalid]="editEmployeeForm.get('NbEnfant').invalid && editEmployeeForm.get('NbEnfant').touched"
+                                    formControlName="NbEnfant">
+                                <div
+                                    *ngIf="editEmployeeForm.get('NbEnfant').invalid && editEmployeeForm.get('NbEnfant').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('NbEnfant').invalid && editEmployeeForm.get('NbEnfant').touched"
+                                        class="text-danger"> *Age is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Informations CNSS</h3>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">CNSS</label>
+                                <select class="form-select form-control"
+                                    [class.invalid]="editEmployeeForm.get('CNSS').invalid && editEmployeeForm.get('CNSS').touched"
+                                    formControlName="CNSS">
+                                    <option value="">Avec CNSS ?</option>
+                                    <option value="true">OUI</option>
+                                    <option value="false">NON</option>
+                                </select>
+                                <div
+                                    *ngIf="editEmployeeForm.get('CNSS').invalid && editEmployeeForm.get('CNSS').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('CNSS').invalid && editEmployeeForm.get('CNSS').touched"
+                                        class="text-danger"> CNSS required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Matricule CNSS</label>
+                                <input class="form-control" type="text"
+                                    formControlName="MatriculeCNSS">
+                            </div>
+                        </div>
+                        <h3 class="card-title">Informations Banque</h3>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Banque</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched"
+                                    formControlName="BankName">
+                                <div
+                                    *ngIf="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched"
+                                        class="text-danger"> *Banque is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">RIB</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched"
+                                    formControlName="RIB">
+                                <div
+                                    *ngIf="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched"
+                                        class="text-danger"> *RIB is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">SWIFT</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched"
+                                    formControlName="SWIFT">
+                                <div
+                                    *ngIf="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched"
+                                        class="text-danger"> *SWIFT is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">IBAN</label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched"
+                                    formControlName="IBAN">
+                                <div
+                                    *ngIf="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched">
+                                    <small
+                                        *ngIf="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched"
+                                        class="text-danger"> *IBAN is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Informations Sofrecom</h3>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Date de Recrutement <span class="text-danger">*</span></label>
@@ -802,163 +964,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Numéro Tel urgence</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('TelURG').invalid && editEmployeeForm.get('TelURG').touched"
-                                    formControlName="TelURG">
-                                <div
-                                    *ngIf="editEmployeeForm.get('TelURG').invalid && editEmployeeForm.get('TelURG').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('TelURG').invalid && editEmployeeForm.get('TelURG').touched"
-                                        class="text-danger"> *Numéro Tel urgence is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Prenom urgence</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched"
-                                    formControlName="NomURG">
-                                <div
-                                    *ngIf="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched"
-                                        class="text-danger"> *Numéro Tel urgence is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label"> Relation urgence</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched"
-                                    formControlName="RelationURG">
-                                <div
-                                    *ngIf="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched"
-                                        class="text-danger"> *Relation is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-form-label">Situation familiale</label>
-                            <select class="form-select form-control"
-                                [class.invalid]="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
-                                formControlName="SituationFam">
-                                <option value="">Choisir Genre</option>
-                                <option value="MARIE">Marie(é)</option>
-                                <option value="CELIBATAIRE">Célibataire</option>
-                               
-                            </select>
-                            <div
-                                *ngIf="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched">
-                                <small
-                                    *ngIf="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
-                                    class="text-danger"> *Situation familiale required</small>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Nombre des enfants <span class="text-danger">*</span></label>
-                                <input class="form-control" type="number"
-                                    [class.invalid]="editEmployeeForm.get('NbEnfant').invalid && editEmployeeForm.get('NbEnfant').touched"
-                                    formControlName="NbEnfant">
-                                <div
-                                    *ngIf="editEmployeeForm.get('NbEnfant').invalid && editEmployeeForm.get('NbEnfant').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('NbEnfant').invalid && editEmployeeForm.get('NbEnfant').touched"
-                                        class="text-danger"> *Age is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">CNSS</label>
-                                <select class="form-select form-control"
-                                    [class.invalid]="editEmployeeForm.get('CNSS').invalid && editEmployeeForm.get('CNSS').touched"
-                                    formControlName="CNSS">
-                                    <option value="">Avec CNSS ?</option>
-                                    <option value="1">OUI</option>
-                                    <option value="2">NON</option>
-                                </select>
-                                <div
-                                    *ngIf="editEmployeeForm.get('CNSS').invalid && editEmployeeForm.get('CNSS').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('CNSS').invalid && editEmployeeForm.get('CNSS').touched"
-                                        class="text-danger"> CNSS required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Matricule CNSS</label>
-                                <input class="form-control" type="text"
-                                    formControlName="MatriculeCNSS">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Banque</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched"
-                                    formControlName="BankName">
-                                <div
-                                    *ngIf="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched"
-                                        class="text-danger"> *Banque is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">RIB</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched"
-                                    formControlName="RIB">
-                                <div
-                                    *ngIf="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched"
-                                        class="text-danger"> *RIB is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">SWIFT</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched"
-                                    formControlName="SWIFT">
-                                <div
-                                    *ngIf="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched"
-                                        class="text-danger"> *SWIFT is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">IBAN</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched"
-                                    formControlName="IBAN">
-                                <div
-                                    *ngIf="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched"
-                                        class="text-danger"> *IBAN is required</small>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="col-form-label">En Congé</label>
@@ -966,8 +971,8 @@
                                     [class.invalid]="editEmployeeForm.get('EnConge').invalid && editEmployeeForm.get('EnConge').touched"
                                     formControlName="EnConge">
                                     <option value="">Le salarié est-il en congé ?</option>
-                                    <option value="1">OUI</option>
-                                    <option value="2">NON</option>
+                                    <option value="true">OUI</option>
+                                    <option value="false">NON</option>
                                 </select>
                                 <div
                                     *ngIf="editEmployeeForm.get('EnConge').invalid && editEmployeeForm.get('EnConge').touched">
