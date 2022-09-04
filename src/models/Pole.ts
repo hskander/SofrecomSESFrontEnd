@@ -8,5 +8,5 @@ export interface Pole{
     responsablePole: string;
     direction : Direction;
     manager:Employee;
-    employees: Employee[];
+    employes: Employee[];
 }

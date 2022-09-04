@@ -31,6 +31,7 @@ export class EmployeeProfileComponent implements OnInit {
   public diplomeDetails : DiplomeDetails[] = [];
   public empId:any;
   public poleManager:Employee = $;
+  public pole:Pole;
   public directionManager:Employee = $;
   constructor(
     private toastr: ToastrService,
@@ -41,7 +42,7 @@ export class EmployeeProfileComponent implements OnInit {
 
   ngOnInit() {
   this.getEmp();
-  this.getPoleManager();
+  this.getEmployePole();
   this.getDirectionManager();
   this.getPoles();
   this.getExperience();
@@ -71,19 +72,17 @@ export class EmployeeProfileComponent implements OnInit {
             }
           );
         }
-
-        //Get Employee Pole Manager
-        getPoleManager(): void{
-          this.allModulesService.getOne(`Employee/findEmployePoleManager?id=${this.route.snapshot.params.id}`).subscribe(
-            (response: Employee) => {
-              this.poleManager= response;
-              console.log(this.poleManager.prenom);
+        getEmployePole(){
+          this.allModulesService.getOne(`Employee/findEmployePole?id=${this.route.snapshot.params.id}`).subscribe(
+            (response: Pole) => {
+              this.pole= response;
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
             }
           );
         }
+        
          //Get Employee Pole Manager
          getDirectionManager(): void{
           this.allModulesService.getOne(`Employee/findEmployeDirectionManager?id=${this.route.snapshot.params.id}`).subscribe(

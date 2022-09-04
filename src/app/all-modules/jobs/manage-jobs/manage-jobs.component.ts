@@ -83,20 +83,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
 
   addJobs() {
     if (this.addManageJobs.valid) {
-      /*let purchaseDateFormat = this.pipe.transform(
-        this.addManageJobs.value.addStartDate,
-        "dd-MM-yyyy"
-      );
-      let purchaseToDateFormat = this.pipe.transform(
-        this.addManageJobs.value.addExpireDate,
-        "dd-MM-yyyy"
-      );
-      let obj = {
-        jobTitle: this.addManageJobs.value.addJobTitle,
-        department: this.addManageJobs.value.addDepartment,
-        startDate: purchaseDateFormat,
-        expireDate: purchaseToDateFormat,
-      };*/
+     
       this.poste.poste= this.addManageJobs.value.Poste;
       this.poste.description=this.addManageJobs.value.Description;
       this.allModuleService.add(this.poste, 'Poste/add').subscribe((data) => {
@@ -111,14 +98,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       this.toastr.success("Job is added", "Success");
     }
   }
-  // to know the date picker changes
-
- /* from(data) {
-    this.purchaseDateFormat = this.pipe.transform(data, "dd-MM-yyyy");
-  }
-  to(data) {
-    this.purchaseToDateFormat = this.pipe.transform(data, "dd-MM-yyyy");
-  }*/
+  
 
   // Edit Provident Modal Api Call
 

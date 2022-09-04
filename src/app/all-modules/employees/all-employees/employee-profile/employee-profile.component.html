@@ -35,9 +35,9 @@
                                     <div class="profile-info-left">
                                         <h3 class="user-name m-t-0 mb-0">{{employee.nom}} {{employee.prenom}}</h3>
                                         <h6 class="text-muted">{{employee.poste.poste}}</h6>
-                                        <small class="text-muted" *ngIf="employee.pole">Pole : {{employee.pole.pole}}</small>
+                                        <small class="text-muted" *ngIf="pole.pole">Pole : {{pole.pole}}</small>
                                         <div class="staff-id">Employee Code : {{employee.employeCode}}</div>
-                                        <small class="text-muted" *ngIf="employee.pole">Direction : {{employee.pole.direction.direction}}</small>
+                                        <small class="text-muted" *ngIf="pole.pole">Direction : {{pole.direction.direction}}</small>
                                     </div>
                                      
                                       <div *ngIf="employee.enConge===true">
@@ -72,20 +72,20 @@
                                         </li>
                                         <li>
                                             <div class="title">Pole Manager</div>
-                                            <div class="text"  *ngIf="employee.pole">
+                                            <div class="text"  *ngIf="pole.pole">
                                                 <div class="avatar-box">
                                                     <div class="avatar avatar-xs">
                                                         <img src="assets/img/yassine1.jpeg" alt="">
                                                     </div>
                                                 </div>
                                                 <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{poleManager.id}}">
-                                                    {{poleManager.nom}} {{poleManager.prenom}}
+                                                    {{pole.manager.nom}} {{pole.manager.prenom}}
                                                 </a>
                                             </div>
                                         </li>
                                         <li>
                                                 <div class="title">Direction Manager</div>
-                                                <div class="text"  *ngIf="employee.pole">
+                                                <div class="text"  *ngIf="pole.pole">
                                                     <div class="avatar-box">
                                                         <div class="avatar avatar-xs">
                                                             <img src="assets/img/yassine1.jpeg" alt="">

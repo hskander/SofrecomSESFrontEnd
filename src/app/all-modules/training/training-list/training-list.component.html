@@ -151,8 +151,7 @@
                                 <div class="form-group">
                                     <label>Diplome</label>
                                     <input class="form-control" type="text"
-                                        [class.invalid]="addTrainerForm.get('Type').invalid && addTrainerForm.get('Type').touched"
-                       >
+                                        [class.invalid]="addTrainerForm.get('Type').invalid && addTrainerForm.get('Type').touched">
                                     <div *ngIf="addTrainerForm.get('Type').invalid && addTrainerForm.get('Type').touched">
                                         <small
                                             *ngIf="addTrainerForm.get('Type').invalid && addTrainerForm.get('Type').touched"

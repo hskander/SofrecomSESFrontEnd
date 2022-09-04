@@ -78,11 +78,10 @@ export class DesignationComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+ 
   // Get designation list  Api Call
   LoadDesignation() {
     this.srvModuleService.get('Pole/all').subscribe((data) => {
-      console.log(data);
       this.poles = data;
       this.dtTrigger.next();
       this.rows = this.poles;
@@ -147,7 +146,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
     this.pole.direction=toSetValues.direction;
     this.pole.description=toSetValues.description;
     this.pole.responsablePole=toSetValues.responsablePole;
-    this.pole.employees=toSetValues.employees;
+    this.pole.employes=toSetValues.employes;
 
   }
   affectManager(){

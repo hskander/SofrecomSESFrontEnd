@@ -55,13 +55,15 @@
                             (click)="tempId = emp.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                     </div>
                 </div>
-                <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a
+            <div> <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a
                         routerLink="/layout/employees/employeeprofile/{{emp.id}}">{{emp.nom}} {{emp.prenom}}</a>
                 </h4>
+                </div>
                 <div class="small text-muted">{{emp.poste.poste}}</div>
             </div>
         </div>
     </div>
+    
 </div>
 <!-- /Page Content -->
 
@@ -382,18 +384,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Situation familiale</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="addEmployeeForm.get('SituationFam').invalid && addEmployeeForm.get('SituationFam').touched"
-                                    formControlName="SituationFam">
-                                <div
-                                    *ngIf="addEmployeeForm.get('SituationFam').invalid && addEmployeeForm.get('SituationFam').touched">
-                                    <small
-                                        *ngIf="addEmployeeForm.get('SituationFam').invalid && addEmployeeForm.get('SituationFam').touched"
-                                        class="text-danger"> *Situation familiale is required</small>
-                                </div>
+                        
+                        <div class="form-group">
+                            <label class="col-form-label">Situation familiale</label>
+                            <select class="form-select form-control"
+                                [class.invalid]="addEmployeeForm.get('SituationFam').invalid && addEmployeeForm.get('SituationFam').touched"
+                                formControlName="SituationFam">
+                                <option value="">Choisir Genre</option>
+                                <option value="MARIE">Marie(é)</option>
+                                <option value="CELIBATAIRE">Célibataire</option>
+                               
+                            </select>
+                            <div
+                                *ngIf="addEmployeeForm.get('SituationFam').invalid && addEmployeeForm.get('SituationFam').touched">
+                                <small
+                                    *ngIf="addEmployeeForm.get('SituationFam').invalid && addEmployeeForm.get('SituationFam').touched"
+                                    class="text-danger"> *Situation familiale required</small>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -765,7 +771,7 @@
                             </div>
                         </div>
         
-                        <div class="col-sm-6">
+                    <!--    <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Pole</label>
                                 <select class="form-select form-control"
@@ -781,7 +787,7 @@
                                         class="text-danger"> Pole required</small>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Salaire Brute</label>
@@ -840,18 +846,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Situation familiale</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
-                                    formControlName="SituationFam">
-                                <div
-                                    *ngIf="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
-                                        class="text-danger"> *Situation familiale is required</small>
-                                </div>
+                        
+                        <div class="form-group">
+                            <label class="col-form-label">Situation familiale</label>
+                            <select class="form-select form-control"
+                                [class.invalid]="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
+                                formControlName="SituationFam">
+                                <option value="">Choisir Genre</option>
+                                <option value="MARIE">Marie(é)</option>
+                                <option value="CELIBATAIRE">Célibataire</option>
+                               
+                            </select>
+                            <div
+                                *ngIf="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched">
+                                <small
+                                    *ngIf="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
+                                    class="text-danger"> *Situation familiale required</small>
                             </div>
                         </div>
                         <div class="col-sm-6">

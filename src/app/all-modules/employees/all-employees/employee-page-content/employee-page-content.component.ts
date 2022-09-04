@@ -94,7 +94,6 @@ export class EmployeePageContentComponent implements OnInit {
       RIB: ["", [Validators.required]],
       IBAN: ["", [Validators.required]],
       EnConge: ["", [Validators.required]],
-      Pole: ["", [Validators.required]],
       Poste: ["", [Validators.required]],
       Email: ["", [Validators.required]],
       NumTel: ["", [Validators.required]],
@@ -107,6 +106,7 @@ export class EmployeePageContentComponent implements OnInit {
       NomURG: ["", [Validators.required]],
       TelURG: ["", [Validators.required]],
       RelationURG: ["", [Validators.required]],
+      Image: [""],
     });
   }
 
@@ -247,6 +247,7 @@ export class EmployeePageContentComponent implements OnInit {
     this.employee.dateNaissance=dateNaissance;
     this.employee.lieuNaissance=this.editEmployeeForm.value.lieuNaissance;
     this.employee.nationalite=this.editEmployeeForm.value.Nationalite;
+    this.employee.image=this.editEmployeeForm.value.Image;
     this.employee.mail=this.editEmployeeForm.value.Email;
     this.employee.dateRecrut=dateRecrut;
     this.employee.dateDepart=dateDepart;
@@ -273,7 +274,6 @@ export class EmployeePageContentComponent implements OnInit {
     if(this.editEmployeeForm.value.EnConge==="2"){
       this.employee.enConge=false;
     }else{this.employee.enConge=true;}
-    this.employee.pole=this.editEmployeeForm.value.Pole;
     this.employee.poste=this.editEmployeeForm.value.Poste;
     this.srvModuleService.update(this.employee,'Employee/editEmployee').subscribe((data1) => {
       this.loadEmployee();
@@ -309,7 +309,6 @@ export class EmployeePageContentComponent implements OnInit {
       RIB: toSetValues.rib,
       IBAN: toSetValues.iban,
       EnConge: toSetValues.enConge,
-      Pole: toSetValues.pole,
       Poste: toSetValues.poste,
       Email: toSetValues.mail,
       NumTel: toSetValues.numTel,
@@ -322,6 +321,7 @@ export class EmployeePageContentComponent implements OnInit {
       NomURG: toSetValues.nomUrgence,
       TelURG: toSetValues.numUrgence,
       RelationURG: toSetValues.relationUrgence,
+      Image: toSetValues.image,
 
     });
   }
