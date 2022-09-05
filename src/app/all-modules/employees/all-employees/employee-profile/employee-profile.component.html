@@ -78,7 +78,7 @@
                                                         <img src="assets/img/{{pole.manager.image}}.jpeg" alt="">
                                                     </div>
                                                 </div>
-                                                <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{poleManager.id}}">
+                                                <a (click)="ngOnInit();" routerLink="/layout/employees/employeeprofile/{{pole.manager.id}}">
                                                     {{pole.manager.nom}} {{pole.manager.prenom}}
                                                 </a>
                                             </div>
@@ -104,7 +104,7 @@
                                                             <img src="assets/img/{{directionManager.image}}.jpeg" alt="">
                                                         </div>
                                                     </div>
-                                                    <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{directionManager.id}}" >
+                                                    <a (click)="ngOnInit();" routerLink="/layout/employees/employeeprofile/{{directionManager.id}}" >
                                                         {{directionManager.nom}} {{directionManager.prenom}}
                                                     </a>
                                                 </div>

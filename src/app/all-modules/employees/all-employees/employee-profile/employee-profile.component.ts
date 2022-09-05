@@ -12,6 +12,7 @@ import { DiplomeDetails } from 'src/models/diplomeDetails';
 import {Experience} from 'src/models/experience';
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
+import { Subject } from 'rxjs';
 
 declare const $: any;
 
@@ -23,6 +24,7 @@ declare const $: any;
 export class EmployeeProfileComponent implements OnInit {
   
   public dtElement: DataTableDirective;
+  public dtTrigger: Subject<any> = new Subject();
   public editId: any;
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
@@ -46,8 +48,7 @@ export class EmployeeProfileComponent implements OnInit {
 
   ngOnInit() {
   this.getEmp();
-  this.getEmployePole();
-  this.getDirectionManager();
+  
   this.getExperience();
   this.editEmployeeForm = this.formBuilder.group({
     FirstName: ["", [Validators.required]],
@@ -113,6 +114,7 @@ export class EmployeeProfileComponent implements OnInit {
           this.allModulesService.getOne(`Employee/findEmployePole?id=${this.route.snapshot.params.id}`).subscribe(
             (response: Pole) => {
               this.pole= response;
+              this.poleManager=this.pole.manager;
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
@@ -137,6 +139,8 @@ export class EmployeeProfileComponent implements OnInit {
     this.allModulesService.getOne(`Employee/find?id=${this.route.snapshot.params.id}`).subscribe(
       (response: Employee) => {
         this.employee= response;
+        this.getEmployePole();
+        this.getDirectionManager();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -216,8 +220,7 @@ export class EmployeeProfileComponent implements OnInit {
       if(this.editEmployeeForm.value.Pole.id){
         this.editEmployeePole(this.editEmployeeForm.value.Pole.id);
       }
-      this.getEmployePole();
-      this.getDirectionManager();
+     this.ngOnInit();
     });
     
     $("#edit_employee").modal("hide");
@@ -265,6 +268,10 @@ export class EmployeeProfileComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
 
   onSubmit() {
     this.toastr.success("Bank & statutory added", "Success");

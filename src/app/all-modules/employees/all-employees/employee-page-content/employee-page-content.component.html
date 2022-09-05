@@ -81,6 +81,7 @@
             <div class="modal-body">
                 <form (ngSubmit)="addEmployee()" [formGroup]="addEmployeeForm">
                     <div class="row">
+                            <h3 class="card-title">Informations Personnelles</h3>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Nom <span class="text-danger">*</span></label>
@@ -272,75 +273,9 @@
                                 <input class="form-control" type="text" formControlName="Civilite">
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Date de Recrutement <span class="text-danger">*</span></label>
-                                <div class="cal-icon">
 
-                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
-                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                        [class.invalid]="addEmployeeForm.get('dateRecrut').invalid && addEmployeeForm.get('dateRecrut').touched"
-                                        formControlName="dateRecrut">
-                                    <div
-                                        *ngIf="addEmployeeForm.get('dateRecrut').invalid && addEmployeeForm.get('dateRecrut').touched">
-                                        <small
-                                            *ngIf="addEmployeeForm.get('dateRecrut').invalid && addEmployeeForm.get('dateRecrut').touched"
-                                            class="text-danger"> *Date de Recrutement is required</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Poste</label>
-                                <select class="form-select form-control"
-                                    [class.invalid]="addEmployeeForm.get('Poste').invalid && addEmployeeForm.get('Poste').touched"
-                                    formControlName="Poste">
-                                    <option value="">Choisir Poste</option>
-                                    <option *ngFor="let po of postes" [ngValue]="po">{{po.poste}}</option>
-                                    
-                                </select>
-                                <div
-                                    *ngIf="addEmployeeForm.get('Poste').invalid && addEmployeeForm.get('Poste').touched">
-                                    <small
-                                        *ngIf="addEmployeeForm.get('Poste').invalid && addEmployeeForm.get('Poste').touched"
-                                        class="text-danger"> Poste required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Pole</label>
-                                <select class="form-select form-control"
-                                    formControlName="Pole">
-                                    <option value="">Choisir Pole</option>
-                                    <option *ngFor="let p of poles" [ngValue]="p" >{{p.pole}}</option>
-                                </select>
-                               <!-- <div
-                                    *ngIf="addEmployeeForm.get('Pole').invalid && addEmployeeForm.get('Pole').touched">
-                                    <small
-                                        *ngIf="addEmployeeForm.get('Pole').invalid && addEmployeeForm.get('Pole').touched"
-                                        class="text-danger"> Pole required</small>
-                                </div>-->
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Salaire Brute</label>
-                                <input class="form-control" type="number"
-                                    [class.invalid]="addEmployeeForm.get('Salaire').invalid && addEmployeeForm.get('Salaire').touched"
-                                    formControlName="Salaire">
-                                <div
-                                    *ngIf="addEmployeeForm.get('Salaire').invalid && addEmployeeForm.get('Salaire').touched">
-                                    <small
-                                        *ngIf="addEmployeeForm.get('Salaire').invalid && addEmployeeForm.get('Salaire').touched"
-                                        class="text-danger"> *Salaire Brute is required</small>
-                                </div>
-                            </div>
-                        </div>
-
-
+                       
+                        <h3 class="card-title">Informations d'urgence</h3>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Numéro Tel urgence</label>
@@ -383,13 +318,13 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        <h3 class="card-title">Informations Famille</h3>
                         <div class="form-group">
                             <label class="col-form-label">Situation familiale</label>
                             <select class="form-select form-control"
                                 [class.invalid]="addEmployeeForm.get('SituationFam').invalid && addEmployeeForm.get('SituationFam').touched"
                                 formControlName="SituationFam">
-                                <option value="">Choisir Genre</option>
+                                <option value="">Choisir Situation Familiale</option>
                                 <option value="MARIE">Marie(é)</option>
                                 <option value="CELIBATAIRE">Célibataire</option>
                                
@@ -415,6 +350,7 @@
                                 </div>
                             </div>
                         </div>
+                        <h3 class="card-title">Informations CNSS</h3>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">CNSS</label>
@@ -440,6 +376,7 @@
                                     formControlName="MatriculeCNSS">
                             </div>
                         </div>
+                        <h3 class="card-title">Informations Banque</h3>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Banque</label>
@@ -465,6 +402,75 @@
                                 <input class="form-control" type="text" formControlName="IBAN">
                             </div>
                         </div>
+                        <h3 class="card-title">Informations Sofrecom</h3>
+                        <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Date de Recrutement <span class="text-danger">*</span></label>
+                                    <div class="cal-icon">
+    
+                                        <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                            [class.invalid]="addEmployeeForm.get('dateRecrut').invalid && addEmployeeForm.get('dateRecrut').touched"
+                                            formControlName="dateRecrut">
+                                        <div
+                                            *ngIf="addEmployeeForm.get('dateRecrut').invalid && addEmployeeForm.get('dateRecrut').touched">
+                                            <small
+                                                *ngIf="addEmployeeForm.get('dateRecrut').invalid && addEmployeeForm.get('dateRecrut').touched"
+                                                class="text-danger"> *Date de Recrutement is required</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Poste</label>
+                                    <select class="form-select form-control"
+                                        [class.invalid]="addEmployeeForm.get('Poste').invalid && addEmployeeForm.get('Poste').touched"
+                                        formControlName="Poste">
+                                        <option value="">Choisir Poste</option>
+                                        <option *ngFor="let po of postes" [ngValue]="po">{{po.poste}}</option>
+                                        
+                                    </select>
+                                    <div
+                                        *ngIf="addEmployeeForm.get('Poste').invalid && addEmployeeForm.get('Poste').touched">
+                                        <small
+                                            *ngIf="addEmployeeForm.get('Poste').invalid && addEmployeeForm.get('Poste').touched"
+                                            class="text-danger"> Poste required</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Pole</label>
+                                    <select class="form-select form-control"
+                                        formControlName="Pole">
+                                        <option value="">Choisir Pole</option>
+                                        <option *ngFor="let p of poles" [ngValue]="p" >{{p.pole}}</option>
+                                    </select>
+                                   <!-- <div
+                                        *ngIf="addEmployeeForm.get('Pole').invalid && addEmployeeForm.get('Pole').touched">
+                                        <small
+                                            *ngIf="addEmployeeForm.get('Pole').invalid && addEmployeeForm.get('Pole').touched"
+                                            class="text-danger"> Pole required</small>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Salaire Brute</label>
+                                    <input class="form-control" type="number"
+                                        [class.invalid]="addEmployeeForm.get('Salaire').invalid && addEmployeeForm.get('Salaire').touched"
+                                        formControlName="Salaire">
+                                    <div
+                                        *ngIf="addEmployeeForm.get('Salaire').invalid && addEmployeeForm.get('Salaire').touched">
+                                        <small
+                                            *ngIf="addEmployeeForm.get('Salaire').invalid && addEmployeeForm.get('Salaire').touched"
+                                            class="text-danger"> *Salaire Brute is required</small>
+                                    </div>
+                                </div>
+                            </div>
+    
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">En Congé</label>
