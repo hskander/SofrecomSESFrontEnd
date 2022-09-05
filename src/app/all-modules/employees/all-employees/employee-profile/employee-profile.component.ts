@@ -13,6 +13,7 @@ import {Experience} from 'src/models/experience';
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
 import { Subject } from 'rxjs';
+import { Direction } from 'ngx-bootstrap/carousel/carousel.component';
 
 declare const $: any;
 
@@ -37,6 +38,7 @@ export class EmployeeProfileComponent implements OnInit {
   public empId:any;
   public poleManager:Employee = $;
   public pole:Pole= $;
+  public direction:Direction= $;
   public directionManager:Employee = $;
   public pipe = new DatePipe("en-US");
   constructor(
@@ -55,33 +57,33 @@ export class EmployeeProfileComponent implements OnInit {
     LastName: ["", [Validators.required]],
     Adresse: ["", [Validators.required]],
     Nationalite: ["", [Validators.required]],
-    NumPasseport: ["", [Validators.required]],
-    dateExpPasseport: ["", [Validators.required]],
+    NumPasseport: [""],
+    dateExpPasseport: [""],
     CIN: ["", [Validators.required]],
     dateDelivCIN: ["", [Validators.required]],
-    Civilite: ["", [Validators.required]],
+    Civilite: [""],
     SituationFam: ["", [Validators.required]],
     NbEnfant: ["", [Validators.required]],
-    MatriculeCNSS: ["", [Validators.required]],
+    MatriculeCNSS: [""],
     CNSS: ["", [Validators.required]],
-    BankName: ["", [Validators.required]],
-    SWIFT: ["", [Validators.required]],
-    RIB: ["", [Validators.required]],
-    IBAN: ["", [Validators.required]],
+    BankName: [""],
+    SWIFT: [""],
+    RIB: [""],
+    IBAN: [""],
     EnConge: ["", [Validators.required]],
     Poste: ["", [Validators.required]],
-    Pole: ["", [Validators.required]],
+    Pole: [""],
     Email: ["", [Validators.required]],
     NumTel: ["", [Validators.required]],
     dateNaissance: ["", [Validators.required]],
     Salaire: ["", [Validators.required]],
-    lieuNaissance: ["", [Validators.required]],
+    lieuNaissance: [""],
     dateRecrut: ["", [Validators.required]],
-    dateDepart: ["", [Validators.required]],
+    dateDepart: [""],
     Genre: ["", [Validators.required]],
-    NomURG: ["", [Validators.required]],
+    NomURG: [""],
     TelURG: ["", [Validators.required]],
-    RelationURG: ["", [Validators.required]],
+    RelationURG: [""],
     Image: [""],
   });
   }
@@ -90,7 +92,6 @@ export class EmployeeProfileComponent implements OnInit {
       this.allModulesService.get('Pole/all').subscribe(
         (response: Pole[]) => {
           this.poles= response;
-         // console.log(this.poles);
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
@@ -127,7 +128,17 @@ export class EmployeeProfileComponent implements OnInit {
           this.allModulesService.getOne(`Employee/findEmployeDirectionManager?id=${this.route.snapshot.params.id}`).subscribe(
             (response: Employee) => {
               this.directionManager= response;
-              console.log(this.directionManager.prenom);
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        findDirectionByManager(){
+          this.allModulesService.getOne(`Direction/findDirectionByManager?id=${this.route.snapshot.params.id}`).subscribe(
+            (response: Direction) => {
+              this.direction= response;
+              console.log(this.direction);
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
@@ -140,6 +151,7 @@ export class EmployeeProfileComponent implements OnInit {
       (response: Employee) => {
         this.employee= response;
         this.getEmployePole();
+        this.findDirectionByManager();
         this.getDirectionManager();
       },
       (error: HttpErrorResponse) => {

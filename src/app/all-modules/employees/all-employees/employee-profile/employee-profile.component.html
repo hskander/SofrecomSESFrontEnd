@@ -17,15 +17,15 @@
     </div>
     <!-- /Page Header -->
 
-    <div class="card mb-0">
+    <div class="card mb-0" *ngIf='employee'>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="profile-view" *ngIf='employee'>
+                    <div class="profile-view" >
                         <div class="profile-img-wrap">
                             <div class="profile-img">
                                 <a>
-                                    <img alt="" src="assets/img/{{employee.image}}.jpeg">
+                                    <img alt="" src="assets/img/{{employee?.image}}.jpeg">
                                 </a>
                             </div>
                         </div>
@@ -33,11 +33,12 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="profile-info-left">
-                                        <h3 class="user-name m-t-0 mb-0">{{employee.nom}} {{employee.prenom}}</h3>
-                                        <h6 class="text-muted">{{employee.poste.poste}}</h6>
-                                        <small class="text-muted" *ngIf="pole.pole">Pole : {{pole.pole}}</small>
-                                        <div class="staff-id">Employee Code : {{employee.employeCode}}</div>
-                                        <small class="text-muted" *ngIf="pole.pole">Direction : {{pole.direction.direction}}</small>
+                                        <h3 class="user-name m-t-0 mb-0">{{employee?.nom}} {{employee?.prenom}}</h3>
+                                        <h6 class="text-muted">{{employee?.poste?.poste}}</h6>
+                                        <h6 *ngIf="direction" class="text-muted">Direction :{{direction?.direction}}</h6>
+                                        <small class="text-muted" *ngIf="pole.pole">Pole : {{pole?.pole}}</small>
+                                        <div class="staff-id">Employee Code : {{employee?.employeCode}}</div>
+                                        <small class="text-muted" *ngIf="pole.direction">Direction : {{pole?.direction?.direction}}</small>
                                     </div>
                                      
                                       <div *ngIf="employee.enConge===true">
@@ -46,19 +47,19 @@
                                 </div>
                                 <div class="col-md-8">
                                     <ul class="personal-info">
-                                        <li>
+                                        <li *ngIf="employee.numTel">
                                             <div class="title">Numéro Tel</div>
                                             <div class="text">
                                                {{employee.numTel}}
                                             </div>
                                         </li>
-                                        <li>
+                                        <li *ngIf="employee.mail">
                                             <div class="title">Email</div>
                                             <div class="text">
                                                 {{employee.mail}}
                                             </div>
                                         </li>
-                                        <li>
+                                        <li *ngIf="employee.dateRecrut">
                                             <div class="title">DateRécrut</div>
                                             <div class="text">
                                                 {{employee.dateRecrut}}
@@ -70,20 +71,20 @@
                                                 {{employee.dateDepart}}
                                             </div>
                                         </li>
-                                        <li *ngIf="pole.manager">
+                                        <li *ngIf="pole.pole">
                                             <div class="title">Pole Manager</div>
-                                            <div class="text"  *ngIf="pole.pole">
+                                            <div class="text">
                                                 <div class="avatar-box">
                                                     <div class="avatar avatar-xs">
-                                                        <img src="assets/img/{{pole.manager.image}}.jpeg" alt="">
+                                                        <img src="assets/img/{{pole?.manager?.image}}.jpeg" alt="">
                                                     </div>
                                                 </div>
-                                                <a (click)="ngOnInit();" routerLink="/layout/employees/employeeprofile/{{pole.manager.id}}">
-                                                    {{pole.manager.nom}} {{pole.manager.prenom}}
+                                                <a (click)="ngOnInit();" routerLink="/layout/employees/employeeprofile/{{pole?.manager?.id}}">
+                                                    {{pole?.manager?.nom}} {{pole?.manager?.prenom}}
                                                 </a>
                                             </div>
                                         </li>
-                                        <li *ngIf="!pole.manager">
+                                        <li *ngIf="!pole.pole">
                                                 <div class="title">Manager </div>
                                                 <div class="text" >
                                                     <div class="avatar-box">
@@ -96,16 +97,16 @@
                                                     </a>
                                                 </div>
                                             </li>
-                                        <li *ngIf="directionManager.nom">
+                                        <li *ngIf="pole.direction">
                                                 <div class="title">Direction Manager</div>
-                                                <div class="text"  *ngIf="pole.pole">
+                                                <div class="text"  *ngIf="pole.direction">
                                                     <div class="avatar-box">
                                                         <div class="avatar avatar-xs">
-                                                            <img src="assets/img/{{directionManager.image}}.jpeg" alt="">
+                                                            <img src="assets/img/{{directionManager?.image}}.jpeg" alt="">
                                                         </div>
                                                     </div>
-                                                    <a (click)="ngOnInit();" routerLink="/layout/employees/employeeprofile/{{directionManager.id}}" >
-                                                        {{directionManager.nom}} {{directionManager.prenom}}
+                                                    <a (click)="window.location.reload()" routerLink="/layout/employees/employeeprofile/{{directionManager?.id}}" >
+                                                        {{directionManager?.nom}} {{directionManager?.prenom}}
                                                     </a>
                                                 </div>
                                             </li>
@@ -117,39 +118,39 @@
                                     <div class="col-md-7" *ngIf='employee'>
                                         <h3 class="card-title">Les informations personnelles</h3>
                                         <ul class="personal-info">
-                                            <li>
+                                            <li *ngIf="employee.adresse">
                                                 <div class="title">Adresse</div>
                                                 <div class="text">{{employee.adresse}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.dateNaissance">
                                                 <div class="title">Date naissance</div>
                                                 <div class="text">{{employee.dateNaissance}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.lieuNaissance">
                                                 <div class="title">Lieu naissance</div>
                                                 <div class="text">{{employee.lieuNaissance}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.genre">
                                                 <div class="title">Genre</div>
                                                 <div class="text">{{employee.genre}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.numCin">
                                                 <div class="title">CIN</div>
                                                 <div class="text">{{employee.numCin}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.delivDate">
                                                 <div class="title">Date delivrance</div>
                                                 <div class="text">{{employee.delivDate}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.numPasseport">
                                                 <div class="title">Passport</div>
                                                 <div class="text">{{employee.numPasseport}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.dateExpPasseport">
                                                 <div class="title">Passport Exp</div>
                                                 <div class="text">{{employee.dateExpPasseport}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.nationalite">
                                                 <div class="title">Nationalité</div>
                                                 <div class="text">{{employee.nationalite}}</div>
                                             </li>
@@ -166,15 +167,15 @@
                                         <h3 class="card-title">Contact d'urgence</h3>
                                         <ul class="personal-info">
 
-                                            <li>
+                                            <li *ngIf="employee.nomUrgence">
                                                 <div class="title">Prenom</div>
                                                 <div class="text">{{employee.nomUrgence}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.relationUrgence">
                                                 <div class="title">Relation</div>
                                                 <div class="text">{{employee.relationUrgence}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.numUrgence">
                                                 <div class="title">Num Tel</div>
                                                 <div class="text">{{employee.numUrgence}}</div>
                                             </li>
@@ -186,23 +187,23 @@
                                     <div class="col-md-6" *ngIf='employee'>
                                         <h3 class="card-title">Les informations bancaires</h3>
                                         <ul class="personal-info">
-                                            <li>
+                                            <li *ngIf="employee.salaireBrute">
                                                 <div class="title">Salaire Brute</div>
-                                                <div class="text">{{employee.salaireBrute}}</div>
+                                                <div class="text">{{employee.salaireBrute}} DT</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.bankName">
                                                 <div class="title">La banque</div>
                                                 <div class="text">{{employee.bankName}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.rib">
                                                 <div class="title">RIB</div>
                                                 <div class="text">{{employee.rib}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.iban">
                                                 <div class="title">IBAN</div>
                                                 <div class="text">{{employee.iban}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.swift">
                                         <div class="title">SWIFT</div>
                                                 <div class="text">{{employee.swift}}</div>
                                             </li>
@@ -212,15 +213,15 @@
                                         <h3 class="card-title">Informations familiale </h3>
 
                                         <ul class="personal-info">
-                                            <li>
+                                            <li *ngIf="employee.civilite">
                                                 <div class="title">Civilité</div>
                                                 <div class="text">{{employee.civilite}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.nbEnfant">
                                                 <div class="title">Enfants</div>
                                                 <div class="text">{{employee.nbEnfant}}</div>
                                             </li>
-                                            <li>
+                                            <li *ngIf="employee.situationFam">
                                                     <div class="title">Situation Famil</div>
                                                     <div class="text">{{employee.situationFam}}</div>
                                                 </li>
@@ -368,7 +369,7 @@
                                 <img class="inline-block" src="assets/img/profiles/avatar-2.jpg" alt="user">
                                 <div class="fileupload btn">
                                     <span class="btn-text">Mise à jour</span>
-                                    <input class="upload" type="file">
+                                    <input class="upload" type="file" formControlName="Image">
                                 </div>
                             </div>      
                     </div>
@@ -390,7 +391,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Prenom</label>
+                                <label class="col-form-label">Prenom<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('LastName').invalid && editEmployeeForm.get('LastName').touched"
                                     formControlName="LastName">
@@ -423,21 +424,14 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Lieu de naissance <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Lieu de naissance</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('lieuNaissance').invalid && editEmployeeForm.get('lieuNaissance').touched"
                                     formControlName="lieuNaissance">
-                                <div
-                                    *ngIf="editEmployeeForm.get('lieuNaissance').invalid && editEmployeeForm.get('lieuNaissance').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('lieuNaissance').invalid && editEmployeeForm.get('lieuNaissance').touched"
-                                        class="text-danger"> *Lieu de naissance is required</small>
-                                </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Genre</label>
+                                <label class="col-form-label">Genre<span class="text-danger">*</span></label>
                                 <select class="form-select form-control"
                                     [class.invalid]="editEmployeeForm.get('Genre').invalid && editEmployeeForm.get('Genre').touched"
                                     formControlName="Genre">
@@ -470,7 +464,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Adresse </label>
+                                <label class="col-form-label">Adresse<span class="text-danger">*</span> </label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('Adresse').invalid && editEmployeeForm.get('Adresse').touched"
                                     formControlName="Adresse">
@@ -484,7 +478,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Numéro de Téléphone </label>
+                                <label class="col-form-label">Numéro de Téléphone<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('NumTel').invalid && editEmployeeForm.get('NumTel').touched"
                                     formControlName="NumTel">
@@ -512,7 +506,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">CIN</label>
+                                <label class="col-form-label">CIN<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('CIN').invalid && editEmployeeForm.get('CIN').touched"
                                     formControlName="CIN">
@@ -526,7 +520,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Date Deliv CIN <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Date Deliv CIN<span class="text-danger">*</span></label>
                                 <div class="cal-icon">
 
                                     <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
@@ -546,14 +540,8 @@
                             <div class="form-group">
                                 <label class="col-form-label">Numero Passeport</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('NumPasseport').invalid && editEmployeeForm.get('NumPasseport').touched"
                                     formControlName="NumPasseport">
-                                <div
-                                    *ngIf="editEmployeeForm.get('NumPasseport').invalid && editEmployeeForm.get('NumPasseport').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('NumPasseport').invalid && editEmployeeForm.get('NumPasseport').touched"
-                                        class="text-danger"> *Numero Passeport is required</small>
-                                </div>
+                               
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -563,14 +551,8 @@
 
                                     <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
                                         [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }"
-                                        [class.invalid]="editEmployeeForm.get('dateExpPasseport').invalid && editEmployeeForm.get('dateExpPasseport').touched"
                                         formControlName="dateExpPasseport">
-                                    <div
-                                        *ngIf="editEmployeeForm.get('dateExpPasseport').invalid && editEmployeeForm.get('dateExpPasseport').touched">
-                                        <small
-                                            *ngIf="editEmployeeForm.get('dateExpPasseport').invalid && editEmployeeForm.get('dateExpPasseport').touched"
-                                            class="text-danger"> *Date Expiration is required</small>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -578,21 +560,15 @@
                             <div class="form-group">
                                 <label class="col-form-label">Civilité</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('Civilite').invalid && editEmployeeForm.get('Civilite').touched"
                                     formControlName="Civilite">
-                                <div
-                                    *ngIf="editEmployeeForm.get('Civilite').invalid && editEmployeeForm.get('Civilite').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('Civilite').invalid && editEmployeeForm.get('Civilite').touched"
-                                        class="text-danger"> *Civilité is required</small>
-                                </div>
+                               
                             </div>
                         </div>
                        
                         <h3 class="card-title">Informations d'urgence</h3>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Numéro Tel urgence</label>
+                                <label class="col-form-label">Numéro Tel urgence<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('TelURG').invalid && editEmployeeForm.get('TelURG').touched"
                                     formControlName="TelURG">
@@ -608,34 +584,22 @@
                             <div class="form-group">
                                 <label class="col-form-label">Prenom urgence</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched"
                                     formControlName="NomURG">
-                                <div
-                                    *ngIf="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('NomURG').invalid && editEmployeeForm.get('NomURG').touched"
-                                        class="text-danger"> *Numéro Tel urgence is required</small>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label"> Relation urgence</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched"
                                     formControlName="RelationURG">
-                                <div
-                                    *ngIf="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('RelationURG').invalid && editEmployeeForm.get('RelationURG').touched"
-                                        class="text-danger"> *Relation is required</small>
-                                </div>
+                                
                             </div>
                         </div>
                         <h3 class="card-title">Informations Famille</h3>
                         <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="col-form-label">Situation familiale</label>
+                            <label class="col-form-label">Situation familiale<span class="text-danger">*</span></label>
                             <select class="form-select form-control"
                                 [class.invalid]="editEmployeeForm.get('SituationFam').invalid && editEmployeeForm.get('SituationFam').touched"
                                 formControlName="SituationFam">
@@ -669,7 +633,7 @@
                         <h3 class="card-title">Informations CNSS</h3>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">CNSS</label>
+                                <label class="col-form-label">CNSS<span class="text-danger">*</span></label>
                                 <select class="form-select form-control"
                                     [class.invalid]="editEmployeeForm.get('CNSS').invalid && editEmployeeForm.get('CNSS').touched"
                                     formControlName="CNSS">
@@ -697,56 +661,32 @@
                             <div class="form-group">
                                 <label class="col-form-label">Banque</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched"
                                     formControlName="BankName">
-                                <div
-                                    *ngIf="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('BankName').invalid && editEmployeeForm.get('BankName').touched"
-                                        class="text-danger"> *Banque is required</small>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">RIB</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched"
                                     formControlName="RIB">
-                                <div
-                                    *ngIf="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('RIB').invalid && editEmployeeForm.get('RIB').touched"
-                                        class="text-danger"> *RIB is required</small>
-                                </div>
+                               
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">SWIFT</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched"
                                     formControlName="SWIFT">
-                                <div
-                                    *ngIf="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('SWIFT').invalid && editEmployeeForm.get('SWIFT').touched"
-                                        class="text-danger"> *SWIFT is required</small>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">IBAN</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched"
                                     formControlName="IBAN">
-                                <div
-                                    *ngIf="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('IBAN').invalid && editEmployeeForm.get('IBAN').touched"
-                                        class="text-danger"> *IBAN is required</small>
-                                </div>
+                                
                             </div>
                         </div>
                         <h3 class="card-title">Informations Sofrecom</h3>
@@ -770,7 +710,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Date de Départ <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Date de Départ </label>
                                 <div class="cal-icon">
                                     <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
                                         [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }"
@@ -781,7 +721,7 @@
                         
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Poste</label>
+                                <label class="col-form-label">Poste<span class="text-danger">*</span></label>
                                 <select class="form-select form-control"
                                     [class.invalid]="editEmployeeForm.get('Poste').invalid && editEmployeeForm.get('Poste').touched"
                                     formControlName="Poste">
@@ -802,22 +742,16 @@
                             <div class="form-group">
                                 <label class="col-form-label">Pole</label>
                                 <select class="form-select form-control"
-                                    [class.invalid]="editEmployeeForm.get('Pole').invalid && editEmployeeForm.get('Pole').touched"
                                     formControlName="Pole">
                                     <option value="">Pole actuel: {{pole.pole}}</option>
                                     <option *ngFor="let p of poles" [ngValue]="p" >{{p.pole}}</option>
                                 </select>
-                                <div
-                                    *ngIf="editEmployeeForm.get('Pole').invalid && editEmployeeForm.get('Pole').touched">
-                                    <small
-                                        *ngIf="editEmployeeForm.get('Pole').invalid && editEmployeeForm.get('Pole').touched"
-                                        class="text-danger"> Pole required</small>
-                                </div>
+                               
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="col-form-label">Salaire Brute</label>
+                                <label class="col-form-label">Salaire Brute<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editEmployeeForm.get('Salaire').invalid && editEmployeeForm.get('Salaire').touched"
                                     formControlName="Salaire">
@@ -831,7 +765,7 @@
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="col-form-label">En Congé</label>
+                                <label class="col-form-label">En Congé<span class="text-danger">*</span></label>
                                 <select class="form-select form-control"
                                     [class.invalid]="editEmployeeForm.get('EnConge').invalid && editEmployeeForm.get('EnConge').touched"
                                     formControlName="EnConge">

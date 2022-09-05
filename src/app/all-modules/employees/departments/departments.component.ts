@@ -50,15 +50,14 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
     this.addDepartmentForm = this.formBuilder.group({
       Direction: ["", [Validators.required]],
-      ResponsableDir: ["", [Validators.required]],
       Description: ["", [Validators.required]],
     });
 
 
     this.editDepartmentForm = this.formBuilder.group({
       Direction: ["", [Validators.required]],
-      ResponsableDir: ["", [Validators.required]],
       Description: ["", [Validators.required]],
+      Manager: [""],
     });
     this.affectManagerForm=this.formBuilder.group({
       Manager: ["", [Validators.required]]
@@ -90,6 +89,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
      this.srvModuleService.getOne(`Direction/findDirectionManager?id=${id}`).subscribe(
       (response: Employee) => {
         this.directionManager= response;
+        console.log(this.directionManager);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -108,7 +108,6 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.direction.id=null;
       this.direction.direction=this.addDepartmentForm.value.Direction;
       this.direction.description=this.addDepartmentForm.value.Description;
-      this.direction.responsableDirection=this.addDepartmentForm.value.ResponsableDir;
       console.log(this.direction);
       this.srvModuleService.add(this.direction,'Direction/addDirection').subscribe((data) => {
         $("#datatable").DataTable().clear();
@@ -163,8 +162,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         this.direction.id= this.editId;
         this.direction.direction=this.editDepartmentForm.value.Direction;
         this.direction.description=this.editDepartmentForm.value.Description;
-        this.direction.responsableDirection=this.editDepartmentForm.value.ResponsableDir;
-     
+        this.direction.manager=this.editDepartmentForm.value.Manager;
       this.srvModuleService.update(this.direction, 'Direction/editDirection').subscribe((data1) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -188,9 +186,10 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     let toSetValues = this.directions[index];
     this.editDepartmentForm.setValue({
       Direction: toSetValues.direction,
-      ResponsableDir: toSetValues.responsableDirection,
-      Description: toSetValues.description
+      Description: toSetValues.description,
+      Manager: toSetValues.manager,
     });
+   
   }
 
   deleteDepartment() {

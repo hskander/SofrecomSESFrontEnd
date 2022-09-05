@@ -127,11 +127,7 @@
                             class="text-danger"> Direction is required</small>
                     </div>
                     </div> 
-                    <div class="form-group">
-                        <label>Responsable Pole <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            formControlName="ResponsablePole">
-                    </div>
+                    
                     <div class="form-group">
                         <label> Description <span class="text-danger">*</span></label>
                             <textarea class=form-control formControlName="Description">
@@ -185,11 +181,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Responsable Pole <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            formControlName="editResponsablePole">
-                    </div>
-                    <div class="form-group">
                         <label> Description <span class="text-danger">*</span></label>
                             <textarea class=form-control formControlName="editDescription">
                             </textarea>
@@ -206,19 +197,20 @@
 
 <!-- /Affect Manager Modal -->
 <div id="affect_manager" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Affect Direction Manager</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Affect Manager</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
             
             <div class="modal-body">
                 <form (ngSubmit)="affectManager()" [formGroup]="affectManagerForm">
                     <div class="form-group">
-                        <label class="col-form-label">Direction Manager</label>
+                        <label class="col-form-label">Pole Manager</label>
                         <select class="form-select form-control"
                             [class.invalid]="affectManagerForm.get('Manager').invalid && affectManagerForm.get('Manager').touched"
                             formControlName="Manager" *ngIf="employees">

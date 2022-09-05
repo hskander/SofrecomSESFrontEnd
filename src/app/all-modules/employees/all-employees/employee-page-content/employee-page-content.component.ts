@@ -45,33 +45,33 @@ export class EmployeePageContentComponent implements OnInit {
       LastName: ["", [Validators.required]],
       Adresse: ["", [Validators.required]],
       Nationalite: ["", [Validators.required]],
-      NumPasseport: ["", [Validators.required]],
-      dateExpPasseport: ["", [Validators.required]],
+      NumPasseport: [""],
+      dateExpPasseport: [""],
       CIN: ["", [Validators.required]],
       dateDelivCIN: ["", [Validators.required]],
-      Civilite: ["", [Validators.required]],
+      Civilite: [""],
       SituationFam: ["", [Validators.required]],
       NbEnfant: ["", [Validators.required]],
-      MatriculeCNSS: ["", [Validators.required]],
+      MatriculeCNSS: [""],
       CNSS: ["", [Validators.required]],
-      BankName: ["", [Validators.required]],
-      SWIFT: ["", [Validators.required]],
-      RIB: ["", [Validators.required]],
-      IBAN: ["", [Validators.required]],
+      BankName: [""],
+      SWIFT: [""],
+      RIB: [""],
+      IBAN: [""],
       EnConge: ["", [Validators.required]],
-      Pole: [null, [Validators.required]],
+      Pole: [null],
       Poste: ["", [Validators.required]],
       Email: ["", [Validators.required]],
       NumTel: ["", [Validators.required]],
       dateNaissance: ["", [Validators.required]],
       Salaire: ["", [Validators.required]],
-      lieuNaissance: ["", [Validators.required]],
+      lieuNaissance: [""],
       dateRecrut: ["", [Validators.required]],
-      dateDepart: ["", [Validators.required]],
+      dateDepart: [""],
       Genre: ["", [Validators.required]],
-      NomURG: ["", [Validators.required]],
+      NomURG: [""],
       TelURG: ["", [Validators.required]],
-      RelationURG: ["", [Validators.required]],
+      RelationURG: [""],
       
     });
 
@@ -80,32 +80,32 @@ export class EmployeePageContentComponent implements OnInit {
       LastName: ["", [Validators.required]],
       Adresse: ["", [Validators.required]],
       Nationalite: ["", [Validators.required]],
-      NumPasseport: ["", [Validators.required]],
-      dateExpPasseport: ["", [Validators.required]],
+      NumPasseport: [""],
+      dateExpPasseport: [""],
       CIN: ["", [Validators.required]],
       dateDelivCIN: ["", [Validators.required]],
-      Civilite: ["", [Validators.required]],
+      Civilite: [""],
       SituationFam: ["", [Validators.required]],
       NbEnfant: ["", [Validators.required]],
-      MatriculeCNSS: ["", [Validators.required]],
+      MatriculeCNSS: [""],
       CNSS: ["", [Validators.required]],
-      BankName: ["", [Validators.required]],
-      SWIFT: ["", [Validators.required]],
-      RIB: ["", [Validators.required]],
-      IBAN: ["", [Validators.required]],
+      BankName: [""],
+      SWIFT: [""],
+      RIB: [""],
+      IBAN: [""],
       EnConge: ["", [Validators.required]],
       Poste: ["", [Validators.required]],
       Email: ["", [Validators.required]],
       NumTel: ["", [Validators.required]],
       dateNaissance: ["", [Validators.required]],
       Salaire: ["", [Validators.required]],
-      lieuNaissance: ["", [Validators.required]],
+      lieuNaissance: [""],
       dateRecrut: ["", [Validators.required]],
-      dateDepart: ["", [Validators.required]],
+      dateDepart: [""],
       Genre: ["", [Validators.required]],
-      NomURG: ["", [Validators.required]],
+      NomURG: [""],
       TelURG: ["", [Validators.required]],
-      RelationURG: ["", [Validators.required]],
+      RelationURG: [""],
       Image: [""],
     });
   }
@@ -150,10 +150,10 @@ export class EmployeePageContentComponent implements OnInit {
 
   // Add employee  Modal Api Call
   addEmployee() {
-    /*if(this.addEmployeeForm.invalid){
+    if(this.addEmployeeForm.invalid){
       this.markFormGroupTouched(this.addEmployeeForm)
       return
-    }*/
+    }
     let dateExpPasseport = this.pipe.transform(
       this.addEmployeeForm.value.dateExpPasseport,
       "yyyy-MM-dd"
@@ -215,8 +215,6 @@ export class EmployeePageContentComponent implements OnInit {
       {this.loadEmployee();}
     );
     }
-    
-    
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
     this.toastr.success("Employeee added sucessfully...!", "Success");
@@ -327,7 +325,7 @@ export class EmployeePageContentComponent implements OnInit {
   }
 
   // edit update data set
-  public edit(value: any) {
+ /* public edit(value: any) {
     let data = this.lstEmployee.filter((client) => client.id === value);
     this.editEmployeeForm.setValue({
       FirstName: data[0].firstname,
@@ -344,7 +342,7 @@ export class EmployeePageContentComponent implements OnInit {
       Designation: data[0].designation,
       Id: data[0].id,
     });
-  }
+  }*/
 
   // delete api call
   deleteEmployee() {

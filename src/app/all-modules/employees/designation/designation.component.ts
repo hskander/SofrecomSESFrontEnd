@@ -54,7 +54,6 @@ export class DesignationComponent implements OnInit, OnDestroy {
     this.addDesignationForm = this.formBuilder.group({
       Pole: ["", [Validators.required]],
       Direction: ["", [Validators.required]],
-      ResponsablePole: ["", [Validators.required]],
       Description : ["", [Validators.required]]
     });
 
@@ -62,7 +61,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
       editPole: ["", [Validators.required]],
       editDirection: ["", [Validators.required]],
       editDescription: ["", [Validators.required]],
-      editResponsablePole: ["", [Validators.required]]
+      Manager: [""]
     });
     this.affectManagerForm=this.formBuilder.group({
       Manager: ["", [Validators.required]]
@@ -112,7 +111,6 @@ export class DesignationComponent implements OnInit, OnDestroy {
         this.pole.id = null; 
         this.pole.pole =  this.addDesignationForm.value.Pole;
         this.pole.description =  this.addDesignationForm.value.Description;
-        this.pole.responsablePole =  this.addDesignationForm.value.ResponsablePole;
         this.pole.direction= this.addDesignationForm.value.Direction ;
 
         console.log(this.pole);
@@ -169,8 +167,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
         this.pole.pole = this.editDesignationForm.value.editPole,
         this.pole.description = this.editDesignationForm.value.editDescription;
         this.pole.direction = this.editDesignationForm.value.editDirection;
-        this.pole.responsablePole = this.editDesignationForm.value.editResponsablePole;
-      
+        this.pole.manager=this.editDesignationForm.value.Manager
         this.srvModuleService.update(this.pole, 'Pole/editPole').subscribe((data1) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -193,8 +190,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
       editPole: toSetValues.pole,
       editDescription: toSetValues.description,
       editDirection: toSetValues.direction,
-      editResponsablePole: toSetValues.responsablePole
-
+      Manager: toSetValues.manager,
     });
   }
 

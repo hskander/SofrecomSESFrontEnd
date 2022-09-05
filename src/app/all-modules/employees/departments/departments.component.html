@@ -56,7 +56,7 @@
                                 <h2 class="table-avatar">
                                     <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
                                             src="assets/img/user.jpg"></a>
-                                    <a (click)="getDirectionManager(d.id)" routerLink="/layout/employees/employeeprofile">{{d.responsableDirection}}</a>
+                                    <a (click)="getDirectionManager(d.id)" routerLink="/layout/employees/employeeprofile">{{d?.manager?.nom}} {{d?.manager?.prenom}} </a>
                                 </h2>
                             </td>
                             <td>{{d.description}}</td>
@@ -114,11 +114,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Responsable Direction <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            formControlName="ResponsableDir">
-                    </div>
+                   
                     <div class="form-group">
                         <label> Description <span class="text-danger">*</span></label>
                             <textarea class=form-control formControlName="Description">
@@ -196,12 +192,6 @@
                                 *ngIf="editDepartmentForm.get('Direction').invalid && editDepartmentForm.get('Direction').touched"
                                 class="text-danger"> *Direction Name required</small>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Responsable Direction <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            formControlName="ResponsableDir">
                     </div>
                     <div class="form-group">
                         <label> Description <span class="text-danger">*</span></label>
