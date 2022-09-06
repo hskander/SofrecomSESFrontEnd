@@ -79,7 +79,7 @@
                                                         <img src="assets/img/{{pole?.manager?.image}}.jpeg" alt="">
                                                     </div>
                                                 </div>
-                                                <a (click)="ngOnInit();" routerLink="/layout/employees/employeeprofile/{{pole?.manager?.id}}">
+                                                <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{pole?.manager?.id}}">
                                                     {{pole?.manager?.nom}} {{pole?.manager?.prenom}}
                                                 </a>
                                             </div>
@@ -105,7 +105,7 @@
                                                             <img src="assets/img/{{directionManager?.image}}.jpeg" alt="">
                                                         </div>
                                                     </div>
-                                                    <a (click)="window.location.reload()" routerLink="/layout/employees/employeeprofile/{{directionManager?.id}}" >
+                                                    <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{directionManager?.id}}" >
                                                         {{directionManager?.nom}} {{directionManager?.prenom}}
                                                     </a>
                                                 </div>
@@ -231,7 +231,7 @@
                             </div>
                         </div>
                         <div class="pro-edit">
-                            <a data-bs-target="#edit_employee" (click)="editEmp();loadPostes();getPoles();"  data-bs-toggle="modal" class="edit-icon">
+                            <a data-bs-target="#edit_employee" (click)="editEmp();"  data-bs-toggle="modal" class="edit-icon">
                                 <i class="fa fa-pencil"></i>
                             </a>
                         </div>

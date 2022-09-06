@@ -51,7 +51,6 @@ export class EmployeeProfileComponent implements OnInit {
   ngOnInit() {
   this.getEmp();
   
-  this.getExperience();
   this.editEmployeeForm = this.formBuilder.group({
     FirstName: ["", [Validators.required]],
     LastName: ["", [Validators.required]],
@@ -138,7 +137,6 @@ export class EmployeeProfileComponent implements OnInit {
           this.allModulesService.getOne(`Direction/findDirectionByManager?id=${this.route.snapshot.params.id}`).subscribe(
             (response: Direction) => {
               this.direction= response;
-              console.log(this.direction);
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
@@ -147,6 +145,7 @@ export class EmployeeProfileComponent implements OnInit {
         }
     // Get Employee By ID list  Api Call
   getEmp(): void {
+    this.viderEmp();
     this.allModulesService.getOne(`Employee/find?id=${this.route.snapshot.params.id}`).subscribe(
       (response: Employee) => {
         this.employee= response;
@@ -158,6 +157,9 @@ export class EmployeeProfileComponent implements OnInit {
         alert(error.message);
       }
     );
+  }
+  viderEmp(){
+    this.employee= new $;
   }
   loadPostes(){
     this.allModulesService.get('Poste/all').subscribe(
@@ -242,6 +244,8 @@ export class EmployeeProfileComponent implements OnInit {
   // To Get The employee Edit Id And Set Values To Edit Modal Form
   editEmp() {
     console.log(this.pole);
+    this.loadPostes();
+  this.getPoles();
     let toSetValues:Employee = this.employee;
     this.editEmployeeForm.setValue({
       FirstName: toSetValues.nom,
