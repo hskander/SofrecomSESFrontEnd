@@ -1,15 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { AllModulesService } from "../../all-modules.service";
-import {
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
-import { DatePipe } from "@angular/common";
+import { CentreFormation } from "src/models/centreformation";
 
 declare const $: any;
 @Component({
@@ -24,85 +19,141 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   public url: any = "expenseReport";
   public allExpensesReport: any = [];
   public tempId: any;
-  public rows = [];
-  public srch = [];
+  public editId: any;
+  public rows :any = [];
+  public srch :any = [];
   public dtTrigger: Subject<any> = new Subject();
-  public pipe = new DatePipe("en-US");
-  constructor(private allModuleService: AllModulesService) {}
+  public addExpensereportForm: FormGroup;
+  public editExpensereportForm: FormGroup;
+  public centresformation: CentreFormation[]=[];
+  public centreformation: CentreFormation= new $;
+  constructor(
+    private formBuilder: FormBuilder,
+    private srvModuleService: AllModulesService,
+    private toastr: ToastrService,
+   
+  ) {}
+ 
 
   ngOnInit() {
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
-    this.getExpensesReport();
-    // for data table configuration
-    this.dtOptions = {
-      // ... skipped ...
-      pageLength: 10,
-      dom: "lrtip",
-    };
-  }
+    
+      this.loadexpenseReport();
+      this.addExpensereportForm = this.formBuilder.group({
+        CentreFormation: ["", [Validators.required]],
+        Description: ["", [Validators.required]],
+        Adress: ["", [Validators.required]],
+        Email: ["", [Validators.required]],
+        NumTel: ["", [Validators.required]],
+       
+      });
 
-  getExpensesReport() {
-    this.allModuleService.get(this.url).subscribe((data) => {
-      this.allExpensesReport = data;
-      this.dtTrigger.next();
-      this.rows = this.allExpensesReport;
-      this.srch = [...this.rows];
-    });
-  }
+      this.editExpensereportForm = this.formBuilder.group({
+        editCentreFormation: ["", [Validators.required]],
+        editDescription: ["", [Validators.required]],
+        editAdress: ["", [Validators.required]],
+        editEmail: ["", [Validators.required]],
+        editNumTel: ["", [Validators.required]],
+        
+      });
+    }
 
-  //search by status
+    loadexpenseReport() {
+      this.srvModuleService.get('CentreFormation/all').subscribe((data) => {
+        this.centresformation = data;
+        this.dtTrigger.next();
+        this.rows = this.centresformation;
+        this.srch = [...this.rows];
+      });
+    }
 
-  searchStatus(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.purchasedBy.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
-  }
 
-  //search by purchase
-  searchByFrom(val) {
-    let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      return d.purchaseDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
-    });
-    this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
-  }
+    addExpenseReport() {
+      if(this.addExpensereportForm.invalid){
+        this.markFormGroupTouched(this.addExpensereportForm)
+        return
+      }
+      if (this.addExpensereportForm.valid) {
+        this.centreformation.id=null;
+        this.centreformation.centreFormationName=this.addExpensereportForm.value.CentreFormation;
+        this.centreformation.description=this.addExpensereportForm.value.Description;
+        this.centreformation.adresse=this.addExpensereportForm.value.Adress;
+        this.centreformation.numTel=this.addExpensereportForm.value.NumTel;
+        this.centreformation.email=this.addExpensereportForm.value.Email;
+  
+        console.log(this.centreformation);
+        this.srvModuleService.add(this.centreformation,'CentreFormation/add').subscribe((data) => {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.loadexpenseReport();
+          $("#add_Center").modal("hide");
+          this.addExpensereportForm.reset();
+          this.toastr.success("Institut added", "Success");
+        });
+        
+      }
+    }
 
-  //search by warranty
-  searchByTo(val) {
-    let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      return d.purchaseDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
-    });
-    this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
-  }
+    editExpenseReport() {
+      if (this.editExpensereportForm.valid) {
+        this.centreformation.id= this.editId;
+        this.centreformation.centreFormationName=this.editExpensereportForm.value.editCentreFormation;
+        this.centreformation.description=this.editExpensereportForm.value.editDescription;
+        this.centreformation.adresse=this.editExpensereportForm.value.editAdress;
+        this.centreformation.email=this.editExpensereportForm.value.editEmail;
+        this.centreformation.numTel=this.editExpensereportForm.value.editNumTel;
+       
+     
+        };
+        this.srvModuleService.update(this.centreformation, 'CentreFormation/update').subscribe((data1) => {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.loadexpenseReport();
+        });
+        
+        $("#edit_expenseReport").modal("hide");
+        this.toastr.success("Centre Formation Updated succesfully", "Success");
+      }
+      edit(value) {
+        this.editId = value;
+        const index = this.centresformation.findIndex((item) => {
+          return item.id === value;
+        });
+        let toSetValues = this.centresformation[index];
+        this.editExpensereportForm.setValue({
+          editCentreFormation: toSetValues.centreFormationName,
+          editAdress: toSetValues.adresse,
+          editEmail: toSetValues.email,
+          editNumTel: toSetValues.numTel,
+          editDescription: toSetValues.description,
+        });
+      }
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
+      deleteexpensereport() {
+        this.srvModuleService.delete(this.tempId, 'CentreFormation/delete').subscribe((data) => {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.loadexpenseReport();
+        });
+        $("#delete_expenseReport").modal("hide");
+          this.toastr.success("Centre Formation Deleted", "Success");
+      }
+
+
+      private markFormGroupTouched(formGroup: FormGroup) {
+        (<any>Object).values(formGroup.controls).forEach((control) => {
+          control.markAsTouched();
+          if (control.controls) {
+            this.markFormGroupTouched(control);
+          }
+        });
+      }
+      ngOnDestroy(): void {
+        // Do not forget to unsubscribe the event
+        this.dtTrigger.unsubscribe();
+
+} 
+
 }

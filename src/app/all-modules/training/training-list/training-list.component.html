@@ -19,17 +19,7 @@
             </div>
         </div>
         <!-- /Page Header -->
-        <!-- Search Filter -->
-        <div class="row filter-row">
-            <div class="col-sm-5 ">
-                <div class="form-group form-focus">
-                    <input type="text" class="form-control floating" (input)="searchId($event.target.value)" (focusout)="rerender()">
-                    <label class="focus-label">Diplome</label>
-                </div>
-            </div>
-          
-        </div>
-        <!-- /Search Filter -->
+      
     
     
         <div class="row">
@@ -42,85 +32,25 @@
                                 <th style="width: 30px;">#</th>
                                 <th>Diplome</th>
                                 <th>Description</th>
-                                <th>Employees</th>
+                                
                                 <th class="text-end">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of lstTraininglist;let i = index">
-                                <td>{{item.id}}</td>
-                                <td>{{item.trainingType}}</td>
-                                <td>{{item.description}}</td>
-                                <td>
-                                    <ul class="team-members">
-                                        <li>
-                                            <a title="Richard Miles" data-bs-toggle="tooltip"><img alt=""
-                                                    src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
-                                        </li>
-                                        <li class="dropdown avatar-dropdown">
-                                            <a class="all-users dropdown-toggle" data-bs-toggle="dropdown"
-                                                aria-expanded="false">+15</a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <div class="avatar-group">
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-2.jpg">
-                                                    </a>
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-9.jpg">
-                                                    </a>
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-5.jpg">
-                                                    </a>
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-5.jpg">
-                                                    </a>
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-6.jpg">
-                                                    </a>
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-9.jpg">
-                                                    </a>
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-8.jpg">
-                                                    </a>
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-1.jpg">
-                                                    </a>
-                                                    <a class="avatar avatar-xs">
-                                                        <img alt="" src="assets/img/profiles/avatar-6.jpg">
-                                                    </a>
-                                                </div>
-                                                <div class="avatar-pagination">
-                                                    <ul class="pagination">
-                                                        <li class="page-item">
-                                                            <a class="page-link" aria-label="Previous">
-                                                                <span aria-hidden="true">«</span>
-                                                                <span class="visually-hidden">Previous</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="page-item"><a class="page-link">1</a></li>
-                                                        <li class="page-item"><a class="page-link">2</a></li>
-                                                        <li class="page-item">
-                                                            <a class="page-link" aria-label="Next">
-                                                                <span aria-hidden="true">»</span>
-                                                                <span class="visually-hidden">Next</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </td>
+                            <tr class="Trainer-completed" *ngFor="let d of diplomes">
+                                <td>{{d.id}}</td>
+                                <td>{{d.diplome}}</td>
+                                <td>{{d.descriptionDiplome}}</td>
+                                
                                 <td class="text-end">
                                     <div class="dropdown dropdown-action">
                                         <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                             aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_training"
-                                                (click)="edit(item.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                (click)="edit(d.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_training"
-                                                (click)="tempId =item.id"><i class="fa fa-trash-o m-r-5"></i>
+                                                (click)="tempId =d.id"><i class="fa fa-trash-o m-r-5"></i>
                                                 Delete</a>
                                         </div>
                                     </div>
@@ -139,7 +69,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Ajouter nouveau diplome</h5>
+                    <h5 class="modal-title">Add Diplome</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -149,14 +79,17 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Diplome</label>
+                                    <label>Diplome <span class="text-danger">*</span></label>
                                     <input class="form-control" type="text"
-                                        [class.invalid]="addTrainerForm.get('Type').invalid && addTrainerForm.get('Type').touched">
-                                    <div *ngIf="addTrainerForm.get('Type').invalid && addTrainerForm.get('Type').touched">
+                                        [class.invalid]="addTrainerForm.get('nomDiplome').invalid && addTrainerForm.get('nomDiplome').touched"
+                                        formControlName="nomDiplome">
+                                    <div
+                                        *ngIf="addTrainerForm.get('nomDiplome').invalid && addTrainerForm.get('nomDiplome').touched">
                                         <small
-                                            *ngIf="addTrainerForm.get('Type').invalid && addTrainerForm.get('Type').touched"
+                                            *ngIf="addTrainerForm.get('nomDiplome').invalid && addTrainerForm.get('nomDiplome').touched"
                                             class="text-danger"> *Diplome is required</small>
                                     </div>
+            
                                 </div>
                             </div>
                             <div class="col-sm-12">
@@ -201,28 +134,31 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                        <label>Diplome</label>
-                                        <input class="form-control" type="text"
-                                            [class.invalid]="addTrainerForm.get('Type').invalid && addTrainerForm.get('Type').touched"
-                           >
-                                    <div *ngIf="editTrainerForm.get('Type').invalid && editTrainerForm.get('Type').touched">
+                                    <label>Diplome <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" rows="4"
+                                        [class.invalid]="editTrainerForm.get('editDiplome').invalid && editTrainerForm.get('editDiplome').touched"
+                                        formControlName="editDiplome">
+                                </textarea>
+                                    <div
+                                        *ngIf="editTrainerForm.get('editDiplome').invalid && editTrainerForm.get('editDiplome').touched">
                                         <small
-                                            *ngIf="editTrainerForm.get('Type').invalid && editTrainerForm.get('Type').touched"
-                                            class="text-danger"> *Diplome is required</small>
+                                            *ngIf="editTrainerForm.get('editDiplome').invalid && editTrainerForm.get('editDiplome').touched"
+                                            class="text-danger"> *Description is required</small>
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Description <span class="text-danger">*</span></label>
                                     <textarea class="form-control" rows="4"
-                                        [class.invalid]="editTrainerForm.get('Description').invalid && editTrainerForm.get('Description').touched"
-                                        formControlName="Description">
+                                        [class.invalid]="editTrainerForm.get('editDescription').invalid && editTrainerForm.get('editDescription').touched"
+                                        formControlName="editDescription">
                                 </textarea>
                                     <div
-                                        *ngIf="editTrainerForm.get('Description').invalid && editTrainerForm.get('Description').touched">
+                                        *ngIf="editTrainerForm.get('editDescription').invalid && editTrainerForm.get('editDescription').touched">
                                         <small
-                                            *ngIf="editTrainerForm.get('Description').invalid && editTrainerForm.get('Description').touched"
+                                            *ngIf="editTrainerForm.get('editDescription').invalid && editTrainerForm.get('editDescription').touched"
                                             class="text-danger"> *Description is required</small>
                                     </div>
                                 </div>
@@ -239,28 +175,29 @@
     </div>
     <!-- /Edit Training List Modal -->
     
-    <!-- Delete Training List Modal -->
-    <div class="modal custom-modal fade" id="delete_training" role="dialog">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="form-header">
-                        <h3>Delete Training List</h3>
-                        <p>Are you sure want to delete?</p>
-                    </div>
-                    <div class="modal-btn delete-action">
-                        <div class="row">
-                            <div class="col-6">
-                                <a class="btn btn-primary continue-btn" (click)="deleteTraining()">Delete</a>
-                            </div>
-                            <div class="col-6">
-                                <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                            </div>
+    <!-- Delete Holiday Modal -->
+<div class="modal custom-modal fade" id="delete_training" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Diplome</h3>
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a  class="btn btn-primary continue-btn"
+                                (click)="deleteTraining()">Delete</a>
+                        </div>
+                        <div class="col-6">
+                            <a  data-bs-dismiss="modal"
+                                class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /Delete Training List Modal -->
-    </div>
+</div>
+<!-- /Delete Holiday Modal -->

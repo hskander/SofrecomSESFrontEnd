@@ -37,14 +37,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // for floating label
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
+    
 
     this.loadLeaves();
 
@@ -117,7 +110,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
       return
     }
     if (this.addLeaveadminForm.valid) {
-      //let obj = {
+        this.entreprise.id=null;
         this.entreprise.entreprise = this.addLeaveadminForm.value.Entreprise, 
         this.entreprise.description= this.addLeaveadminForm.value.Description,
         this.entreprise.adresse=this.addLeaveadminForm.value.Adress,
@@ -128,26 +121,15 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
-        this.dtTrigger.next();
+        this.loadLeaves();
       });
-      this.loadLeaves();
+      
       $("#add_leave").modal("hide");
       this.addLeaveadminForm.reset();
       this.toastr.success("Entreprise added sucessfully...!", "Success");
-    } else {
-      this.toastr.warning("Mandatory fields required", "");
     }
   }
 
-  // to know the date picker changes
-
- /* from(data) {
-    this.editFromDate = this.pipe.transform(data, "dd-MM-yyyy");
-  }
-  to(data) {
-    this.editToDate = this.pipe.transform(data, "dd-MM-yyyy");
-  }
-*/
 
   // Edit leaves Modal Api Call
   editLeaves() {

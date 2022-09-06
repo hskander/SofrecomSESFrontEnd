@@ -26,33 +26,33 @@
                     class="table table-striped custom-table mb-0">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Name </th>
+                            <th style="width: 30px;">Id</th>
+                            <th>Institut</th>
+                            <th>Description</th>
                             <th>Adress</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th>Description</th>
+                            <th>NumTel</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="holiday-completed" *ngFor="let row of lstHolidays">
-                            <td>{{row.id}}</td>
-                            <td>Name Institut</td>
-                            <td>{{row.title}}</td>
-                            <td>INST@gmail.com</td>
-                            <td>21345678</td>
-                            <td>Description</td>
+                        <tr class="holiday-completed" *ngFor="let i of instituts">
+                            <td>{{i.id}}</td>
+                            <td>{{i.institut}}</td>
+                            <td>{{i.description}}</td>
+                            <td>{{i.adresse}}</td>
+                            <td>{{i.email}}</td>
+                            <td>{{i.numTel}}</td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#edit_holiday" (click)="edit(row.id)"><i
+                                            data-bs-target="#edit_holiday" (click)="edit(i.id)"><i
                                                 class="fa fa-pencil m-r-5"></i> Edit</a>
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#delete_holiday" (click)="tempId = row.id"><i
+                                            data-bs-target="#delete_holiday" (click)="tempId = i.id"><i
                                                 class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Ajouter institut</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#add_holiday">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -81,48 +81,41 @@
                     <div class="form-group">
                         <label>Nom de l'institut <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            [class.invalid]="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched"
-                            formControlName="HolidayName">
+                            [class.invalid]="addHolidayForm.get('Institut').invalid && addHolidayForm.get('Institut').touched"
+                            formControlName="Institut">
                         <div
-                            *ngIf="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched">
+                            *ngIf="addHolidayForm.get('Institut').invalid && addHolidayForm.get('Institut').touched">
                             <small
-                                *ngIf="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched"
-                                class="text-danger"> *nom d'institut is required</small>
+                                *ngIf="addHolidayForm.get('Institut').invalid && addHolidayForm.get('Institut').touched"
+                                class="text-danger"> *institut is required</small>
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label>Adresee<span class="text-danger">*</span></label>
-                        <div class="cal-icon">
-                            <input class="form-control datetimepicker" type="text" 
-                                [class.invalid]="addHolidayForm.get('Holidaydate').invalid && addHolidayForm.get('Holidaydate').touched"
-                                formControlName="Holidaydate">
-                            <div
-                                *ngIf="addHolidayForm.get('Holidaydate').invalid && addHolidayForm.get('Holidaydate').touched">
-                                <small
-                                    *ngIf="addHolidayForm.get('Holidaydate').invalid && addHolidayForm.get('Holidaydate').touched"
-                                    class="text-danger"> *Adress is required</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Numéro de téléphone<span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            [class.invalid]="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched"
-                            formControlName="DaysName">
-                        <div *ngIf="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched">
-                            <small
-                                *ngIf="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched"
-                                class="text-danger"> *Numéro de téléphone is required</small>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Description</label>
+                        <label>Adresse<span class="text-danger">*</span></label>
                         <textarea class="form-control" type="text"
-                            [class.invalid]="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched"
-                            formControlName="DaysName"></textarea>
+                        [class.invalid]="addHolidayForm.get('Adress').invalid && addHolidayForm.get('Adress').touched"
+                        formControlName="Adress"></textarea>
+
+                    </div>
+                
+                    <div class="form-group">
+                        <label>Numéro de téléphone</label>
+                        <textarea class="form-control" type="text"
+                            [class.invalid]="addHolidayForm.get('NumTel').invalid && addHolidayForm.get('NumTel').touched"
+                            formControlName="NumTel"></textarea>
  
                      </div>
+                     <div class="form-group">
+                        <label>Email<span class="text-danger">*</span></label>
+                            <textarea class=form-control formControlName="Email">
+                            </textarea>
+                    </div>
+                     <div class="form-group">
+                        <label> Description <span class="text-danger">*</span></label>
+                            <textarea class=form-control formControlName="Description">
+                            </textarea>
+                    </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn" type="submit">Submit</button>
                     </div>
@@ -139,7 +132,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Holiday</h5>
+                <h5 class="modal-title">Edit institut</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -147,43 +140,68 @@
             <div class="modal-body">
                 <form (ngSubmit)="editHolidays()" [formGroup]="editHolidayForm">
                     <div class="form-group">
-                        <label>Holiday Name <span class="text-danger">*</span></label>
+                        <label> Institut <span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            [class.invalid]="editHolidayForm.get('editHolidayName').invalid && editHolidayForm.get('editHolidayName').touched"
-                            formControlName="editHolidayName">
+                            [class.invalid]="editHolidayForm.get('editInstitut').invalid && editHolidayForm.get('editInstitut').touched"
+                            formControlName="editInstitut">
                         <div
-                            *ngIf="editHolidayForm.get('editHolidayName').invalid && editHolidayForm.get('editHolidayName').touched">
+                            *ngIf="editHolidayForm.get('editInstitut').invalid && editHolidayForm.get('editInstitut').touched">
                             <small
-                                *ngIf="editHolidayForm.get('editHolidayName').invalid && editHolidayForm.get('editHolidayName').touched"
+                                *ngIf="editHolidayForm.get('editInstitut').invalid && editHolidayForm.get('editInstitut').touched"
                                 class="text-danger"> *Name is required</small>
                         </div>
 
                     </div>
+                    
                     <div class="form-group">
-                        <label>Holiday Date</label>
-                        <div class="cal-icon">
-                            <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                [class.invalid]="editHolidayForm.get('editHolidayDate').invalid && editHolidayForm.get('editHolidayDate').touched"
-                                formControlName="editHolidayDate" (bsValueChange)="from($event)">
-                            <div
-                                *ngIf="editHolidayForm.get('editHolidayDate').invalid && editHolidayForm.get('editHolidayDate').touched">
-                                <small
-                                    *ngIf="editHolidayForm.get('editHolidayDate').invalid && editHolidayForm.get('editHolidayDate').touched"
-                                    class="text-danger"> *Date is required</small>
-                            </div>
+                        <label>Adresse <span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                            [class.invalid]="editHolidayForm.get('editAdress').invalid && editHolidayForm.get('editAdress').touched"
+                            formControlName="editAdress">
+                        <div
+                            *ngIf="editHolidayForm.get('editAdress').invalid && editHolidayForm.get('editAdress').touched">
+                            <small
+                                *ngIf="editHolidayForm.get('editAdress').invalid && editHolidayForm.get('editAdress').touched"
+                                class="text-danger"> *Adress is required</small>
                         </div>
+
                     </div>
                     <div class="form-group">
-                        <label>Day <span class="text-danger">*</span></label>
+                        <label>Email<span class="text-danger">*</span></label>
                         <input class="form-control" type="text"
-                            [class.invalid]="editHolidayForm.get('editDaysName').invalid && editHolidayForm.get('editDaysName').touched"
-                            formControlName="editDaysName">
+                            [class.invalid]="editHolidayForm.get('editEmail').invalid && editHolidayForm.get('editEmail').touched"
+                            formControlName="editEmail">
                         <div
-                            *ngIf="editHolidayForm.get('editDaysName').invalid && editHolidayForm.get('editDaysName').touched">
+                            *ngIf="editHolidayForm.get('editEmail').invalid && editHolidayForm.get('editEmail').touched">
                             <small
-                                *ngIf="editHolidayForm.get('editDaysName').invalid && editHolidayForm.get('editDaysName').touched"
-                                class="text-danger"> *Days is required</small>
+                                *ngIf="editHolidayForm.get('editEmail').invalid && editHolidayForm.get('editEmail').touched"
+                                class="text-danger"> *Email is required</small>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label>NumTel<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                            [class.invalid]="editHolidayForm.get('editNumTel').invalid && editHolidayForm.get('editNumTel').touched"
+                            formControlName="editNumTel">
+                        <div
+                            *ngIf="editHolidayForm.get('editNumTel').invalid && editHolidayForm.get('editNumTel').touched">
+                            <small
+                                *ngIf="editHolidayForm.get('editNumTel').invalid && editHolidayForm.get('editNumTel').touched"
+                                class="text-danger"> *NumTel is required</small>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label>Description<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                            [class.invalid]="editHolidayForm.get('editDescription').invalid && editHolidayForm.get('editDescription').touched"
+                            formControlName="editDescription">
+                        <div
+                            *ngIf="editHolidayForm.get('editDescription').invalid && editHolidayForm.get('editDescription').touched">
+                            <small
+                                *ngIf="editHolidayForm.get('editDescription').invalid && editHolidayForm.get('editDescription').touched"
+                                class="text-danger"> *Description is required</small>
                         </div>
 
                     </div>
@@ -203,7 +221,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-header">
-                    <h3>Delete Holiday</h3>
+                    <h3>Delete Institut</h3>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

@@ -3,115 +3,60 @@
 
     <!-- Page Header -->
     <div class="page-header">
-        <div class="row">
-            <div class="col-sm-12">
-                <h3 class="page-title">Expense Report</h3>
+            <div class="row align-items-center">
+                <div class="col">
+                <h3 class="page-title">Centres de formation</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Expense Report</li>
+                    <li class="breadcrumb-item active">Centres</li>
                 </ul>
             </div>
+            <div class="col-auto float-end ms-auto">
+                    <a  class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_Center"><i
+                            class="fa fa-plus"></i> Add Centre de formation</a>
+                </div>
         </div>
     </div>
     <!-- /Page Header -->
 
-    <!-- Search Filter -->
-    <div class="row filter-row">
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus select-focus">
-                <select class="form-select form-control" (input)="searchStatus($event.target.value)">
-                    <option value = "">Select buyer</option>
-                    <option value = "Loren Gatlin">Loren Gatlin</option>
-                    <option value = "Tarah Shropshire">Tarah Shropshire</option>
-                </select>
-                <label class="focus-label">Purchased By</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus">
-                <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchByFrom($event)">
-                </div>
-                <label class="focus-label">From</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus">
-                <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" bsDatepicker type="text"  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchByTo($event)">
-                </div>
-                <label class="focus-label">To</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <a  class="btn btn-success w-100"> Search </a>
-        </div>
-    </div>
-    <!-- /Search Filter -->
-
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped custom-table mb-0 datatable">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                    class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
-                            <th>Item</th>
-                            <th>Purchase From</th>
-                            <th>Purchase Date</th>
-                            <th>Purchased By</th>
-                            <th>Amount</th>
-                            <th>Paid By</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-end">Actions</th>
+                            <th>Id</th>
+                            <th>Name </th>
+                            <th>Adress</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Description</th>
+                            <th class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let expensesReport of allExpensesReport;let i = index">
-                            <td>
-                                <strong>{{expensesReport.item}}</strong>
-                            </td>
-                            <td>{{expensesReport.purchaseFrom}}</td>
-                            <td>{{expensesReport.purchaseDate | customDate}}</td>
-                            <td>
-                                <a routerLink="/layout/employees/employeeprofile" class="avatar avatar-xs">
-                                    <img src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" alt="">
-                                </a>
-                                <h2><a routerLink="/layout/employees/employeeprofile">{{expensesReport.purchasedBy}}</a></h2>
-                            </td>
-                            <td>{{expensesReport.amount}}</td>
-                            <td>{{expensesReport.paidBy}}</td>
-                            <td class="text-center">
-                                <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" 
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Pending
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" ><i class="fa fa-dot-circle-o text-danger"></i>
-                                            Pending</a>
-                                        <a class="dropdown-item" ><i
-                                                class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                    </div>
-                                </div>
-                            </td>
+                        <tr *ngFor="let item of centresformation">
+                            <td>{{item.id}}</td>
+                            <td>{{item.centreFormationName}}</td>
+                            <td>{{item.adresse}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.numTel}}</td>
+                            <td>{{item.description}}</td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            data-bs-target="#edit_expenseReport" (click)="edit(item.id)"><i
+                                                class="fa fa-pencil m-r-5"></i> Edit</a>
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            data-bs-target="#delete_expenseReport" (click)="tempId = item.id"><i
+                                                class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>
-                        </tr>
-                        <tr *ngIf="allExpensesReport.length === 0">
-                            <td colspan="10">
-                                <h5 style="text-align: center;">No data found</h5>
-                            </td>
-                           
                         </tr>
                     </tbody>
                 </table>
@@ -120,3 +65,203 @@
     </div>
 </div>
 <!-- /Page Content -->
+
+<!-- Add Center Modal -->
+<div class="modal custom-modal fade" id="add_Center" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Centre de formation</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#add_Center">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="addExpenseReport()" [formGroup]="addExpensereportForm">
+                     <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                        <label>Centre Formation<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                            [class.invalid]="addExpensereportForm.get('CentreFormation').invalid && addExpensereportForm.get('CentreFormation').touched"
+                            formControlName="CentreFormation">
+                        <div
+                            *ngIf="addExpensereportForm.get('CentreFormation').invalid && addExpensereportForm.get('CentreFormation').touched">
+                            <small
+                                *ngIf="addExpensereportForm.get('CentreFormation').invalid && addExpensereportForm.get('CentreFormation').touched"
+                                class="text-danger"> *nom du centre is required</small>
+                        </div>
+                      </div> 
+                    </div>
+                    <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Adress<span class="text-danger">*</span></label>
+                      
+                            <input class="form-control datetimepicker" type="text" 
+                                [class.invalid]="addExpensereportForm.get('Adress').invalid && addExpensereportForm.get('Adress').touched"
+                                formControlName="Adress">
+                            <div
+                                *ngIf="addExpensereportForm.get('Adress').invalid && addExpensereportForm.get('Adress').touched">
+                                <small
+                                    *ngIf="addExpensereportForm.get('Adress').invalid && addExpensereportForm.get('addExpensereportForm').touched"
+                                    class="text-danger"> *Adress is required</small>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <label>Phone<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                            [class.invalid]="addExpensereportForm.get('NumTel').invalid && addExpensereportForm.get('NumTel').touched"
+                            formControlName="NumTel">
+                        <div *ngIf="addExpensereportForm.get('NumTel').invalid && addExpensereportForm.get('NumTel').touched">
+                            <small
+                                *ngIf="addExpensereportForm.get('NumTel').invalid && addExpensereportForm.get('NumTel').touched"
+                                class="text-danger"> *Phone is required</small>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                            <label>Email<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text"
+                                [class.invalid]="addExpensereportForm.get('Email').invalid && addExpensereportForm.get('Email').touched"
+                                formControlName="Email">
+                            <div *ngIf="addExpensereportForm.get('Email').invalid && addExpensereportForm.get('Email').touched">
+                                <small
+                                    *ngIf="addExpensereportForm.get('Email').invalid && addExpensereportForm.get('Email').touched"
+                                    class="text-danger"> *Email is required</small>
+                            </div>
+                     </div>
+                      <div class="form-group">
+                         <label>Description</label>
+                         <textarea class="form-control" type="text"
+                            [class.invalid]="addExpensereportForm.get('Description').invalid && addExpensereportForm.get('Description').touched"
+                            formControlName="Description"></textarea>
+                       </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- /Add Center Modal -->
+
+ <!-- Edit Center Modal -->
+<div class="modal custom-modal fade" id="edit_expenseReport" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Center</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="editExpenseReport()" [formGroup]="editExpensereportForm">
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                        <label>Nom <span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                            [class.invalid]="editExpensereportForm.get('editCentreFormation').invalid && editExpensereportForm.get('editCentreFormation').touched"
+                            formControlName="editCentreFormation">
+                        <div
+                            *ngIf="editExpensereportForm.get('editCentreFormation').invalid && editExpensereportForm.get('editCentreFormation').touched">
+                            <small
+                                *ngIf="editExpensereportForm.get('editCentreFormation').invalid && editExpensereportForm.get('editCentreFormation').touched"
+                                class="text-danger"> *Nom is required</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                    <div class="form-group">
+                            <label>Adresse <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text"
+                                [class.invalid]="editExpensereportForm.get('editAdress').invalid && editExpensereportForm.get('editAdress').touched"
+                                formControlName="editAdress">
+                            <div
+                                *ngIf="editExpensereportForm.get('editAdress').invalid && editExpensereportForm.get('editAdress').touched">
+                                <small
+                                    *ngIf="editExpensereportForm.get('editAdress').invalid && editExpensereportForm.get('editEmail').touched"
+                                    class="text-danger"> *Adresse is required</small>
+                            </div>
+                        </div>
+                      </div>   
+                    </div>
+                        <div class="form-group">
+                                <label>Email<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editExpensereportForm.get('editEmail').invalid && editExpensereportForm.get('editEmail').touched"
+                                    formControlName="editEmail">
+                                <div
+                                    *ngIf="editExpensereportForm.get('editEmail').invalid && editExpensereportForm.get('editEmail').touched">
+                                    <small
+                                        *ngIf="editExpensereportForm.get('editEmail').invalid && editExpensereportForm.get('editEmail').touched"
+                                        class="text-danger"> *Email is required</small>
+                                </div>
+        
+                            </div>
+                            <div class="form-group">
+                                    <label>N° téléphone <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text"
+                                        [class.invalid]="editExpensereportForm.get('editNumTel').invalid && editExpensereportForm.get('editNumTel').touched"
+                                        formControlName="editNumTel">
+                                    <div
+                                        *ngIf="editExpensereportForm.get('editNumTel').invalid && editExpensereportForm.get('editNumTel').touched">
+                                        <small
+                                            *ngIf="editExpensereportForm.get('editNumTel').invalid && editExpensereportForm.get('editNumTel').touched"
+                                            class="text-danger"> *N° téléphone is required</small>
+                                    </div>
+            
+                                </div>
+                        <div class="form-group">
+                                <label>Description <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="editExpensereportForm.get('editDescription').invalid && editExpensereportForm.get('editDescription').touched"
+                                    formControlName="editDescription">
+                                <div
+                                    *ngIf="editExpensereportForm.get('editDescription').invalid && editExpensereportForm.get('editDescription').touched">
+                                    <small
+                                        *ngIf="editExpensereportForm.get('editDescription').invalid && editExpensereportForm.get('editDescription').touched"
+                                        class="text-danger"> *Description is required</small>
+                                </div>
+        
+                            </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Center Modal -->
+
+    <!-- Delete Center Modal -->
+    <div class="modal custom-modal fade" id="delete_expenseReport" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Delete CentreFormation</h3>
+                        <p>Are you sure want to delete this centreFormation?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <div class="row">
+                            <div class="col-6">
+                                <a  class="btn btn-primary continue-btn"
+                                    (click)="deleteexpensereport()">Delete</a>
+                            </div>
+                            <div class="col-6">
+                                <a  data-bs-dismiss="modal"
+                                    class="btn btn-primary cancel-btn">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+

@@ -1,7 +1,7 @@
 export interface Institut{
     id: number;
-    Institut: string;
-    descritpion: string;
+    institut: string;
+    description: string;
     adresse: string;
     email: string;
     numTel:number;
