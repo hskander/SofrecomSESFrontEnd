@@ -25,7 +25,7 @@
                         <div class="profile-img-wrap">
                             <div class="profile-img">
                                 <a>
-                                    <img alt="" src="assets/img/{{employee?.image}}.jpeg">
+                                    <img alt="" src="assets/img/{{employee?.image}}">
                                 </a>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                             <div class="text">
                                                 <div class="avatar-box">
                                                     <div class="avatar avatar-xs">
-                                                        <img src="assets/img/{{pole?.manager?.image}}.jpeg" alt="">
+                                                        <img src="assets/img/{{pole?.manager?.image}}" alt="">
                                                     </div>
                                                 </div>
                                                 <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{pole?.manager?.id}}">
@@ -85,11 +85,11 @@
                                             </div>
                                         </li>
                                         <li *ngIf="!pole.pole">
-                                                <div class="title">Manager </div>
+                                                <div class="title">Directeur Générale </div>
                                                 <div class="text" >
                                                     <div class="avatar-box">
                                                         <div class="avatar avatar-xs">
-                                                            <img src="assets/img/skander1.jpeg" alt="">
+                                                            <img src="assets/img/SamiBenZahra.jpg" alt="">
                                                         </div>
                                                     </div>
                                                     <a>
@@ -102,7 +102,7 @@
                                                 <div class="text"  *ngIf="pole.direction">
                                                     <div class="avatar-box">
                                                         <div class="avatar avatar-xs">
-                                                            <img src="assets/img/{{directionManager?.image}}.jpeg" alt="">
+                                                            <img src="assets/img/{{directionManager?.image}}" alt="">
                                                         </div>
                                                     </div>
                                                     <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{directionManager?.id}}" >
@@ -366,7 +366,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="profile-img-wrap edit-img">
-                                <img class="inline-block" src="assets/img/profiles/avatar-2.jpg" alt="user">
+                                <img class="inline-block" src="assets/img/{{employee.image}}" alt="user">
                                 <div class="fileupload btn">
                                     <span class="btn-text">Mise à jour</span>
                                     <input class="upload" type="file" formControlName="Image">
@@ -725,8 +725,8 @@
                                 <select class="form-select form-control"
                                     [class.invalid]="editEmployeeForm.get('Poste').invalid && editEmployeeForm.get('Poste').touched"
                                     formControlName="Poste">
-                                    <option value="">Poste Actuel: {{employee?.poste.poste}}</option>
-                                    <option *ngFor="let po of postes" [ngValue]="po">{{po.poste}}</option>
+                                    <option value="">Poste Actuel: {{employee?.poste?.poste}}</option>
+                                    <option *ngFor="let po of postes" [ngValue]="po">{{po?.poste}}</option>
                                     
                                 </select>
                                 <div

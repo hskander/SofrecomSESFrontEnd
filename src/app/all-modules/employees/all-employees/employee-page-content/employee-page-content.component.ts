@@ -221,6 +221,10 @@ export class EmployeePageContentComponent implements OnInit {
   }
  
   editEmployee() {
+    if(this.editEmployeeForm.invalid){
+      this.markFormGroupTouched(this.editEmployeeForm)
+      return
+    }
     let dateExpPasseport = this.pipe.transform(
       this.editEmployeeForm.value.dateExpPasseport,
       "yyyy-MM-dd"

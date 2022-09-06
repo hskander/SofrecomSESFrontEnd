@@ -43,7 +43,7 @@
             <div class="profile-widget">
                 <div class="profile-img">
                     <a routerLink="/layout/employees/employeeprofile/{{emp.id}}" class="avatar"><img
-                            src="assets/img/{{emp?.image}}.jpeg" alt=""></a>
+                            src="assets/img/{{emp?.image}}" alt=""></a>
                 </div>
                 <div class="dropdown profile-action">
                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -60,6 +60,7 @@
                 </h4>
                 </div>
                 <div class="small text-muted">{{emp?.poste?.poste}}</div>
+                <div class="small text-muted">{{emp?.numTel}}</div>
             </div>
         </div>
     </div>

@@ -84,6 +84,7 @@ export class EmployeeProfileComponent implements OnInit {
     TelURG: ["", [Validators.required]],
     RelationURG: [""],
     Image: [""],
+    ImageName: [""],
   });
   }
     // Get pole list  Api Call
@@ -177,7 +178,20 @@ export class EmployeeProfileComponent implements OnInit {
 
     });
   }
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
   editEmployee() {
+    if(this.editEmployeeForm.invalid){
+      this.markFormGroupTouched(this.editEmployeeForm)
+      return
+    }
     let dateExpPasseport = this.pipe.transform(
       this.editEmployeeForm.value.dateExpPasseport,
       "yyyy-MM-dd"
@@ -230,6 +244,11 @@ export class EmployeeProfileComponent implements OnInit {
     this.employee.iban=this.editEmployeeForm.value.IBAN;
     this.employee.enConge=this.editEmployeeForm.value.EnConge;
     this.employee.poste=this.editEmployeeForm.value.Poste;
+    if(this.editEmployeeForm.value.Image){
+      this.employee.image=this.editEmployeeForm.value.Image.slice(12,this.editEmployeeForm.value.Image.length);
+    }else{
+      this.employee.image=this.editEmployeeForm.value.ImageName;
+    }
     this.allModulesService.update(this.employee,'Employee/editEmployee').subscribe((data1) => {
       if(this.editEmployeeForm.value.Pole.id){
         this.editEmployeePole(this.editEmployeeForm.value.Pole.id);
@@ -243,7 +262,6 @@ export class EmployeeProfileComponent implements OnInit {
 
   // To Get The employee Edit Id And Set Values To Edit Modal Form
   editEmp() {
-    console.log(this.pole);
     this.loadPostes();
   this.getPoles();
     let toSetValues:Employee = this.employee;
@@ -279,7 +297,8 @@ export class EmployeeProfileComponent implements OnInit {
       NomURG: toSetValues.nomUrgence,
       TelURG: toSetValues.numUrgence,
       RelationURG: toSetValues.relationUrgence,
-      Image: toSetValues.image,
+      Image:null,
+      ImageName: toSetValues.image,
 
     });
   }
