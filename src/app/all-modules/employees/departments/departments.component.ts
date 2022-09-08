@@ -72,11 +72,10 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+ 
   // Get department list  Api Call
   LoadDepartment() {
     this.srvModuleService.get('Direction/all').subscribe((data) => {
-      $("#datatable").DataTable().clear();
       this.directions = data;
       //this.chRef.detectChanges();
       this.dtTrigger.next();
@@ -110,10 +109,11 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.direction.description=this.addDepartmentForm.value.Description;
       console.log(this.direction);
       this.srvModuleService.add(this.direction,'Direction/addDirection').subscribe((data) => {
-        $("#datatable").DataTable().clear();
+       
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.LoadDepartment();
       $("#add_department").modal("hide");
       this.addDepartmentForm.reset();
@@ -148,6 +148,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.LoadDepartment();
         
       });
@@ -209,8 +210,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     let temp = this.srch.filter(function (d) {
       key = key.toLowerCase();
       return d.direction.toLowerCase().indexOf(key) !== -1 
-      || d.description.toLowerCase().indexOf(key) !== -1
-      || d.responsableDirection.toLowerCase().indexOf(key) !== -1 
+      || d.description.toLowerCase().indexOf(key) !== -1 
       || !key;
     });
     this.rows.push(...temp);

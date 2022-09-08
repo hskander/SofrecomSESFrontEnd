@@ -32,7 +32,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
                     class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
@@ -51,18 +51,13 @@
                             <td>{{item.descriptionCertificat}}</td>
                            
                             <td>
-                                <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" 
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-success"></i> {{item.enLigne}}
+                                <div class="action-label">
+                                    <a class="btn btn-white btn-sm btn-rounded" 
+                                       aria-expanded="false">
+                                        <i class="fa fa-dot-circle-o text-success"></i> 
+                                        {{item.enLigne}}
                                     </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" (click)="getOnline('True')"><i
-                                                class="fa fa-dot-circle-o text-success"></i> True</a>
-                                        <a class="dropdown-item" (click)="getOnline('False')"><i
-                                                class="fa fa-dot-circle-o text-danger"></i>
-                                            False</a>
-                                    </div>
+                                  
                                 </div>
                             </td>
                             <td>
@@ -102,23 +97,22 @@
             <div class="modal-body">
                 <form (ngSubmit)="addGoal()" [formGroup]="addGoalForm">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label class="col-form-label">Certificat</label>
-                                <select class="form-select form-control"
-                                    [class.invalid]="addGoalForm.get('Certificat').invalid && addGoalForm.get('Certificat').touched"
-                                    formControlName="Certificat">
-                                    <option>Certificat en Cybersecurity</option>
-                                    <option>Certificat en AI</option>
-                                </select>
-                                <div *ngIf="addGoalForm.get('Certificat').invalid && addGoalForm.get('Certificat').touched">
-                                    <small
-                                        *ngIf="addGoalForm.get('Certificat').invalid && addGoalForm.get('Certificat').touched"
-                                        class="text-danger"> *Certificat is required</small>
+                          <div class="col-sm-12">
+                                <div class="form-group">
+                                 <label>Certificat </label>
+                                     <input class="form-control" type="text"
+                                     [class.invalid]="addGoalForm.get('Certificat').invalid && addGoalForm.get('Certificat').touched"
+                                      formControlName="Certificat">
+                                        <div
+                                            *ngIf="addGoalForm.get('Certificat').invalid && addGoalForm.get('Certificat').touched">
+                                            <small
+                                            *ngIf="addGoalForm.get('Certificat').invalid && addGoalForm.get('Certificat').touched"
+                                         class="text-danger"> *Name is required</small>
+                                       </div>
                                 </div>
                             </div>
-                        </div>
-                        
+                                    
+            
 
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -174,26 +168,24 @@
             </div>
             <div class="modal-body">
                 <form (ngSubmit)="editGoal()" [formGroup]="editGoalForm">
+
+
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="form-group">
-                                <label class="col-form-label">Certicat</label>
-                                <select class="form-select form-control"
-                                    [class.invalid]="editGoalForm.get('Certificat').invalid && editGoalForm.get('Certificat').touched"
-                                    formControlName="Certificat">
-                                    <option>Certificat en CyberSecurity</option>
-                                    <option>Certificat en AI</option>
-                                </select>
-                                <div
-                                    *ngIf="editGoalForm.get('Certificat').invalid && editGoalForm.get('Certificat').touched">
-                                    <small
-                                        *ngIf="editGoalForm.get('Certificat').invalid && editGoalForm.get('Certificat').touched"
-                                        class="text-danger"> *Certificat is required</small>
-                                </div>
-                            </div>
+                                <div class="form-group">
+                                        <label>Certificat</label>
+                                        <input class="form-control" type="text"
+                                            [class.invalid]="editGoalForm.get('Certificat').invalid && editGoalForm.get('Certificat').touched"
+                                            formControlName="Certificat">
+                                        <div
+                                            *ngIf="editGoalForm.get('Certificat').invalid && editGoalForm.get('Certificat').touched">
+                                            <small
+                                                *ngIf="editGoalForm.get('Certificat').invalid && editProjectForm.get('Certificat').touched"
+                                                class="text-danger"> *Name is required</small>
+                                        </div>
+                                    </div>
                         </div>
-        
-                        <div class="col-sm-12">
+                            <div class="col-sm-12">
                             <div class="form-group">
                                 <label>Description <span class="text-danger">*</span></label>
                                 <textarea class="form-control" rows="4"
@@ -225,7 +217,6 @@
 </div>
 <!-- /Edit Goal Modal -->
 
-<!-- Delete Goal Modal -->
 <div class="modal custom-modal fade" id="delete_certificat" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -250,4 +241,6 @@
         </div>
     </div>
 </div>
-<!-- /Delete Goal Modal -->
+
+
+

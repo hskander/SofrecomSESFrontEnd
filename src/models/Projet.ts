@@ -4,6 +4,6 @@ export interface Projet{
     dateDebut: string;
     dateFin: string;
     description: string;
-    enCour: boolean;
+    enCours: boolean;
     chefProjet: string;
 }

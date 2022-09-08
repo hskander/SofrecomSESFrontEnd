@@ -33,7 +33,7 @@
                 <label class="focus-label">Project Name</label>
             </div>
         </div>
-        <div class="col-sm-6 col-md-3">
+        <!--div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
                 <input type="text" class="form-control floating">
                 <label class="focus-label">Employee Name</label>
@@ -50,10 +50,10 @@
                 </select>
                 <label class="focus-label">Role</label>
             </div>
-        </div>
+        </div
         <div class="col-sm-6 col-md-3">
             <a class="btn btn-success w-100"> Search </a>
-        </div>
+        </div>-->
     </div>
     <!-- /Search Filter -->
 
@@ -69,17 +69,17 @@
                             <th>Leader</th>
                             <th>Team</th>
                             <th>Deadline</th>
-                            <th>Priority</th>
-                            <th>Status</th>
+                            <th>Ongoing</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let project of projects;let i = index">
+                        <tr *ngFor="let projet of projets;let i = index">
                             <td>
-                                <a routerLink="/layout/projects/projectview/{{project.id}}">{{project.name}}</a>
+                            
+                                <a routerLink="/layout/projects/projectview/{{projet.id}}">{{projet.projet}}</a>
                             </td>
-                            <td>{{project.projectId}}</td>
+                            <td>{{projet.id}}</td>
                             <td>
                                 <ul class="team-members">
                                     <li>
@@ -161,44 +161,28 @@
                                     </li>
                                 </ul>
                             </td>
-                            <td>{{project.startDate | customDate}} </td>
+                        
+
+                            <td>{{projet.dateFin }} </td>
                             <td>
-                                <div class="dropdown action-label">
-                                    <a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false"><i
-                                            class="fa fa-dot-circle-o text-danger"></i>{{project.priority}}</a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
-                                            High</a>
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-warning"></i>
-                                            Medium</a>
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i> Low</a>
+                                    <div class="action-label">
+                                        <a href="" class="btn btn-white btn-sm btn-rounded "
+                                             aria-expanded="false"><i
+                                                class="fa fa-dot-circle-o text-success"></i> {{projet.enCours}} </a>
+
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="dropdown action-label">
-                                    <a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false"><i
-                                            class="fa fa-dot-circle-o text-success"></i> Active </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
-                                            Active</a>
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
-                                            Inactive</a>
-                                    </div>
-                                </div>
-                            </td>
+                                </td>
+                        
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_project"
-                                            (click)="editProject(project.id)"><i class="fa fa-pencil m-r-5"></i>
+                                            (click)="editProject(projet.id)"><i class="fa fa-pencil m-r-5"></i>
                                             Edit</a>
                                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_project"
-                                            (click)="tempId = project.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            (click)="tempId = projet.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>
@@ -210,183 +194,168 @@
     </div>
 </div>
 <!-- /Page Content -->
+
+
 <!-- Create Project Modal -->
 <div id="create_project" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Create Project</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="addProjectForm">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Project Name</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="addProjectForm.get('projectName').invalid && addProjectForm.get('projectName').touched"
-                                    formControlName="projectName">
-                                <div
-                                    *ngIf="addProjectForm.get('projectName').invalid && addProjectForm.get('projectName').touched">
-                                    <small
-                                        *ngIf="addProjectForm.get('projectName').invalid && addProjectForm.get('projectName').touched"
-                                        class="text-danger"> *Name is required</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Client</label>
-                                <select class="form-select form-control">
-                                    <option>Global Technologies</option>
-                                    <option>Delta Infotech</option>
-                                </select>
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Create Project</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="addProjectForm">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Project Name</label>
+                            <input class="form-control" type="text"
+                                [class.invalid]="addProjectForm.get('Project').invalid && addProjectForm.get('Project').touched"
+                                formControlName="Project">
+                            <div
+                                *ngIf="addProjectForm.get('Project').invalid && addProjectForm.get('Project').touched">
+                                <small
+                                    *ngIf="addProjectForm.get('Project').invalid && addProjectForm.get('Project').touched"
+                                    class="text-danger"> *Name is required</small>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Start Date</label>
-                                <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
-                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                        [class.invalid]="addProjectForm.get('projectStartDate').invalid && addProjectForm.get('projectStartDate').touched"
-                                        formControlName="projectStartDate">
-                                </div>
-                                <div
-                                    *ngIf="addProjectForm.get('projectStartDate').invalid && addProjectForm.get('projectStartDate').touched">
-                                    <small
-                                        *ngIf="addProjectForm.get('projectStartDate').invalid && addProjectForm.get('projectStartDate').touched"
-                                        class="text-danger"> *Start Date is required</small>
-                                </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <div class="cal-icon">
+                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                    [class.invalid]="addProjectForm.get('StartDate').invalid && addProjectForm.get('StartDate').touched"
+                                    formControlName="StartDate">
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>End Date</label>
-                                <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
-                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                        [class.invalid]="addProjectForm.get('projectEndDate').invalid && addProjectForm.get('projectEndDate').touched"
-                                        formControlName="projectEndDate">
-                                </div>
-                                <div
-                                    *ngIf="addProjectForm.get('projectEndDate').invalid && addProjectForm.get('projectEndDate').touched">
-                                    <small
-                                        *ngIf="addProjectForm.get('projectEndDate').invalid && addProjectForm.get('projectEndDate').touched"
-                                        class="text-danger"> *Date is required</small>
-                                </div>
+                            <div
+                                *ngIf="addProjectForm.get('StartDate').invalid && addProjectForm.get('StartDate').touched">
+                                <small
+                                    *ngIf="addProjectForm.get('StartDate').invalid && addProjectForm.get('StartDate').touched"
+                                    class="text-danger"> *Start Date is required</small>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>Rate</label>
-                                <input placeholder="$50" class="form-control" type="text">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <div class="cal-icon">
+                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                    [class.invalid]="addProjectForm.get('EndDate').invalid && addProjectForm.get('EndDate').touched"
+                                    formControlName="EndDate">
                             </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>&nbsp;</label>
-                                <select class="form-select form-control">
-                                    <option>Hourly</option>
-                                    <option>Fixed</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Priority</label>
-                                <select class="form-select form-control"
-                                    [class.invalid]="addProjectForm.get('projectPriority').invalid && addProjectForm.get('projectPriority').touched"
-                                    formControlName="projectPriority">
-                                    <option>High</option>
-                                    <option>Medium</option>
-                                    <option>Low</option>
-                                </select>
+                            <div
+                                *ngIf="addProjectForm.get('EndDate').invalid && addProjectForm.get('EndDate').touched">
+                                <small
+                                    *ngIf="addProjectForm.get('EndDate').invalid && addProjectForm.get('EndDate').touched"
+                                    class="text-danger"> *Date is required</small>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Add Project Leader</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="addProjectForm.get('projectLeader').invalid && addProjectForm.get('projectLeader').touched"
-                                    formControlName="projectLeader">
-                            </div>
+                </div>
+                
+                <div class="row">
+                    <!--div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Add Project Leader</label>
+                            <input class="form-control" type="text"
+                                [class.invalid]="addProjectForm.get('projectLeader').invalid && addProjectForm.get('projectLeader').touched"
+                                formControlName="projectLeader">
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Team Leader</label>
-                                <div class="project-members">
-                                    <a data-bs-toggle="tooltip" title="Jeffery Lalor" class="avatar">
-                                        <img src="assets/img/profiles/avatar-6.jpg" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Add Team</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="addProjectForm.get('addTeamMembers').invalid && addProjectForm.get('addTeamMembers').touched"
-                                    formControlName="addTeamMembers">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Team Members</label>
-                                <div class="project-members">
-                                    <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
-                                        <img src="assets/img/profiles/avatar-17.jpg" alt="">
-                                    </a>
-                                    <a data-bs-toggle="tooltip" title="Richard Miles" class="avatar">
-                                        <img src="assets/img/profiles/avatar-9.jpg" alt="">
-                                    </a>
-                                    <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
-                                        <img src="assets/img/profiles/avatar-10.jpg" alt="">
-                                    </a>
-                                    <a data-bs-toggle="tooltip" title="Mike Litorus" class="avatar">
-                                        <img src="assets/img/profiles/avatar-5.jpg" alt="">
-                                    </a>
-                                    <span class="all-team">+2</span>
-                                </div>
+                    </div-->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Team Leader</label>
+                            <div class="project-members">
+                                <a data-bs-toggle="tooltip" title="Jeffery Lalor" class="avatar">
+                                    <img src="assets/img/profiles/avatar-6.jpg" alt="">
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea rows="4" class="form-control summernote" placeholder="Enter your message here"
-                            [class.invalid]="addProjectForm.get('projectDescription').invalid && addProjectForm.get('projectDescription').touched"
-                            formControlName="projectDescription"></textarea>
-                        <div
-                            *ngIf="addProjectForm.get('projectDescription').invalid && addProjectForm.get('projectDescription').touched">
-                            <small
-                                *ngIf="addProjectForm.get('projectDescription').invalid && addProjectForm.get('projectDescription').touched"
-                                class="text-danger"> *Description is required</small>
+                </div>
+                <div class="row">
+                    <!--div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Add Team</label>
+                            <input class="form-control" type="text"
+                                [class.invalid]="addProjectForm.get('addTeamMembers').invalid && addProjectForm.get('addTeamMembers').touched"
+                                formControlName="addTeamMembers">
+                        </div>
+                    </div-->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Team Members</label>
+                            <div class="project-members">
+                                <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
+                                    <img src="assets/img/profiles/avatar-17.jpg" alt="">
+                                </a>
+                                <a data-bs-toggle="tooltip" title="Richard Miles" class="avatar">
+                                    <img src="assets/img/profiles/avatar-9.jpg" alt="">
+                                </a>
+                                <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
+                                    <img src="assets/img/profiles/avatar-10.jpg" alt="">
+                                </a>
+                                <a data-bs-toggle="tooltip" title="Mike Litorus" class="avatar">
+                                    <img src="assets/img/profiles/avatar-5.jpg" alt="">
+                                </a>
+                                <span class="all-team">+2</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Upload Files</label>
-                        <input class="form-control" type="file">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea rows="4" class="form-control summernote" placeholder="Enter your message here"
+                        [class.invalid]="addProjectForm.get('Description').invalid && addProjectForm.get('Description').touched"
+                        formControlName="Description"></textarea>
+                    <div
+                        *ngIf="addProjectForm.get('Description').invalid && addProjectForm.get('Description').touched">
+                        <small
+                            *ngIf="addProjectForm.get('Description').invalid && addProjectForm.get('Description').touched"
+                            class="text-danger"> *Description is required</small>
                     </div>
-                    <div class="submit-section">
-                        <button class="btn btn-primary submit-btn" (click)="addProject()">Submit</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+
+
+                <div class="col-sm-10">
+                        <div class="form-group">
+                            <label class="col-form-label">Ongoing</label>
+                            <select class="form-select form-control"
+                                [class.invalid]="addProjectForm.get('Ongoing').invalid && addProjectForm.get('Ongoing').touched"
+                                formControlName="Ongoing">
+                                <option>True</option>
+                                <option>False</option>
+                            </select>
+                            <div *ngIf="addProjectForm.get('Ongoing').invalid && addProjectForm.get('Ongoing').touched">
+                                <small
+                                    *ngIf="addProjectForm.get('Ongoing').invalid && addProjectForm.get('Ongoing').touched"
+                                    class="text-danger"> *Ongoing is required</small>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="submit-section">
+                    <button class="btn btn-primary submit-btn" (click)="addProject()">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+</div>
 <!-- /Create Project Modal -->
+
+
+
+
 
 <!-- Edit Project Modal -->
 <div id="edit_project" class="modal custom-modal fade" role="dialog">
@@ -405,25 +374,17 @@
                             <div class="form-group">
                                 <label>Project Name</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editProjectForm.get('editProjectName').invalid && editProjectForm.get('editProjectName').touched"
-                                    formControlName="editProjectName">
+                                    [class.invalid]="editProjectForm.get('editProject').invalid && editProjectForm.get('editProject').touched"
+                                    formControlName="editProject">
                                 <div
-                                    *ngIf="editProjectForm.get('editProjectName').invalid && editProjectForm.get('editProjectName').touched">
+                                    *ngIf="editProjectForm.get('editProject').invalid && editProjectForm.get('editProject').touched">
                                     <small
-                                        *ngIf="editProjectForm.get('editProjectName').invalid && editProjectForm.get('editProjectName').touched"
+                                        *ngIf="editProjectForm.get('editProject').invalid && editProjectForm.get('editProject').touched"
                                         class="text-danger"> *Name is required</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Client</label>
-                                <select class="form-select form-control">
-                                    <option>Global Technologies</option>
-                                    <option>Delta Infotech</option>
-                                </select>
-                            </div>
-                        </div>
+                      
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
@@ -432,12 +393,12 @@
                                 <div class="cal-icon">
                                     <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
                                         [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                        [class.invalid]="editProjectForm.get('editProjectStartDate').invalid && editProjectForm.get('editProjectStartDate').touched"
-                                        formControlName="editProjectStartDate">
+                                        [class.invalid]="editProjectForm.get('editStartDate').invalid && editProjectForm.get('editStartDate').touched"
+                                        formControlName="editStartDate">
                                     <div
-                                        *ngIf="editProjectForm.get('editProjectStartDate').invalid && editProjectForm.get('editProjectStartDate').touched">
+                                        *ngIf="editProjectForm.get('editStartDate').invalid && editProjectForm.get('editStartDate').touched">
                                         <small
-                                            *ngIf="editProjectForm.get('editProjectStartDate').invalid && editProjectForm.get('editProjectStartDate').touched"
+                                            *ngIf="editProjectForm.get('editStartDate').invalid && editProjectForm.get('editStartDate').touched"
                                             class="text-danger"> *Start date is required</small>
                                     </div>
                                 </div>
@@ -449,54 +410,26 @@
                                 <div class="cal-icon">
                                     <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
                                         [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                        [class.invalid]="editProjectForm.get('editProjectEndDate').invalid && editProjectForm.get('editProjectEndDate').touched"
-                                        formControlName="editProjectEndDate">
+                                        [class.invalid]="editProjectForm.get('editEndDate').invalid && editProjectForm.get('editEndDate').touched"
+                                        formControlName="editEndDate">
                                     <div
-                                        *ngIf="editProjectForm.get('editProjectEndDate').invalid && editProjectForm.get('editProjectEndDate').touched">
+                                        *ngIf="editProjectForm.get('editEndDate').invalid && editProjectForm.get('editEndDate').touched">
                                         <small
-                                            *ngIf="editProjectForm.get('editProjectEndDate').invalid && editProjectForm.get('editProjectEndDate').touched"
+                                            *ngIf="editProjectForm.get('editEndDate').invalid && editProjectForm.get('editEndDate').touched"
                                             class="text-danger"> *End date is required</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                   
                     <div class="row">
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>Rate</label>
-                                <input placeholder="$50" class="form-control" value="$5000" type="text">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>&nbsp;</label>
-                                <select class="form-select form-control">
-                                    <option>Hourly</option>
-                                    <option selected>Fixed</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Priority</label>
-                                <select class="form-select form-control"
-                                    [class.invalid]="editProjectForm.get('editProjectPriority').invalid && editProjectForm.get('editProjectPriority').touched"
-                                    formControlName="editProjectPriority">
-                                    <option selected>High</option>
-                                    <option>Medium</option>
-                                    <option>Low</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
+                        <!--div class="col-sm-6">
                             <div class="form-group">
                                 <label>Add Project Leader</label>
                                 <input class="form-control" type="text">
                             </div>
-                        </div>
+                        </div-->
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Team Leader</label>
@@ -509,14 +442,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <!--div class="col-sm-6">
                             <div class="form-group">
                                 <label>Add Team</label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="editProjectForm.get('editaddTeamMembers').invalid && editProjectForm.get('editaddTeamMembers').touched"
                                     formControlName="editaddTeamMembers">
                             </div>
-                        </div>
+                        </div-->
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Team Members</label>
@@ -541,15 +474,29 @@
                     <div class="form-group">
                         <label>Description</label>
                         <textarea rows="4" class="form-control summernote" placeholder="Enter your message here"
-                            [class.invalid]="editProjectForm.get('editProjectDescription').invalid && editProjectForm.get('editProjectDescription').touched"
-                            formControlName="editProjectDescription"></textarea>
+                            [class.invalid]="editProjectForm.get('editDescription').invalid && editProjectForm.get('editDescription').touched"
+                            formControlName="editDescription"></textarea>
                         <div
-                            *ngIf="editProjectForm.get('editProjectDescription').invalid && editProjectForm.get('editProjectDescription').touched">
+                            *ngIf="editProjectForm.get('editDescription').invalid && editProjectForm.get('editDescription').touched">
                             <small
-                                *ngIf="editProjectForm.get('editProjectDescription').invalid && editProjectForm.get('editProjectDescription').touched"
+                                *ngIf="editProjectForm.get('editDescription').invalid && editProjectForm.get('editDescription').touched"
                                 class="text-danger"> *Description is required</small>
                         </div>
                     </div>
+
+                    <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-form-label">Ongoing</label>
+                                <select class="form-select form-control"
+                                    [class.invalid]="editProjectForm.get('editOngoing').invalid && editProjectForm.get('editOngoing').touched"
+                                    formControlName="editOngoing">
+                                    <option>True</option>
+                                    <option>False</option>
+                                </select>
+                            </div>
+                    </div>
+
+
                     <div class="form-group">
                         <label>Upload Files</label>
                         <input class="form-control" type="file">
@@ -563,6 +510,9 @@
     </div>
 </div>
 <!-- /Edit Project Modal -->
+
+
+
 
 <!-- Delete Project Modal -->
 <div class="modal custom-modal fade" id="delete_project" role="dialog">

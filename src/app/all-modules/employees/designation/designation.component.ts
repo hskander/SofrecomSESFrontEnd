@@ -118,6 +118,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.LoadDesignation();
         $("#add_designation").modal("hide");
         this.addDesignationForm.reset();
@@ -154,6 +155,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.LoadDesignation();
       });
 
@@ -172,6 +174,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.LoadDesignation();
         $("#edit_designation").modal("hide");
         this.toastr.success("Department Updated sucessfully...!", "Success");
@@ -200,12 +203,14 @@ export class DesignationComponent implements OnInit, OnDestroy {
     this.srvModuleService.delete(this.tempId,'Pole/delete').subscribe((data) => {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
-        this.LoadDesignation();
-        $("#delete_designation").modal("hide");
-        this.toastr.success("Designation deleted sucessfully..!", "Success");
       });
+      $("#datatable").DataTable().clear();
+      this.LoadDesignation();
+      $("#delete_designation").modal("hide");
+      this.toastr.success("Designation deleted sucessfully..!", "Success");
     });
   }
+  
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();

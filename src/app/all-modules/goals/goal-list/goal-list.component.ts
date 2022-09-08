@@ -134,27 +134,27 @@ export class GoalListComponent implements OnInit, OnDestroy {
 
 
   deleteCertificat() {
-    this.srvModuleService.delete(this.tempId, 'Certificat/delete').subscribe((data) => {
+    this.srvModuleService.delete(this.tempId,'Certificat/delete').subscribe((data) => {
+      $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
+        this.LoadGoal();
       });
-      this.LoadGoal();
+     
+      });
       $("#delete_certificat").modal("hide");
       this.toastr.success("Certificat deleted sucessfully..!", "Success");
-    });
+   
   }
-
+  
   searchCertificat(key) {
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (certif) {
       key = key.toLowerCase();
-      return certif.certificat.toLowerCase().indexOf(key) !== -1 
-      || certif.descriptionCertificat.toLowerCase().indexOf(key) !== -1 
-      || !key;
+      return certif.certificat.toLowerCase().indexOf(key) !== -1 || !key;
     });
     this.rows.push(...temp);
   }
-
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe()

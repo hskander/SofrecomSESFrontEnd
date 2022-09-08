@@ -90,6 +90,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.getManageJobs();
       });
      
@@ -111,7 +112,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
-      
+      $("#datatable").DataTable().clear();
       this.getManageJobs();
     });
     
@@ -138,6 +139,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
+      $("#datatable").DataTable().clear();
       this.getManageJobs();
       $("#delete_job").modal("hide");
       this.toastr.success("Job is deleted", "Success");

@@ -75,17 +75,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
 
   // manually rendering Data table
 
-  rerender(): void {
-    $("#datatable").DataTable().clear();
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-    });
-    this.lstLeave = [];
-    this.loadLeaves();
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 1000);
-  }
+ 
   // Get leave  Api Call
   loadLeaves() {
     this.srvModuleService.get('Entreprise/all').subscribe((data) => {
@@ -182,71 +172,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
 
   }
 
-  //search by name
- /* searchName(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.employeeName.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
-  }
-  
 
-  //search by status
-  searchType(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.leaveType.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
-  }
-  searchStatus(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.status.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
-  }
-
-  //search by purchase
-  searchByFrom(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      return d.from.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
-    });
-    this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
-  }
-
-  //search by warranty
-  searchByTo(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      return d.to.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
-    });
-    this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
-  }*/
-
-  //getting the status value
- /* getStatus(data) {
-    this.statusValue = data;
-  }**/
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();

@@ -36,7 +36,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
                     class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
@@ -64,8 +64,8 @@
                                     {{p.employes?.length}}
                                 </a>
                             </td>
-                           <ng-container *ngIf="p.direction">
-                                    <td >{{p.direction.direction}}</td>
+                           <ng-container >
+                                    <td >{{p?.direction?.direction}}</td>
                             </ng-container> 
                             <td>{{p.description}}</td>
                             <td class="text-end">
@@ -238,11 +238,8 @@
         </div>
     </div>
 </div>
-<!-- /Affect Manager Modal -->
 
-
-
-<!-- Delete Designation Modal -->
+<!-- Delete Department Modal -->
 <div class="modal custom-modal fade" id="delete_designation" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -267,4 +264,4 @@
         </div>
     </div>
 </div>
-<!-- /Delete Designation Modal -->
+<!-- /Delete Department Modal -->
