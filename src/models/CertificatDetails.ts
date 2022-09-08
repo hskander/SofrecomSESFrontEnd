@@ -3,6 +3,7 @@ import { CentreFormation } from 'src/models/CentreFormation';
 import { Employee } from 'src/models/Employee';
 
 export interface CertificatDetails{
+    id:number;
     dateDebutFormation: string;
     dateObtention: string;
     note : number;

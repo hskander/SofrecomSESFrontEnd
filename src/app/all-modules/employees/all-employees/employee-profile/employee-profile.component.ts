@@ -14,6 +14,12 @@ import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
 import { Subject } from 'rxjs';
 import { Direction } from 'ngx-bootstrap/carousel/carousel.component';
+import { Diplome } from 'src/models/Diplome';
+import { Certificat } from 'src/models/Certificat';
+import { CertificatDetails } from 'src/models/CertificatDetails';
+import { Institut } from 'src/models/Institut';
+import { CentreFormation } from 'src/models/CentreFormation';
+import { Entreprise } from 'src/models/Entreprise';
 
 declare const $: any;
 
@@ -30,7 +36,7 @@ export class EmployeeProfileComponent implements OnInit {
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
   public employee : Employee;
-  public experience : Experience[]=[];
+  public senioriteEmp;
   public emp : any;
   public poles : Pole[] = [];
   public postes:Poste[] = [];
@@ -41,6 +47,27 @@ export class EmployeeProfileComponent implements OnInit {
   public direction:Direction= $;
   public directionManager:Employee = $;
   public pipe = new DatePipe("en-US");
+
+  /* Salmaa*/
+  public diplomes: Diplome[] = [];
+  public certificats: Certificat[] = [];
+  public diplomeDT : DiplomeDetails=  new $;
+  public certifDT : CertificatDetails=  new $;
+  public instituts : Institut[] = [];
+  public centreFormations : CentreFormation[] = [];
+  public experiences : Experience[] = [];
+  public experience : Experience = new $;
+  public entreprises : Entreprise[] = [];
+  public ddId:any;
+  public cdId: any;
+  public expId: any;
+  public affectDiplomeForm : FormGroup;
+  public affectCertificatForm : FormGroup;
+  public affectExperienceForm : FormGroup;
+  public editExperienceForm : FormGroup;
+  public editCertificatForm : FormGroup;
+  public editDiplomeDTForm: FormGroup;
+  /* Salmaa*/
   constructor(
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
@@ -50,7 +77,6 @@ export class EmployeeProfileComponent implements OnInit {
 
   ngOnInit() {
   this.getEmp();
-  
   this.editEmployeeForm = this.formBuilder.group({
     FirstName: ["", [Validators.required]],
     LastName: ["", [Validators.required]],
@@ -86,6 +112,69 @@ export class EmployeeProfileComponent implements OnInit {
     Image: [""],
     ImageName: [""],
   });
+  //Salmaa
+  this.getInstitut();
+    this.getDiplome();
+    this.getCentreF();
+    this.getCertificat();
+    this.getEntreprises();
+
+
+
+    this.affectExperienceForm=this.formBuilder.group({
+      DateDebutExp: ["", [Validators.required]],
+      DateFinExp: ["", [Validators.required]],
+      Poste: ["", [Validators.required]],
+      SalaireBrute: ["", [Validators.required]],
+      Entreprise: ["", [Validators.required]],
+      RaisonDepart: ["", [Validators.required]],
+
+    });
+
+    this.affectDiplomeForm=this.formBuilder.group({
+      Institut: ["", [Validators.required]],
+      Diplome: ["", [Validators.required]],
+      Mention:  ["", [Validators.required]],
+      DateDebutFomation : ["", [Validators.required]],
+      DateObtention : ["", [Validators.required]],
+
+    });
+
+    this.affectCertificatForm=this.formBuilder.group({
+      CentreF: ["", [Validators.required]],
+      Certificat: ["", [Validators.required]],
+      DateDebutCertif : ["", [Validators.required]],
+      DateFinCertif : ["", [Validators.required]],
+      Note : ["", [Validators.required]],
+    });
+
+    this.editDiplomeDTForm = this.formBuilder.group({
+      editInstitut: ["", [Validators.required]],
+      editDiplome: ["", [Validators.required]],
+      editMention:  ["", [Validators.required]],
+      editDateDebutFomation : ["", [Validators.required]],
+      editDateObtention : ["", [Validators.required]],
+    });
+  
+    this.editCertificatForm=this.formBuilder.group({
+      editCentreF: ["", [Validators.required]],
+      editCertificat: ["", [Validators.required]],
+      editDateDebutCertif : ["", [Validators.required]],
+      editDateFinCertif : ["", [Validators.required]],
+      editNote : ["", [Validators.required]],
+
+    });
+
+    this.editExperienceForm=this.formBuilder.group({
+      editDateDebutExp: ["", [Validators.required]],
+      editDateFinExp: ["", [Validators.required]],
+      editPoste: ["", [Validators.required]],
+      editSalaireBrute: ["", [Validators.required]],
+      editEntreprise: ["", [Validators.required]],
+      editRaisonDepart: ["", [Validators.required]],
+
+    });
+  //Salma
   }
     // Get pole list  Api Call
     getPoles(): void {
@@ -99,18 +188,6 @@ export class EmployeeProfileComponent implements OnInit {
       );
     }
 
-         // Get experience list  Api Call
-         getExperience(): void {
-          this.allModulesService.get('Experience/all').subscribe(
-            (response: Experience[]) => {
-              this.experience= response;
-              //console.log(this.experience);
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        }
         getEmployePole(){
           this.allModulesService.getOne(`Employee/findEmployePole?id=${this.route.snapshot.params.id}`).subscribe(
             (response: Pole) => {
@@ -147,9 +224,36 @@ export class EmployeeProfileComponent implements OnInit {
     // Get Employee By ID list  Api Call
   getEmp(): void {
     this.viderEmp();
+   
     this.allModulesService.getOne(`Employee/find?id=${this.route.snapshot.params.id}`).subscribe(
       (response: Employee) => {
         this.employee= response;
+        let dateRecrut = this.pipe.transform(
+          this.employee.dateRecrut,
+          "yyyy-MM-dd"
+        );
+        if(new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))<1 && !this.employee.dateDepart){
+          this.senioriteEmp= "Amateur";
+        }
+        if(new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))<2&&new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))>=1 && !this.employee.dateDepart){
+          this.senioriteEmp= "Junior1";
+        }
+        if(new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))<3 && new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))>=2 && !this.employee.dateDepart){
+          this.senioriteEmp= "Junior2";
+        }
+        if(new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))<5 && new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))>=3&& !this.employee.dateDepart){
+          this.senioriteEmp= "Confirmé";
+        }
+        if(new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))<7 && new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))>=5 && !this.employee.dateDepart){
+          this.senioriteEmp= "Senior1";
+        }
+        if(new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))<10 && new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))>=7 && !this.employee.dateDepart){
+          this.senioriteEmp= "Senior2";
+        }
+        if(new Date().getFullYear() - parseInt(dateRecrut.slice(0,4))>=10 && !this.employee.dateDepart){
+          this.senioriteEmp= "Senior3";
+        }
+
         this.getEmployePole();
         this.findDirectionByManager();
         this.getDirectionManager();
@@ -302,7 +406,248 @@ export class EmployeeProfileComponent implements OnInit {
 
     });
   }
+  //Salma
+  // Get instituts list  Api Call
+  getInstitut(): void {
+    this.allModulesService.get('Institut/all').subscribe(
+      (response: Institut[]) => {
+        this.instituts= response
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 
+      // Get entreprises list  Api Call
+      getEntreprises(): void {
+        this.allModulesService.get('Entreprise/all').subscribe(
+          (response: Entreprise[]) => {
+            this.entreprises= response;
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+
+  // Get CentreF list  Api Call
+  getCentreF(): void {
+      this.allModulesService.get('CentreFormation/all').subscribe(
+        (response: CentreFormation[]) => {
+          this.centreFormations= response;
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+
+    // Get Certificat list  Api Call
+  getCertificat(): void {
+    this.allModulesService.get('Certificat/all').subscribe(
+      (response: Certificat[]) => {
+        this.certificats= response;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    }  
+   // Get directions list  Api Call
+   getDiplome(): void {
+    this.allModulesService.get('Diplome/all').subscribe(
+      (response: Diplome[]) => {
+        this.diplomes= response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  };
+
+  // Affect Diplome  Modal Api Call
+addDiplomeDetailsEmp() {
+  if(this.affectDiplomeForm.invalid){
+    this.markFormGroupTouched(this.affectDiplomeForm)
+    return
+  }
+  
+  if (this.affectDiplomeForm.valid) {
+     this.diplomeDT.id=null;
+      this.diplomeDT.institut =  this.affectDiplomeForm.value.Institut;
+      this.diplomeDT.diplome =  this.affectDiplomeForm.value.Diplome;
+      this.diplomeDT.mention =  this.affectDiplomeForm.value.Mention;
+      this.diplomeDT.dateDebutFomation= this.affectDiplomeForm.value.DateDebutFomation ;
+      this.diplomeDT.dateObtention = this.affectDiplomeForm.value.DateObtention ;
+    this.allModulesService.add(this.diplomeDT,`Employee/AffecterDiplomeEmployee?employeId=${this.employee.id}&diplomeId=${this.affectDiplomeForm.value.Diplome.id}&institutId=${this.affectDiplomeForm.value.Institut.id}`).subscribe((data) => {
+         this.getEmp();   
+         $("#education_info").modal("hide");
+         this.affectDiplomeForm.reset();
+         this.toastr.success("Desigantion added sucessfully...!", "Success");
+      });
+  }
+}
+
+// Affect Certificat  Modal Api Call
+addCertificatDetailsEmp() {
+  if(this.affectCertificatForm.invalid){
+    this.markFormGroupTouched(this.affectCertificatForm)
+    return
+  }
+  
+  if (this.affectCertificatForm.valid) {
+     this.certifDT.id=null;
+      this.certifDT.dateDebutFormation =  this.affectCertificatForm.value.DateDebutCertif;
+      this.certifDT.dateObtention =  this.affectCertificatForm.value.DateFinCertif;
+      this.certifDT.note =  this.affectCertificatForm.value.Note;
+      this.certifDT.certificat= this.affectCertificatForm.value.Certificat ;
+      this.certifDT.centreFormation= this.affectCertificatForm.value.CentreF;
+
+    this.allModulesService.add(this.certifDT,`Employee/AffecterCertificatEmployee?employeId=${this.employee.id}&certificatId=${this.affectCertificatForm.value.Certificat.id}&centreFormationId=${this.affectCertificatForm.value.CentreF.id}`).subscribe((data) => {
+
+         this.getEmp();   
+         $("#Certif_info").modal("hide");
+         this.affectCertificatForm.reset();
+         this.toastr.success("Desigantion added sucessfully...!", "Success");
+      });
+  }
+}
+
+// Affect Experience  Modal Api Call
+addExperiencEmp() {
+  if(this.affectExperienceForm.invalid){
+    this.markFormGroupTouched(this.affectExperienceForm)
+    return
+  }
+  
+  if (this.affectExperienceForm.valid) {
+     this.experience.id=null;
+      this.experience.dateDebut =  this.affectExperienceForm.value.DateDebutExp;
+      this.experience.dateFin =  this.affectExperienceForm.value.DateFinExp;
+      this.experience.poste =  this.affectExperienceForm.value.Poste;
+      this.experience.salaireBrute= this.affectExperienceForm.value.SalaireBrute ;
+      this.experience.entreprise= this.affectExperienceForm.value.Entreprise;
+      this.experience.raisonDepart= this.affectExperienceForm.value.RaisonDepart;
+      
+
+    this.allModulesService.add(this.experience,`Employee/AffecterExperienceEmployee?employeId=${this.employee.id}&entrepriseId=${this.affectExperienceForm.value.Entreprise.id}`).subscribe((data) => {
+
+         this.getEmp();   
+         $("#experience_info").modal("hide");
+         this.affectExperienceForm.reset();
+         this.toastr.success("Desigantion added sucessfully...!", "Success");
+      });
+  }
+}
+
+editDiplomeDetails() {
+  if (this.editDiplomeDTForm.valid) {
+      this.diplomeDT.id = this.ddId;
+      this.diplomeDT.diplome = this.editDiplomeDTForm.value.editDiplome,
+      this.diplomeDT.institut = this.editDiplomeDTForm.value.editInstitut;
+      this.diplomeDT.mention = this.editDiplomeDTForm.value.editMention;
+      this.diplomeDT.dateObtention = this.editDiplomeDTForm.value.editDateObtention;
+      this.diplomeDT.dateDebutFomation = this.editDiplomeDTForm.value.editDateDebutFomation;
+      this.allModulesService.update(this.diplomeDT,`Employee/editDiplomeDetails?id=${this.employee.id}`).subscribe((data1) => {
+      this.getEmp();
+      $("#edit_education_info").modal("hide");
+      this.toastr.success("Department Updated sucessfully...!", "Success");
+    });
+  }
+}
+
+// To Get The timesheet Edit Id And Set Values To Edit Modal Form
+editDip(value) {
+  this.ddId = value;
+  const index = this.employee.listDiplomeDetails
+  .findIndex((item) => {
+    return item.id === value;
+});
+  let toSetValues = this.employee.listDiplomeDetails[index];
+  this.editDiplomeDTForm.setValue({
+  
+    editInstitut: toSetValues.institut,
+    editDiplome: toSetValues.diplome,
+    editMention: toSetValues.mention,
+    editDateDebutFomation: toSetValues.dateDebutFomation,
+    editDateObtention: toSetValues.dateObtention,
+  
+  });
+}
+
+editCertificatDetails() {
+  if (this.editCertificatForm.valid) {
+      this.certifDT.id = this.cdId;
+      this.certifDT.dateDebutFormation =  this.editCertificatForm.value.editDateDebutCertif;
+      this.certifDT.dateObtention =  this.editCertificatForm.value.editDateFinCertif;
+      this.certifDT.note =  this.editCertificatForm.value.editNote;
+      this.certifDT.certificat= this.editCertificatForm.value.editCertificat ;
+      this.certifDT.centreFormation= this.editCertificatForm.value.editCentreF;
+
+      this.allModulesService.update(this.certifDT,`Employee/editCertificatDetails?id=${this.employee.id}`).subscribe((data1) => {
+      this.getEmp();
+      $("#Edit_Certif_info").modal("hide");
+      this.toastr.success("Department Updated sucessfully...!", "Success");
+    });
+  }
+}
+
+// To Get The timesheet Edit Id And Set Values To Edit Modal Form
+editCertif(value) {
+  this.cdId=value;
+  const index = this.employee.listCertificatDetails
+  .findIndex((item) => {
+    return item.id === value;
+});
+  let toSetValues = this.employee.listCertificatDetails[index];
+  this.editCertificatForm.setValue({
+    editDateDebutCertif: toSetValues.dateDebutFormation,
+    editDateFinCertif: toSetValues.dateObtention,
+    editNote: toSetValues.note,
+    editCertificat: toSetValues.certificat,
+    editCentreF: toSetValues.centreFormation,
+  
+  });
+}
+
+editExperience() {
+  if (this.editExperienceForm.valid) {
+      this.experience.id = this.expId;
+      this.experience.dateDebut =  this.editExperienceForm.value.editDateDebutExp;
+      this.experience.poste =  this.editExperienceForm.value.editPoste;
+      this.experience.dateFin =  this.editExperienceForm.value.editDateFinExp;
+      this.experience.salaireBrute= this.editExperienceForm.value.editSalaireBrute ;
+      this.experience.raisonDepart= this.editExperienceForm.value.editRaisonDepart;
+      this.experience.entreprise= this.editExperienceForm.value.editEntreprise;
+
+      this.allModulesService.update(this.experience,`Experience/update?id=${this.employee.id}`).subscribe((data1) => {
+      this.getEmp();
+      $("#edit_experience_info").modal("hide");
+      this.toastr.success("Department Updated sucessfully...!", "Success");
+    });
+  }
+}
+
+// To Get The timesheet Edit Id And Set Values To Edit Modal Form
+editExp(value) {
+  this.expId = value;
+  const index = this.employee.experiences
+  .findIndex((item) => {
+    return item.id === value;
+});
+  let toSetValues = this.employee.experiences[index];
+  this.editExperienceForm.setValue({
+    editDateDebutExp: toSetValues.dateDebut,
+    editDateFinExp: toSetValues.dateFin,
+    editPoste: toSetValues.poste,
+    editSalaireBrute: toSetValues.salaireBrute,
+    editRaisonDepart: toSetValues.raisonDepart,
+    editEntreprise: toSetValues.entreprise,
+  
+  });
+}
+//Salma
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();

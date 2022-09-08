@@ -35,6 +35,9 @@
                                     <div class="profile-info-left">
                                         <h3 class="user-name m-t-0 mb-0">{{employee?.nom}} {{employee?.prenom}}</h3>
                                         <h6 class="text-muted">{{employee?.poste?.poste}}</h6>
+                                        <div >
+                                            <span class="badge bg-inverse-success">{{senioriteEmp}}</span>
+                                      </div>
                                         <h6 *ngIf="direction" class="text-muted">Direction :{{direction?.direction}}</h6>
                                         <small class="text-muted" *ngIf="pole.pole">Pole : {{pole?.pole}}</small>
                                         <div class="staff-id">Employee Code : {{employee?.employeCode}}</div>
@@ -76,12 +79,12 @@
                                             <div class="text">
                                                 <div class="avatar-box">
                                                     <div class="avatar avatar-xs">
-                                                        <img src="assets/img/{{pole?.manager?.image}}" alt="">
+                                                        <img src="assets/img/{{pole?.manager?.image}}" alt="pole?.manager?.prenom">
                                                     </div>
                                                 </div>
-                                                <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{pole?.manager?.id}}">
+                                                
                                                     {{pole?.manager?.nom}} {{pole?.manager?.prenom}}
-                                                </a>
+                                               
                                             </div>
                                         </li>
                                         <li *ngIf="!pole.pole">
@@ -102,12 +105,12 @@
                                                 <div class="text"  *ngIf="pole.direction">
                                                     <div class="avatar-box">
                                                         <div class="avatar avatar-xs">
-                                                            <img src="assets/img/{{directionManager?.image}}" alt="">
+                                                            <img src="assets/img/{{directionManager?.image}}" alt="directionManager?.prenom">
                                                         </div>
                                                     </div>
-                                                    <a (click)="getEmp();" routerLink="/layout/employees/employeeprofile/{{directionManager?.id}}" >
+                                                   
                                                         {{directionManager?.nom}} {{directionManager?.prenom}}
-                                                    </a>
+                                                   
                                                 </div>
                                             </li>
 
@@ -247,61 +250,67 @@
         <!-- Profile Info Tab -->
         <div id="emp_profile" class="pro-overview tab-pane fade show active ">
 
-                <div class="row justify-content-md-center">
-                        <div class="col-md-12 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Les Experiences
-                                        <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </h3>
-                                    <div class="experience-box ">
-                                        <ul class="experience-list " *ngIf='employee'>
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content"  *ngFor='let exp of employee.experiences'>
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">{{exp.entreprise.entreprise}}</a>
-                                                        <div class="row">
-                                                            <div class="col col-6">
-                                                                <span class="time">{{exp.poste}}</span>
-                                                                <span>{{exp.salaireBrute}} DT</span>
-                                                            </div>
-                                                            <div class="col col-6">
-                                                                <span class="time">{{exp.dateDebut}} - {{exp.dateFin}}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <span>{{exp.raisonDepart}}</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            <div class="row">
-                <div class="col-md-6 d-flex">
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 d-flex">
                     <div class="card profile-box flex-fill">
-                        <div class="card-body" *ngIf='employee'>
-                            <h3 class="card-title">Les diplomes
-                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#education_info">
-                                    <i class="fa fa-pencil"></i>
+                        <div class="card-body"  *ngIf='employee'>
+                            <h3 class="card-title">Les Experiences
+                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info">
+                                    <i class="fa fa-plus-square"></i>
                                 </a>
                             </h3>
-                            <div class="experience-box" >
-                                <ul class="experience-list" *ngFor='let dip of employee.listDiplomeDetails'  >
+                            <div class="experience-box ">
+                                <ul class="experience-list " *ngFor='let exp of employee.experiences'>
                                     <li>
                                         <div class="experience-user">
                                             <div class="before-circle"></div>
                                         </div>
                                         <div class="experience-content" >
                                             <div class="timeline-content">
+                                               <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit_experience_info" (click)="editExp(exp?.id)" >
+                                                   <i class="fa fa-pencil"></i>
+                                                 </a>
+                                                <a href="#/" class="name">{{exp.entreprise.entreprise}}</a>
+                                                <div class="row">
+                                                    <div class="col col-6">
+                                                        <span class="time">{{exp.poste}}</span>
+                                                        <span>{{exp.salaireBrute}} DT</span>
+                                                    </div>
+                                                    <div class="col col-6">
+                                                        <span class="time">{{exp.dateDebut}} - {{exp.dateFin}}
+                                                        </span>
+                                                        <span>Raison de départ : {{exp.raisonDepart}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body" *ngIf='employee'>
+                            <h3 class="card-title">Les diplomes
+                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#education_info">
+                                    <i class="fa fa-plus-square"></i>
+                                </a>
+                            </h3>
+                            <div class="experience-box">
+                                <ul class="experience-list" *ngFor='let dip of employee.listDiplomeDetails'>
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit_education_info" (click)="editDip(dip?.id)">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                                 <a href="#/" class="name">{{dip.institut.institut}}
                                                 </a>
                                                 <div>{{dip.diplome.diplome}}</div>
@@ -309,7 +318,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                  
+
                                 </ul>
                             </div>
                         </div>
@@ -319,18 +328,21 @@
                     <div class="card profile-box flex-fill" *ngIf='employee'>
                         <div class="card-body">
                             <h3 class="card-title">Les certificats
-                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#certificat_info">
-                                    <i class="fa fa-pencil"></i>
+                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#Certif_info">
+                                    <i class="fa fa-plus-square"></i>
                                 </a>
                             </h3>
                             <div class="experience-box">
-                                <ul class="experience-list" *ngFor='let certif of employee.listCertificatDetails'>
+                                <ul class="experience-list" *ngFor='let certif of employee?.listCertificatDetails'>
                                     <li>
                                         <div class="experience-user">
                                             <div class="before-circle"></div>
                                         </div>
                                         <div class="experience-content">
                                             <div class="timeline-content">
+                                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#Edit_Certif_info" (click)="editCertif(certif?.id)">
+                                                     <i class="fa fa-pencil"></i>
+                                                 </a>
                                                 <a href="#/" class="name">{{certif.certificat.certificat}}</a>
                                                 <div>{{certif.centreFormation.centreFormationName}}</div>
                                                 <span class="time">{{certif.dateDebutFormation}} - {{certif.dateObtention}}</span>
@@ -343,7 +355,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <!-- /Profile Info Tab -->
 
@@ -794,6 +806,7 @@
 <!-- /Profile Modal -->
 
 <!-- Education Modal -->
+<!-- Diplome Modal -->
 <div id="education_info" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -804,8 +817,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-scroll">
+                <form (ngSubmit)="addDiplomeDetailsEmp()" [formGroup]='affectDiplomeForm'>
+                    <div class="form-group">
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="card-title">parcours académique
@@ -816,13 +829,21 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-focus focused">
-                                            <input type="text" value="Oxford University" class="form-control floating">
+                                            <select class="form-select form-control"      
+                                            [class.invalid]="affectDiplomeForm.get('Institut').invalid && affectDiplomeForm.get('Institut').touched"
+                                                formControlName="Institut" *ngIf="instituts">
+                                            
+                                                <option *ngFor="let institut of instituts" [ngValue]="institut">{{institut.institut}} </option>
+                                                </select>
                                             <label class="focus-label">Institut</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-focus focused">
-                                            <input type="text" value="Licence" class="form-control floating">
+                                            <select class="form-select form-control"     [class.invalid]="affectDiplomeForm.get('Diplome').invalid && affectDiplomeForm.get('Diplome').touched"
+                                                    formControlName="Diplome" *ngIf="diplomes" >
+                                                <option *ngFor="let diplome of diplomes" [ngValue]="diplome">{{diplome.diplome}} </option>
+                                                </select>
                                             <label class="focus-label">Diplome</label>
                                         </div>
                                     </div>
@@ -830,7 +851,7 @@
                                         <div class="form-group form-focus focused">
                                             <div class="cal-icon">
                                                 <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    value="01/05/2006">
+                                                    formControlName="DateDebutFomation" >
                                             </div>
                                             <label class="focus-label">Date de début</label>
                                         </div>
@@ -839,16 +860,19 @@
                                         <div class="form-group form-focus focused">
                                             <div class="cal-icon">
                                                 <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    value="31/05/2006">
+                                                    formControlName="DateObtention">
                                             </div>
                                             <label class="focus-label"> Date de fin</label>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" class="form-control floating" formControlName="Mention" >
+                                            <label class="focus-label">Mention</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="add-more">
-                                    <a>
-                                        <i class="fa fa-plus-circle"></i> Add More</a>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -860,10 +884,93 @@
         </div>
     </div>
 </div>
+<!-- /Diplome Modal -->
+
+<!-- Edit Diplome Modal -->
+<div id="edit_education_info" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Parcours académique</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="editDiplomeDetails()" [formGroup]='editDiplomeDTForm'>
+                    <div class="form-group" *ngIf='employee'>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">parcours académique
+                                    <a class="delete-icon">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <select class="form-select form-control"   [class.invalid]="editDiplomeDTForm.get('editInstitut').invalid && editDiplomeDTForm.get('editInstitut').touched"
+                                                                            formControlName="editInstitut" *ngIf="instituts">
+                                                <option value="" >Institut actuel : {{editDiplomeDTForm.value.editInstitut.institut}} </option>
+                                                <option *ngFor="let institut of instituts" [ngValue]="institut">{{institut.institut}} </option>
+                                                </select>
+                                            <label class="focus-label">Institut</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <select class="form-select form-control" [class.invalid]="editDiplomeDTForm.get('editDiplome').invalid && editDiplomeDTForm.get('editDiplome').touched"
+                                                    formControlName="editDiplome" *ngIf="diplomes">
+                                                <option value="" >diplome actuel : {{editDiplomeDTForm.value.editDiplome.diplome}} </option>
+                                                <option *ngFor="let diplome of diplomes" [ngValue]="diplome">{{diplome.diplome}} </option>
+                                                </select>
+                                            <label class="focus-label">Diplome</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <div class="cal-icon">
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    formControlName="editDateDebutFomation">
+                                            </div>
+                                            <label class="focus-label">Date de début</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <div class="cal-icon">
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    formControlName="editDateObtention">
+                                            </div>
+                                            <label class="focus-label"> Date de fin</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" class="form-control floating" formControlName="editMention">
+                                            <label class="focus-label">Mention</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Diplome Modal -->
 <!-- /Education Modal -->
 
 <!-- Certificat Modal -->
-<div id="certificat_info" class="modal custom-modal fade" role="dialog">
+<!-- Certificat Modal -->
+<div id="Certif_info" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -873,7 +980,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form (ngSubmit)="addCertificatDetailsEmp()" [formGroup]='affectCertificatForm'>
                     <div class="form-scroll">
                         <div class="card">
                             <div class="card-body">
@@ -885,21 +992,29 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-focus focused">
-                                            <input type="text" value="GO MYCODE" class="form-control floating">
-                                            <label class="focus-label">Centre de formation</label>
+                                            <select class="form-select form-control"     
+                                            [class.invalid]="affectCertificatForm.get('CentreF').invalid && affectCertificatForm.get('CentreF').touched"
+                                               formControlName="CentreF" >
+                                                <option *ngFor="let CF of centreFormations" [ngValue]="CF">{{CF.centreFormationName}} </option>
+                                                </select>
+                                            <label class="focus-label">Centre de Formation</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group form-focus focused">
-                                            <input type="text" value="SCRUM" class="form-control floating">
-                                            <label class="focus-label">Certificat</label>
-                                        </div>
+                                            <div class="form-group form-focus focused">
+                                                    <select class="form-select form-control"     
+                                                    [class.invalid]="affectCertificatForm.get('Certificat').invalid && affectCertificatForm.get('Certificat').touched"
+                                                       formControlName="Certificat" >
+                                                        <option *ngFor="let certif of certificats" [ngValue]="certif">{{certif.certificat}} </option>
+                                                        </select>
+                                                    <label class="focus-label">Certificat</label>
+                                                </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-focus focused">
                                             <div class="cal-icon">
                                                 <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    value="01/05/2006">
+                                                formControlName="DateDebutCertif">
                                             </div>
                                             <label class="focus-label">Starting Date</label>
                                         </div>
@@ -908,15 +1023,17 @@
                                         <div class="form-group form-focus focused">
                                             <div class="cal-icon">
                                                 <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    value="31/05/2006">
+                                                formControlName="DateFinCertif">
                                             </div>
                                             <label class="focus-label">Complete Date</label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="add-more">
-                                    <a>
-                                        <i class="fa fa-plus-circle"></i> Add More</a>
+                                    <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" class="form-control floating" formControlName="Note">
+                                                <label class="focus-label">Note</label>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -930,6 +1047,87 @@
     </div>
 </div>
 <!-- /Certificat Modal -->
+<!-- Edit Certificat Modal -->
+<div id="Edit_Certif_info" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Parcours académique</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="editCertificatDetails()" [formGroup]='editCertificatForm'>
+                    <div class="form-group" *ngIf='employee'>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">parcours académique
+                                    <a class="delete-icon">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <select class="form-select form-control"
+                                            [class.invalid]="editCertificatForm.get('editCentreF').invalid && editCertificatForm.get('editCentreF').touched"
+                                              formControlName="editCentreF" *ngIf="centreFormations">
+                                               <option value="" >Centre actuel : {{editCertificatForm.value.editCentreF.centreFormationName}} </option>
+                                                <option *ngFor="let CF of centreFormations" [ngValue]="CF">{{CF.centreFormationName}} </option>
+                                                </select>
+                                            <label class="focus-label">Centre de Formation</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <select class="form-select form-control" [class.invalid]="editCertificatForm.get('editCertificat').invalid && editCertificatForm.get('editCertificat').touched"
+                                                    formControlName="editCertificat" *ngIf="certificats">
+                                                <option value=" " >Certificat actuel : {{editCertificatForm.value.editCertificat.certificat }} </option>
+                                                <option *ngFor="let certif of certificats" [ngValue]="certif">{{certif.certificat}} </option>
+                                                </select>
+                                            <label class="focus-label">Certificat</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    formControlName="editDateDebutCertif">
+                                                </div>
+                                                <label class="focus-label">Starting Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    formControlName="editDateFinCertif">
+                                                </div>
+                                                <label class="focus-label">Complete Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <div class="form-group form-focus focused">
+                                                    <input type="text" class="form-control floating" formControlName="editNote">
+                                                    <label class="focus-label">Note</label>
+                                                </div>
+                                            </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Certificat Modal -->
+<!-- /Certificat Modal -->
 
 <!-- Experience Modal -->
 <div id="experience_info" class="modal custom-modal fade" role="dialog">
@@ -942,8 +1140,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-scroll">
+                <form (ngSubmit)="addExperiencEmp()" [formGroup]="affectExperienceForm">
+                    <div class="form-scroll" *ngIf='employee'>
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="card-title">Experience Informations
@@ -953,49 +1151,50 @@
                                 </h3>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <input type="text" class="form-control floating">
-                                            <label class="focus-label">Entreprise</label>
-                                        </div>
+                                        <div class="form-group form-focus focused">
+                                            <select class="form-select form-control"
+                                            [class.invalid]="affectExperienceForm.get('Entreprise').invalid && affectExperienceForm.get('Entreprise').touched"
+                                              formControlName="Entreprise" *ngIf="entreprises">
+                                                <option *ngFor="let entreprise of entreprises" [ngValue]="entreprise">{{entreprise.entreprise}} </option>
+                                              </select>
+                                                    <label class="focus-label">Entreprise</label>
+                                                </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <input type="text" class="form-control floating">
-                                            <label class="focus-label">Description</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <input type="text" class="form-control floating">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" class="form-control floating" formControlName="SalaireBrute" >
                                             <label class="focus-label">Salaire Brute</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <input type="text" class="form-control floating">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" class="form-control floating" formControlName="Poste" >
                                             <label class="focus-label">Poste</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group form-focus">
+                                        <div class="form-group form-focus focused">
                                             <div class="cal-icon">
-                                                <input type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control floating datetimepicker">
+                                                <input type="text" bsDatepicker type="text" formControlName="DateDebutExp"  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control floating datetimepicker">
                                             </div>
                                             <label class="focus-label">Periode De</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group form-focus">
+                                        <div class="form-group form-focus focused">
                                             <div class="cal-icon">
-                                                <input type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control floating datetimepicker">
+                                                <input type="text" bsDatepicker type="text" formControlName="DateFinExp"  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control floating datetimepicker">
                                             </div>
                                             <label class="focus-label">Période à</label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="add-more">
-                                    <a>
-                                        <i class="fa fa-plus-circle"></i> Add More</a>
+
+                                    <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" class="form-control floating" formControlName="RaisonDepart">
+                                                <label class="focus-label">Raison de depart</label>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -1011,3 +1210,86 @@
     </div>
 </div>
 <!-- /Experience Modal -->
+
+<!-- Edit Experience Modal -->
+<div id="edit_experience_info" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Experience Informations</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="editExperience()" [formGroup]="editExperienceForm">
+                        <div class="form-scroll" *ngIf='employee'>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Experience Informations
+                                        <a class="delete-icon">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <select class="form-select form-control"
+                                                [class.invalid]="editExperienceForm.get('editEntreprise').invalid && editExperienceForm.get('editEntreprise').touched"
+                                                  formControlName="editEntreprise" *ngIf="entreprises">
+                                                   <option value="" >entreprise actuel : {{editExperienceForm.value.editEntreprise.entreprise}} </option>
+                                                    <option *ngFor="let entreprise of entreprises" [ngValue]="entreprise">{{entreprise.entreprise}} </option>
+                                                  </select>
+                                                        <label class="focus-label">Entreprise</label>
+                                                    </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus">
+                                                <input type="text" class="form-control floating" formControlName="editSalaireBrute" >
+                                                <label class="focus-label">Salaire Brute</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus">
+                                                <input type="text" class="form-control floating" formControlName="editPoste" >
+                                                <label class="focus-label">Poste</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus">
+                                                <div class="cal-icon">
+                                                    <input type="text" bsDatepicker type="text" formControlName="editDateDebutExp"  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control floating datetimepicker">
+                                                </div>
+                                                <label class="focus-label">Periode De</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus">
+                                                <div class="cal-icon">
+                                                    <input type="text" bsDatepicker type="text" formControlName="editDateFinExp"  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control floating datetimepicker">
+                                                </div>
+                                                <label class="focus-label">Période à</label>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-6">
+                                                <div class="form-group form-focus focused">
+                                                    <input type="text" class="form-control floating" formControlName="editRaisonDepart">
+                                                    <label class="focus-label">Raison de depart</label>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+    
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Experience Modal -->
