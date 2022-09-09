@@ -111,6 +111,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.loadLeaves();
       });
       
@@ -135,6 +136,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        $("#datatable").DataTable().clear();
         this.loadLeaves();
       });
       $("#edit_leave").modal("hide");
@@ -168,11 +170,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
       Email:toSetValues.email,
 
     })
-   
-
   }
-
-
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();

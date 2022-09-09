@@ -83,7 +83,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
 
   addJobs() {
     if (this.addManageJobs.valid) {
-     
+     this.poste.id=null;
       this.poste.poste= this.addManageJobs.value.Poste;
       this.poste.description=this.addManageJobs.value.Description;
       this.allModuleService.add(this.poste, 'Poste/add').subscribe((data) => {
